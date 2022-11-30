@@ -17,7 +17,11 @@ export const deleteStation =  (payload)=> apiClient('/settings/station/'+payload
 // Department
 export const getDepartment =  ()=> apiClient('/settings/department','get')
 export const createDepartment =  (payload)=> apiClient('/settings/department','post',payload)
+export const updateDepartment =  (payload)=> apiClient('/settings/department','put',payload)
+export const deleteDepartment =  (payload)=> apiClient('/settings/department/'+payload?.id,'delete')
 
 // Team
 export const getTeams =  ()=> apiClient('/settings/team','get')
 export const createTeams =  (payload)=> apiClient('/settings/team','post',payload)
+export const updateTeams =  (payload)=> apiClient('/settings/team','put',payload)
+export const deleteTemas =  (payload)=> apiClient('/settings/team/'+payload?.id,'delete')

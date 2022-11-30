@@ -2,7 +2,7 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import SettingsOverviewCard from "templates/settings/templates/SettingsOverviewCard";
+import SettingsOverviewCard from "components/settings/SettingsOverviewCard";
 
 function handleClick(event) {
   event.preventDefault();
@@ -20,20 +20,27 @@ export default function SettingsMain() {
             title: "Organisation",
             types: [
               {
-                path: "Company",
+                path: "general/Company",
                 title: "Company",
               },
               {
                 path: "general/division",
                 title: "Division",
               },
-              "Station",
-              "Department",
-              // {
-              //   path: "sub_department",
-              //   title: "Sub Department",
-              // },
-              "Teams",
+              
+              {
+                path: "general/department",
+                title: "Department",
+              },
+              {
+                path: "general/station",
+                title: "Station",
+              }
+              ,
+              {
+                path: "general/teams",
+                title: "Teams",
+              },
               {
                 path: "org_document",
                 title: "Organisation document",

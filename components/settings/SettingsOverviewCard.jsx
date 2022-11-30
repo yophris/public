@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Divider, Paper, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-import AppProgressBar from '../../../components/AppProgressBar';
+import AppProgressBar from '../AppProgressBar';
 
 export default function SettingsOverviewCard({
   children,

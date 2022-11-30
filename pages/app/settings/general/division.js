@@ -57,6 +57,7 @@ const divisionForm = {
   ],
   endpoint: 'settings/division',
   texts: {
+    title:"Division",
     key: 'divisionName',
     drawerTitle: 'Add Division',
     mainTitle: 'List of Divisions',

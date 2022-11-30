@@ -3,31 +3,35 @@ import { Box, Breadcrumbs, Divider, Link, Paper, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'next/link';
 
-const breadcrumbs = [
-  // <Link href="/app/settings">SETTINGS</Link>,
-  <Link
-    component={RouterLink}
-    href="/app/settings"
-    sx={{
-      fontSize: '1.6rem',
-      fontWeight: 600,
-      color: 'primary.main',
-      cursor: 'pointer',
-    }}
-    underline="hover"
-    key="1"
-    color="inherit"
-  >
-    SETTINGS
-  </Link>,
-  <Typography key="2" variant="h3_bold_secondary">
-    {/* {texts?.title} */}
-    Division
-  </Typography>,
-];
+
 
 function SettingPageLayout({ children, texts }) {
   console.log('setting pae layout');
+
+  const breadcrumbs = [
+
+    <Link
+    href="/app/settings" 
+     sx={{
+       fontSize: '1.6rem',
+       fontWeight: 600,
+       color: 'primary.main',
+       cursor: 'pointer',
+     }}
+     underline="hover"
+     key="1"
+     color="inherit"
+   >
+     SETTINGS
+   </Link>
+   
+   
+  ,
+    <Typography key="2" variant="h3_bold_secondary">
+      {texts?.title}
+    </Typography>,
+  ];
+
   return (
     <Box sx={{ height: '100%' }}>
       <Stack
@@ -78,11 +82,11 @@ function SettingPageLayout({ children, texts }) {
             <Stack spacing={4} sx={{ width: '70%', margin: 2.5 }}>
               <Box>
                 <Typography variant="h2_bold_secondary" component="h2">
-                  {texts.mainTitle}
+                  {texts?.mainTitle}
                 </Typography>
 
                 <Typography variant="body_medium_muted" component="p">
-                  {texts.mainDescription}
+                  {texts?.mainDescription}
                 </Typography>
               </Box>
               <Stack sx={{ height: '75vh' }} spacing={2}>
@@ -91,10 +95,10 @@ function SettingPageLayout({ children, texts }) {
             </Stack>
             <Stack spacing={1} sx={{ width: '30%', margin: 2.5 }}>
               <Typography variant="h2_bold_secondary">
-                {texts.sideTitle}
+                {texts?.sideTitle}
               </Typography>
               <Typography variant="h3_medium_muted">
-                {texts.sideDescription}
+                {texts?.sideDescription}
               </Typography>
             </Stack>
           </Stack>

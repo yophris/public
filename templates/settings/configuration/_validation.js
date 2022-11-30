@@ -18,19 +18,7 @@ export const validation_division = Yup.object()
   })
   .required();
 
-export const validation_address = Yup.object()
-  .shape({
-    address: Yup.object().shape({
-      addressLn1: Yup.string().required(" Line 1 required."),
-      addressLn2: Yup.string(),
-      city: Yup.string().required(),
-      state: Yup.string().required(),
-      postalCode: Yup.string().required(),
-      country: Yup.string().required(),
-      phone1: Yup.string().required(),
-    }),
-  })
-  .required();
+
 
   export const validation_company = Yup.object()
   .shape({

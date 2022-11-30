@@ -1,8 +1,26 @@
 import { createTheme } from '@mui/material';
+import NextLink from 'next/link';
+import { forwardRef } from 'react';
+
+const LinkBehaviour = forwardRef(function LinkBehaviour(props, ref) {
+    return <NextLink ref={ref} {...props} />;
+});
 
 //all the MUI default styles can be customized here
 //Typography Regular: 400, medium: 500, semi-bold: 600
 const theme = createTheme({
+  components: {
+    MuiLink: {
+        defaultProps: {
+            component: LinkBehaviour
+        }
+    },
+    MuiButtonBase: {
+        defaultProps: {
+            LinkComponent: LinkBehaviour
+        }
+    }
+},
   palette: {
     primary: {
       main: '#377DFF',

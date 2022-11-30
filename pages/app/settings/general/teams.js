@@ -1,7 +1,82 @@
-import React from 'react'
+import React from 'react';
+import TextInput from 'components/fields/TextInput';
+import * as Yup from 'yup';
+import {
+  createDivisions,
+  createTeams,
+  deleteDivision,
+  deleteTemas,
+  getDivisions,
+  getTeams,
+  updateDivision,
+  updateTeams,
+} from 'requests/settings';
+import SettingPageLayout from 'components/settings/SettingPageLayout';
+import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 
-export default function teams() {
+
+
+
+  const validation_team= Yup.object()
+  .shape({
+    team: Yup.object().shape({
+      teamName: Yup.string().required(' name required.'),
+      description: Yup.string().required('type required.'),
+    }),
+  })
+  .required();
+
+
+const fields = [
+  {
+    element: TextInput,
+    attr: {
+      label: 'team Name',
+      name: 'team.teamName',
+    },
+    size: 6,
+  },
+  {
+    element: TextInput,
+    attr: {
+      label: 'Description',
+      name: 'team.description',
+    },
+    size: 12,
+  },
+];
+
+
+const teamForm = {
+  form: [
+    {
+      header: '',
+      fields: fields,
+    },
+  ],
+  endpoint: 'settings/team',
+  texts:{
+    key:"teamName",
+    title:"Teams",
+    drawerTitle: 'Add team',
+    mainTitle: 'List of Teams',
+    shortDescription: 'this is short description for division',
+    longDescription:
+      'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
+  },
+  validation:validation_team,
+  getAllFn:getTeams,
+  postFn: createTeams,
+  putFn: updateTeams,
+  deleteFn: deleteTemas,
+};
+
+
+export default function Page() {
   return (
-    <div>teams</div>
-  )
+    <SettingPageLayout texts={teamForm.texts}>
+      <ListWithSidebarLayout config={teamForm} />
+    </SettingPageLayout>
+  );
+  // return <ListWithSidebarLayout config={divisionForm}/>
 }
