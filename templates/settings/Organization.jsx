@@ -22,23 +22,23 @@ const Organization = () => {
 
   const breadcrumbs = [
     <Link
-     component={RouterLink}
-     to="/app/settings"
-     sx={{ fontSize: '1.6rem', fontWeight: 600, color: 'primary.main' }}
-     underline="hover"
-     key="1"
-     color="inherit"
-   >
-     SETTINGS
-   </Link>,
-   <Typography key="2" variant="h3_bold_secondary">
-     COMPANY
-   </Typography>,
- ]
+      component={RouterLink}
+      to="/app/settings"
+      sx={{ fontSize: '1.6rem', fontWeight: 600, color: 'primary.main' }}
+      underline="hover"
+      key="1"
+      color="inherit"
+    >
+      SETTINGS
+    </Link>,
+    <Typography key="2" variant="h3_bold_secondary">
+      COMPANY
+    </Typography>,
+  ];
 
   return (
     <>
-    <Stack
+      <Stack
         sx={{
           padding: 2,
           background: '#FAFBFC',
@@ -52,34 +52,32 @@ const Organization = () => {
           {breadcrumbs}
         </Breadcrumbs>
       </Stack>
-    <SettingPageLayout
-      title="Organization Setting"
-      subtitle="It is a long established fact that a reader will be distracted"
-    >
-      
-      <Stack spacing={3}>
-      
-        <Typography variant="h3_bold_secondary" component="h3">
-          Organization Details
-        </Typography>
-        {/* <form onSubmit={handleSubmit(onSubmit)}></form> */}
-        <TextInput
-          label="Organization Name"
-          register={register}
-          name="companyName"
-        />
-        <TextInput label="Industry" register={register} name="industry"/>
-        
-        <AppDatePicker label="Established" register={register} name="established" />
-        <SettingDrawer />
+      <SettingPageLayout
+        title="Organization Setting"
+        subtitle="It is a long established fact that a reader will be distracted"
+      >
+        <Stack spacing={3}>
+          <Typography variant="h3_bold_secondary" component="h3">
+            Organization Details
+          </Typography>
+          {/* <form onSubmit={handleSubmit(onSubmit)}></form> */}
+          <TextInput
+            label="Organization Name"
+            register={register}
+            name="companyName"
+          />
+          <TextInput label="Industry" register={register} name="industry" />
 
-        <AppButton
-              label={"Save"}
-              variant="contained"
-            />
+          <AppDatePicker
+            label="Established"
+            register={register}
+            name="established"
+          />
+          <SettingDrawer />
 
-      </Stack>
-    </SettingPageLayout>
+          <AppButton label={'Save'} variant="contained" />
+        </Stack>
+      </SettingPageLayout>
     </>
   );
 };

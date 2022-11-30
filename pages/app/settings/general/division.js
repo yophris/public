@@ -1,8 +1,14 @@
-import React from 'react'
-import { createDivisions, deleteDivision, getDivisions, updateDivision } from 'requests/settings';
+import React from 'react';
 import TextInput from 'components/fields/TextInput';
-import ListWithSidebarLayout from 'templates/settings/ListWithSidebarLayout';
 import * as Yup from 'yup';
+import {
+  createDivisions,
+  deleteDivision,
+  getDivisions,
+  updateDivision,
+} from 'requests/settings';
+import SettingPageLayout from 'components/settings/SettingPageLayout';
+import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 
 const division = [
   {
@@ -17,7 +23,7 @@ const division = [
     element: TextInput,
     attr: {
       label: 'Division Type',
-      name:  'division.divisionType',
+      name: 'division.divisionType',
     },
     size: 6,
   },
@@ -25,25 +31,24 @@ const division = [
     element: TextInput,
     attr: {
       label: 'Description',
-      name:  'division.description',
+      name: 'division.description',
     },
     size: 12,
   },
 ];
 
-
 const validation_division = Yup.object()
   .shape({
     division: Yup.object().shape({
-      divisionName: Yup.string().required(" name required."),
-      divisionType: Yup.string().required("type required."),
-      description: Yup.string().required("description required."),
+      divisionName: Yup.string().required(' name required.'),
+      divisionType: Yup.string().required('type required.'),
+      description: Yup.string().required('description required.'),
     }),
   })
   .required();
 
 const divisionForm = {
-  key:"division",
+  key: 'division',
   form: [
     {
       header: '',
@@ -51,23 +56,27 @@ const divisionForm = {
     },
   ],
   endpoint: 'settings/division',
-  texts:{
-    key:"divisionName",
+  texts: {
+    key: 'divisionName',
     drawerTitle: 'Add Division',
     mainTitle: 'List of Divisions',
-    shortDescription: 'this is short description for division',
-    longDescription:
-      'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
+    mainDescription: 'It is short description for division',
+    sideTitle: 'List of Divisions',
+    sideDescription:
+      'This is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
-  validation:validation_division,
-  getAllFn:getDivisions,
-  postFn:createDivisions,
+  validation: validation_division,
+  getAllFn: getDivisions,
+  postFn: createDivisions,
   putFn: updateDivision,
-  deleteFn:deleteDivision
+  deleteFn: deleteDivision,
 };
 
-
-
-  export default function Page() {
-    return <ListWithSidebarLayout config={divisionForm}/>
-  }
+export default function Page() {
+  return (
+    <SettingPageLayout texts={divisionForm.texts}>
+      <ListWithSidebarLayout config={divisionForm} />
+    </SettingPageLayout>
+  );
+  // return <ListWithSidebarLayout config={divisionForm}/>
+}

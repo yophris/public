@@ -1,20 +1,10 @@
-import React, { useEffect } from 'react';
-import {
-  Breadcrumbs,
-  Card,
-  CardHeader,
-  Divider,
-  Stack,
-  Typography,
-} from '@mui/material';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { Divider, Stack } from '@mui/material';
+import AppButton from 'components/AppButton';
+import SearchInput from 'components/fields/SearchInput';
+import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import AppButton from '../../components/AppButton';
-import SearchInput from '../../components/fields/SearchInput';
-import SettingDrawer from './templates/SettingDrawer';
-import SettingPageLayout from './templates/SettingPageLayout';
-import EditableList from './templates/EditableList';
-import Link from 'next/link';
+import EditableList from './EditableList';
+import SettingDrawer from './SettingDrawer';
 
 const ListWithSidebarLayout = ({ config }) => {
   const { endpoint, texts, postFn, key, deleteFn, validation } = config;
