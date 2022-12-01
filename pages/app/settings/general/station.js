@@ -2,10 +2,10 @@ import React from 'react';
 import TextInput from 'components/fields/TextInput';
 import * as Yup from 'yup';
 import {
-  createStation,
-  deleteStation,
-  getStation,
-  updateStation,
+  createSetting,
+  deleteSetting,
+  getSetting,
+  updateSetting,
 } from 'requests/settings';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
@@ -119,10 +119,10 @@ const stationForm = {
       'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
   validation: validation_station.concat(validation_address),
-  getAllFn: getStation,
-  postFn: createStation,
-  putFn: updateStation,
-  deleteFn: deleteStation,
+  getAllFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
 };
 
 export default function Page() {

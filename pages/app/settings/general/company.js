@@ -1,9 +1,15 @@
-import SelectDropdown from 'components/fields/SelectDropdown';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import * as Yup from 'yup';
-import SettingPageLayout from 'components/settings/SettingPageLayout';
 import AppForm from 'components/fields/AppForm';
+import SelectDropdown from 'components/fields/SelectDropdown';
 import TextInput from 'components/fields/TextInput';
+import SettingPageLayout from 'components/settings/SettingPageLayout';
+import { useMutation, useQueryClient } from 'react-query';
+import {
+  createSetting,
+  deleteSetting,
+  getSetting,
+  updateSetting,
+} from 'requests/settings';
+import * as Yup from 'yup';
 
 const company = [
   {
@@ -17,18 +23,18 @@ const company = [
   {
     element: TextInput,
     attr: {
-      label: 'Industry',
-      name: 'company.industry',
+      label: 'Start Year',
+      name: 'company.startYear',
     },
-    size: 12,
+    size: 4,
   },
   {
     element: TextInput,
     attr: {
-      label: 'Description',
-      name: 'company.description',
+      label: 'Country',
+      name: 'company.country',
     },
-    size: 6,
+    size: 4,
   },
   {
     element: SelectDropdown,
@@ -40,7 +46,7 @@ const company = [
         { text: 'Arabic', value: 'ar' },
       ],
     },
-    size: 6,
+    size: 4,
   },
 ];
 
@@ -62,6 +68,10 @@ const companyForm = {
       header: 'Organisation Details',
       fields: company,
     },
+    {
+      header: 'Organisation Details',
+      fields: company,
+    },
   ],
   endpoint: 'settings/company',
   texts: {
@@ -76,38 +86,32 @@ const companyForm = {
       'This is long long long for Organization saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
   validation: validation_company,
-  // getAllFn: getDivisions,
-  // postFn: createDivisions,
-  // putFn: updateDivision,
-  // deleteFn: deleteDivision,
+  getAllFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
 };
 
 const Organization = () => {
   const qc = useQueryClient();
-  // getSetting
+
   // const {
   //   isLoading,
   //   data: response,
   //   error,
-  // } = useQuery('get' + companyForm.key, () => config.getAllFn());
+  // } = useQuery('get' + companyForm.key, () => companyForm.getAllFn());
 
   // create
-  const onCreate = useMutation(
-    (data) => {
-      console.log('company data', data);
-      postFn(data);
+  const onCreate = useMutation((data) => companyForm.postFn(data), {
+    onSuccess: () => {
+      qc.invalidateQueries('get' + key);
+      alert(`${endpoint} created`);
+      setOpenSideMenu(false);
     },
-    {
-      onSuccess: () => {
-        qc.invalidateQueries('get' + key);
-        alert(`${endpoint} created`);
-        setOpenSideMenu(false);
-      },
-      onError: (data) => {
-        alert('Failed');
-      },
-    }
-  );
+    onError: (data) => {
+      alert('Failed');
+    },
+  });
 
   return (
     <>

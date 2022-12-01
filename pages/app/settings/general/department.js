@@ -1,8 +1,8 @@
 import {
-  createDepartment,
-  deleteDepartment,
-  getDepartment,
-  updateDepartment,
+  createSetting,
+  deleteSetting,
+  getSetting,
+  updateSetting,
 } from 'requests/settings';
 import TextInput from 'components/fields/TextInput';
 import * as Yup from 'yup';
@@ -56,10 +56,10 @@ const DeparmentForm = {
       'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
   validation: validation_department,
-  getAllFn: getDepartment,
-  postFn: createDepartment,
-  putFn: updateDepartment,
-  deleteFn: deleteDepartment,
+  getAllFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
 };
 
 export default function Page() {
