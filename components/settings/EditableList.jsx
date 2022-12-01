@@ -8,7 +8,7 @@ const options = ['Edit', 'Delete'];
 
 const ITEM_HEIGHT = 48;
 
-export default function EditableList({ label = '',cb={} }) {
+export default function EditableList({ label = '', cb = {} }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,13 +18,13 @@ export default function EditableList({ label = '',cb={} }) {
     setAnchorEl(null);
   };
 
-  const handleMenu = (option)=>{
-    let callback = cb[option]
-    if(callback){
-      callback()
-      handleClose()
+  const handleMenu = (option) => {
+    let callback = cb[option];
+    if (callback) {
+      callback();
+      handleClose();
     }
-  }
+  };
   return (
     <Stack
       direction="row"
@@ -65,11 +65,11 @@ export default function EditableList({ label = '',cb={} }) {
             <MenuItem
               key={option}
               selected={option === 'Pyxis'}
-              onClick={()=>handleMenu(option)}
+              onClick={() => handleMenu(option)}
             >
               <Typography mr={1} variant="body_medium_tertiary" component="p">
                 {option === 'Delete' ? (
-                  <DeleteIcon sx={{ color: '#F53E40' }}  />
+                  <DeleteIcon sx={{ color: '#F53E40' }} />
                 ) : (
                   <BorderColorIcon />
                 )}

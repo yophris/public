@@ -1,9 +1,13 @@
-import { createDepartment, deleteDepartment, getDepartment, updateDepartment } from 'requests/settings';
+import {
+  createDepartment,
+  deleteDepartment,
+  getDepartment,
+  updateDepartment,
+} from 'requests/settings';
 import TextInput from 'components/fields/TextInput';
 import * as Yup from 'yup';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
-
 
 const fields = [
   {
@@ -24,8 +28,7 @@ const fields = [
   },
 ];
 
-
-const validation_department= Yup.object()
+const validation_department = Yup.object()
   .shape({
     department: Yup.object().shape({
       departmentName: Yup.string().required(' name required.'),
@@ -42,26 +45,22 @@ const DeparmentForm = {
     },
   ],
   endpoint: 'settings/department',
-  texts:{
-    key:"departmentName",
-    title:"deparment",
+  texts: {
+    key: 'departmentName',
+    breadcrumbText: 'Department',
     drawerTitle: 'Add deparment',
     mainTitle: 'List of Departments',
-    shortDescription: 'this is short description for division',
-    longDescription:
+    mainDescription: 'This is short description for division',
+    sideTitle: 'Deparment',
+    sideDescription:
       'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
-  validation:validation_department,
-  getAllFn:getDepartment,
+  validation: validation_department,
+  getAllFn: getDepartment,
   postFn: createDepartment,
   putFn: updateDepartment,
   deleteFn: deleteDepartment,
-
 };
-
-
-
-
 
 export default function Page() {
   return (

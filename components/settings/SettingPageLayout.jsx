@@ -3,32 +3,27 @@ import { Box, Breadcrumbs, Divider, Link, Paper, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'next/link';
 
-
-
 function SettingPageLayout({ children, texts }) {
   console.log('setting pae layout');
 
   const breadcrumbs = [
-
     <Link
-    href="/app/settings" 
-     sx={{
-       fontSize: '1.6rem',
-       fontWeight: 600,
-       color: 'primary.main',
-       cursor: 'pointer',
-     }}
-     underline="hover"
-     key="1"
-     color="inherit"
-   >
-     SETTINGS
-   </Link>
-   
-   
-  ,
+      href="/app/settings"
+      sx={{
+        fontSize: '1.6rem',
+        fontWeight: 600,
+        color: 'primary.main',
+        cursor: 'pointer',
+      }}
+      underline="hover"
+      key="1"
+      color="inherit"
+    >
+      SETTINGS
+    </Link>,
+
     <Typography key="2" variant="h3_bold_secondary">
-      {texts?.title}
+      {texts?.breadcrumbText}
     </Typography>,
   ];
 

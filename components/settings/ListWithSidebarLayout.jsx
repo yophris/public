@@ -1,5 +1,7 @@
 import { Divider, Stack } from '@mui/material';
 import AppButton from 'components/AppButton';
+import AppDivider from 'components/AppDivider';
+import AppForm from 'components/fields/AppForm';
 import SearchInput from 'components/fields/SearchInput';
 import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -60,16 +62,7 @@ const ListWithSidebarLayout = ({ config }) => {
   console.log(response);
   // return "hi"
   return (
-    <Stack
-      spacing={3}
-      divider={
-        <Divider
-          sx={{ borderColor: '#EFEFEF' }}
-          orientation="horizontal"
-          flexItem
-        />
-      }
-    >
+    <Stack spacing={2} divider={<AppDivider />}>
       <Stack direction="row" spacing={3}>
         <SearchInput sx={{ flex: 1 }} />
         <AppButton
@@ -81,11 +74,15 @@ const ListWithSidebarLayout = ({ config }) => {
           <SettingDrawer
             open={openSideMenu}
             callback={setOpenSideMenu}
-            form={config.form}
             title={texts?.drawerTitle}
-            submitData={(data) => onCreate.mutate({ ...data })}
-            validationSchema={validation}
-          />
+          >
+            <AppForm
+              form={config.form}
+              submitData={(data) => onCreate.mutate({ ...data })}
+              validationSchema={validation}
+              cancelDrawer={() => setOpenSideMenu(false)}
+            />
+          </SettingDrawer>
         )}
       </Stack>
       <Stack sx={{ rowGap: 1 }}>

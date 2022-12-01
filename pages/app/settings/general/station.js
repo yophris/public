@@ -11,8 +11,6 @@ import SettingPageLayout from 'components/settings/SettingPageLayout';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SelectDropdown from 'components/fields/SelectDropdown';
 
-
-
 const station = [
   {
     element: TextInput,
@@ -24,19 +22,18 @@ const station = [
   },
   {
     element: SelectDropdown,
-   
+
     attr: {
       label: 'Is main station?',
       name: 'station.isMainStation',
-      options:[
+      options: [
         { text: 'Yes', value: true },
-        { text: 'No', value: false }
-      ]
+        { text: 'No', value: false },
+      ],
     },
     size: 6,
   },
 ];
-
 
 export const addressFields = [
   {
@@ -76,20 +73,19 @@ export const addressFields = [
   },
 ];
 
-
- const validation_station = Yup.object()
+const validation_station = Yup.object()
   .shape({
     station: Yup.object().shape({
-      stationName: Yup.string().required("stationName"),
-      isMainStation: Yup.string().required("select main station"),
+      stationName: Yup.string().required('stationName'),
+      isMainStation: Yup.string().required('select main station'),
     }),
   })
   .required();
 
-  export const validation_address = Yup.object()
+export const validation_address = Yup.object()
   .shape({
     address: Yup.object().shape({
-      addressLn1: Yup.string().required(" Line 1 required."),
+      addressLn1: Yup.string().required(' Line 1 required.'),
       addressLn2: Yup.string(),
       city: Yup.string().required(),
       state: Yup.string().required(),
@@ -100,34 +96,34 @@ export const addressFields = [
   })
   .required();
 
-  const stationForm = {
-    form: [
-      {
-        header: '',
-        fields: station,
-      },
-      {
-        header: 'Station Address',
-        fields: addressFields,
-      },
-    ],
-    endpoint: 'settings/station',
-    texts:{
-      key:"stationName",
-      title:"Station",
-      drawerTitle: 'Add Station',
-      mainTitle: 'List of Stations',
-      shortDescription: 'this is short description for division',
-      longDescription:
-        'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
+const stationForm = {
+  form: [
+    {
+      header: '',
+      fields: station,
     },
-    validation:validation_station.concat(validation_address),
-    getAllFn:getStation,
-    postFn: createStation,
-    putFn: updateStation,
-    deleteFn: deleteStation,
-  };
-
+    {
+      header: 'Station Address',
+      fields: addressFields,
+    },
+  ],
+  endpoint: 'settings/station',
+  texts: {
+    key: 'stationName',
+    breadcrumbText: 'Station',
+    drawerTitle: 'Add Station',
+    mainTitle: 'List of Stations',
+    mainDescription: 'this is short description for division',
+    sideTitle: 'Station',
+    sideDescription:
+      'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
+  },
+  validation: validation_station.concat(validation_address),
+  getAllFn: getStation,
+  postFn: createStation,
+  putFn: updateStation,
+  deleteFn: deleteStation,
+};
 
 export default function Page() {
   return (

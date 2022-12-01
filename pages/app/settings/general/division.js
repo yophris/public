@@ -57,8 +57,9 @@ const divisionForm = {
   ],
   endpoint: 'settings/division',
   texts: {
-    title:"Division",
+    title: 'Division',
     key: 'divisionName',
+    breadcrumbText: 'Division',
     drawerTitle: 'Add Division',
     mainTitle: 'List of Divisions',
     mainDescription: 'It is short description for division',

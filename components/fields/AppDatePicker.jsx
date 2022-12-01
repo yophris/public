@@ -85,47 +85,49 @@ export default function AppDatePicker(props) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
-      <Typography variant="body_medium_muted" component="p" mb={1}>
-        {label}
-        <Typography
-          variant="body_bold"
-          sx={{ marginLeft: '4px', color: '#F53E40' }}
-        >
-          *
+      <div>
+        <Typography variant="body_medium_muted" component="p" mb={1}>
+          {label}
+          <Typography
+            variant="body_bold"
+            sx={{ marginLeft: '4px', color: '#F53E40' }}
+          >
+            *
+          </Typography>
         </Typography>
-      </Typography>
-      <ThemeProvider theme={theme}>
-        <DesktopDatePicker
-          sx={{
-            '& .MuiTypography-root-MuiDayPicker-weekDayLabel': {
-              fontSize: '2rem',
-            },
-          }}
-          inputFormat="MM-DD-YYYY"
-          {...register(name)}
-          renderInput={(params) => {
-            console.log('params:', params);
-            return (
-              <TextField
-                sx={{
-                  width: '100%',
-                  '& .MuiInputBase-root': {
-                    fontFamily: ['Poppins', 'sans-serif'].join(','),
-                    fontSize: '1.4rem',
-                    color: '#333',
-                    fontWeight: 500,
-                    '& .MuiInputBase-input': {
-                      padding: 1.5,
+        <ThemeProvider theme={theme}>
+          <DesktopDatePicker
+            sx={{
+              '& .MuiTypography-root-MuiDayPicker-weekDayLabel': {
+                fontSize: '2rem',
+              },
+            }}
+            inputFormat="MM-DD-YYYY"
+            {...register(name)}
+            renderInput={(params) => {
+              console.log('params:', params);
+              return (
+                <TextField
+                  sx={{
+                    width: '100%',
+                    '& .MuiInputBase-root': {
+                      fontFamily: ['Poppins', 'sans-serif'].join(','),
+                      fontSize: '1.4rem',
+                      color: '#333',
+                      fontWeight: 500,
+                      '& .MuiInputBase-input': {
+                        padding: 1.5,
+                      },
                     },
-                  },
-                  '& .MuiSvgIcon-root': { fontSize: '1.8rem' },
-                }}
-                {...params}
-              />
-            );
-          }}
-        />
-      </ThemeProvider>
+                    '& .MuiSvgIcon-root': { fontSize: '1.8rem' },
+                  }}
+                  {...params}
+                />
+              );
+            }}
+          />
+        </ThemeProvider>
+      </div>
     </LocalizationProvider>
   );
 }

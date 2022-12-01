@@ -14,10 +14,7 @@ import {
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 
-
-
-
-  const validation_team= Yup.object()
+const validation_team = Yup.object()
   .shape({
     team: Yup.object().shape({
       teamName: Yup.string().required(' name required.'),
@@ -25,7 +22,6 @@ import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
     }),
   })
   .required();
-
 
 const fields = [
   {
@@ -46,7 +42,6 @@ const fields = [
   },
 ];
 
-
 const teamForm = {
   form: [
     {
@@ -55,22 +50,22 @@ const teamForm = {
     },
   ],
   endpoint: 'settings/team',
-  texts:{
-    key:"teamName",
-    title:"Teams",
+  texts: {
+    key: 'teamName',
+    breadcrumbText: 'Teams',
     drawerTitle: 'Add team',
-    mainTitle: 'List of Teams',
-    shortDescription: 'this is short description for division',
-    longDescription:
+    mainTitle: 'Teams',
+    mainDescription: 'this is short description for division',
+    sideTitle: 'List of Teams',
+    sideDescription:
       'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
-  validation:validation_team,
-  getAllFn:getTeams,
+  validation: validation_team,
+  getAllFn: getTeams,
   postFn: createTeams,
   putFn: updateTeams,
   deleteFn: deleteTemas,
 };
-
 
 export default function Page() {
   return (
