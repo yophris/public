@@ -1,4 +1,4 @@
-import { Divider, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import AppButton from 'components/AppButton';
 import AppDivider from 'components/AppDivider';
 import AppForm from 'components/fields/AppForm';
@@ -45,9 +45,9 @@ const ListWithSidebarLayout = ({ config }) => {
     },
   });
 
-  const submitData = (data) => {
-    console.log('submit data: ', key, data);
-  };
+  // const submitData = (data) => {
+  //   console.log('submit data: ', key, data);
+  // };
 
   const editClickCB = (id) => {
     setOpenSideMenu(true);

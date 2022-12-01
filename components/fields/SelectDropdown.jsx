@@ -8,7 +8,7 @@ export default function SelectDropdown({
   options = [{ text: '', value: '' }],
   register,
   name,
-  error
+  error,
 }) {
   return (
     <div>
@@ -26,6 +26,7 @@ export default function SelectDropdown({
         {...register(name)}
         input={<BootstrapInput />}
         IconComponent={KeyboardArrowDownIcon}
+        sx={{ fontSize: '1.4rem', fontWeight: 500, color: 'text.secondary' }}
       >
         <MenuItem
           sx={{
@@ -38,7 +39,11 @@ export default function SelectDropdown({
         </MenuItem>
         {options.map((option, ind) => (
           <MenuItem
-            sx={{ fontSize: '1.4rem', color: 'text.secondary' }}
+            sx={{
+              fontSize: '1.4rem',
+              fontWeight: 500,
+              color: 'text.secondary',
+            }}
             value={option.value}
             key={ind}
           >
@@ -47,7 +52,7 @@ export default function SelectDropdown({
         ))}
       </Select>
       {error?.message && (
-        <Typography variant="h6" sx={{ marginLeft: '4px', color: 'red' }} >
+        <Typography variant="h6" sx={{ marginLeft: '4px', color: 'red' }}>
           {error.message}
         </Typography>
       )}

@@ -7,7 +7,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import AppButton from '../AppButton';
 
-function AppForm({ form, submitData, validationSchema, cancelDrawer }) {
+function AppForm({
+  form,
+  submitData,
+  validationSchema,
+  cancelDrawer = () => {},
+}) {
   const {
     register,
     handleSubmit,
@@ -74,7 +79,6 @@ function AppForm({ form, submitData, validationSchema, cancelDrawer }) {
             })}
           </Grid>
         </Stack>
-
         <Paper
           sx={{
             padding: 1.25,

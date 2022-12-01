@@ -2,10 +2,9 @@ import * as React from 'react';
 import { Box, Breadcrumbs, Divider, Link, Paper, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'next/link';
+import AppDivider from 'components/AppDivider';
 
 function SettingPageLayout({ children, texts }) {
-  console.log('setting pae layout');
-
   const breadcrumbs = [
     <Link
       href="/app/settings"
@@ -59,6 +58,7 @@ function SettingPageLayout({ children, texts }) {
           sx={{
             border: '1px solid #EFEFEF',
             borderRadius: 2.5,
+            overflow: 'hidden',
             width: '100%',
           }}
           variant="outlined"
@@ -66,16 +66,10 @@ function SettingPageLayout({ children, texts }) {
           <Stack
             direction="row"
             justifyContent="space-between"
-            divider={
-              <Divider
-                sx={{ margin: '0 8px', border: '1px solid #EFEFEF' }}
-                orientation="vertical"
-                flexItem
-              />
-            }
+            divider={<AppDivider direction="vertical" />}
           >
-            <Stack spacing={4} sx={{ width: '70%', margin: 2.5 }}>
-              <Box>
+            <Stack spacing={1} sx={{ width: '70%' }}>
+              <Box sx={{ px: 2.5, pt: 2.5 }}>
                 <Typography variant="h2_bold_secondary" component="h2">
                   {texts?.mainTitle}
                 </Typography>
@@ -84,9 +78,7 @@ function SettingPageLayout({ children, texts }) {
                   {texts?.mainDescription}
                 </Typography>
               </Box>
-              <Stack sx={{ height: '75vh' }} spacing={2}>
-                {children}
-              </Stack>
+              <Stack sx={{ height: '75vh' }}>{children}</Stack>
             </Stack>
             <Stack spacing={1} sx={{ width: '30%', margin: 2.5 }}>
               <Typography variant="h2_bold_secondary">

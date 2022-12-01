@@ -1,13 +1,9 @@
 import { Divider } from '@mui/material';
 import React from 'react';
 
-const AppDivider = () => {
+const AppDivider = ({ direction = 'horizontal' }) => {
   return (
-    <Divider
-      sx={{ borderColor: '#EFEFEF' }}
-      orientation="horizontal"
-      flexItem
-    />
+    <Divider sx={{ borderColor: '#EFEFEF' }} orientation={direction} flexItem />
   );
 };
 
