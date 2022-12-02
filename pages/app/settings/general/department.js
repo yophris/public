@@ -8,6 +8,7 @@ import TextInput from 'components/fields/TextInput';
 import * as Yup from 'yup';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
+import SelectDropdown from 'components/fields/SelectDropdown';
 
 const fields = [
   {
@@ -23,6 +24,18 @@ const fields = [
     attr: {
       label: 'Description',
       name: 'department.description',
+    },
+    size: 12,
+  },
+  {
+    element: SelectDropdown,
+    attr: {
+      label: 'Department Head',
+      name: 'department.departmentHead',
+      options: [
+        { text: 'Employee 1', value: 'e1' },
+        { text: 'Employee 2', value: 'e2' },
+      ],
     },
     size: 12,
   },

@@ -33,6 +33,18 @@ const station = [
     },
     size: 6,
   },
+  {
+    element: SelectDropdown,
+    attr: {
+      label: 'Station Head',
+      name: 'station.stationHead',
+      options: [
+        { text: 'Employee 1', value: 'e1' },
+        { text: 'Employee 2', value: 'e2' },
+      ],
+    },
+    size: 12,
+  },  
 ];
 
 export const addressFields = [

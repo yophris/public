@@ -12,7 +12,7 @@ import {
 import * as Yup from 'yup';
 
 /**********************************************************/
-/*        All Company Related Fields/Validation/Form      */
+/*        All Company Related Fields/Validation/Form      
 /**********************************************************/
 const company = [
   {
@@ -96,47 +96,8 @@ const companyForm = {
 };
 
 /**********************************************************/
-/*        All Address Related Fields/Validation/Form      */
+/*                   Other Config      
 /**********************************************************/
-const address = [
-  {
-    element: TextInput,
-    attr: {
-      label: 'Organization Name',
-      name: 'company.companyName',
-    },
-    size: 12,
-  },
-  {
-    element: TextInput,
-    attr: {
-      label: 'Industry',
-      name: 'company.industry',
-    },
-    size: 12,
-  },
-  {
-    element: TextInput,
-    attr: {
-      label: 'Description',
-      name: 'company.description',
-    },
-    size: 6,
-  },
-  {
-    element: SelectDropdown,
-    attr: {
-      label: 'Language',
-      name: 'company.language',
-      options: [
-        { text: 'English', value: 'en' },
-        { text: 'Arabic', value: 'ar' },
-      ],
-    },
-    size: 6,
-  },
-];
-
 const Organization = () => {
   const qc = useQueryClient();
 

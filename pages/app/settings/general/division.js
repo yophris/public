@@ -8,6 +8,7 @@ import {
 } from 'requests/settings';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
+import SelectDropdown from 'components/fields/SelectDropdown';
 
 const division = [
   {
@@ -31,6 +32,18 @@ const division = [
     attr: {
       label: 'Description',
       name: 'division.description',
+    },
+    size: 12,
+  },
+  {
+    element: SelectDropdown,
+    attr: {
+      label: 'Division Head',
+      name: 'division.divisionHead',
+      options: [
+        { text: 'Employee 1', value: 'e1' },
+        { text: 'Employee 2', value: 'e2' },
+      ],
     },
     size: 12,
   },
