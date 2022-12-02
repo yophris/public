@@ -9,7 +9,8 @@ import EditableList from './EditableList';
 import SettingDrawer from './SettingDrawer';
 
 const ListWithSidebarLayout = ({ config }) => {
-  const { endpoint, texts, postFn, key, deleteFn, validation } = config;
+  const { endpoint, texts, getAllFn, postFn, key, deleteFn, validation } =
+    config;
 
   const qc = useQueryClient();
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
@@ -19,10 +20,10 @@ const ListWithSidebarLayout = ({ config }) => {
     isLoading,
     data: response,
     error,
-  } = useQuery('get' + key, () => config.getAllFn());
+  } = useQuery('get' + key, () => getAllFn(endpoint));
 
   // create
-  const onCreate = useMutation((data) => postFn(data), {
+  const onCreate = useMutation((data) => postFn(endpoint, data), {
     onSuccess: () => {
       qc.invalidateQueries('get' + key);
       alert(`${endpoint} created`);
@@ -34,7 +35,7 @@ const ListWithSidebarLayout = ({ config }) => {
   });
 
   // Delete
-  const onDelete = useMutation((data) => deleteFn(data), {
+  const onDelete = useMutation((data) => deleteFn(endpoint, data), {
     onSuccess: () => {
       qc.invalidateQueries('get' + key);
       alert('Deleted');
@@ -44,10 +45,6 @@ const ListWithSidebarLayout = ({ config }) => {
       alert('Failed');
     },
   });
-
-  // const submitData = (data) => {
-  //   console.log('submit data: ', key, data);
-  // };
 
   const editClickCB = (id) => {
     setOpenSideMenu(true);
@@ -62,7 +59,7 @@ const ListWithSidebarLayout = ({ config }) => {
   console.log(response);
   // return "hi"
   return (
-    <Stack spacing={2} divider={<AppDivider />}>
+    <Stack spacing={2} m={2} divider={<AppDivider />}>
       <Stack direction="row" spacing={3}>
         <SearchInput sx={{ flex: 1 }} />
         <AppButton
