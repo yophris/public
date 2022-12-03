@@ -49,15 +49,13 @@ const division = [
   },
 ];
 
-const validation_division = Yup.object()
-  .shape({
-    division: Yup.object().shape({
-      divisionName: Yup.string().required(' name required.'),
-      divisionType: Yup.string().required('type required.'),
-      description: Yup.string().required('description required.'),
-    }),
-  })
-  .required();
+const validation_division = Yup.object().shape({
+  division: Yup.object().shape({
+    divisionName: Yup.string().required(' name required.'),
+    divisionType: Yup.string().required('type required.'),
+    description: Yup.string().required('description required.'),
+  }),
+});
 
 const divisionForm = {
   key: 'division',
@@ -92,5 +90,4 @@ export default function Page() {
       <ListWithSidebarLayout config={divisionForm} />
     </SettingPageLayout>
   );
-  // return <ListWithSidebarLayout config={divisionForm}/>
 }

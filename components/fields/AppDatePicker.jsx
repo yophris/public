@@ -80,7 +80,7 @@ const theme = createTheme({
 });
 
 export default function AppDatePicker(props) {
-  const { name, label, register } = props;
+  const { name, label, register, isRequired } = props;
   console.log('in date picker: ', name, register(name));
 
   return (
@@ -88,12 +88,14 @@ export default function AppDatePicker(props) {
       <div>
         <Typography variant="body_medium_muted" component="p" mb={1}>
           {label}
-          <Typography
-            variant="body_bold"
-            sx={{ marginLeft: '4px', color: '#F53E40' }}
-          >
-            *
-          </Typography>
+          {isRequired && (
+            <Typography
+              variant="body_bold"
+              sx={{ marginLeft: '4px', color: '#F53E40' }}
+            >
+              *
+            </Typography>
+          )}
         </Typography>
         <ThemeProvider theme={theme}>
           <DesktopDatePicker

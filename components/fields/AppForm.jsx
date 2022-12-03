@@ -25,12 +25,17 @@ function AppForm({
   const renderFields = (d, error) => {
     const { attr } = d;
     const Field = d.element;
+    const [domain, field] = attr.name.split('.');
     return (
       <>
         <Field
           {...attr}
           register={register}
           error={getFieldState(attr.name).error}
+          isRequired={
+            validationSchema.fields[domain]?.fields[field]?.exclusiveTests
+              ?.required
+          }
         />
       </>
     );
@@ -39,7 +44,7 @@ function AppForm({
   return (
     <form onSubmit={handleSubmit(submitData)} style={{ height: '100%' }}>
       <Stack justifyContent="space-between" sx={{ height: '100%' }}>
-        <Stack sx={{ margin: 3, marginTop: 3, flex: 1 }}>
+        <Stack sx={{ margin: 3, marginTop: 3, flex: 1, overflow: 'auto' }}>
           <Grid container spacing={3}>
             {form?.map((setting, ind) => {
               return (

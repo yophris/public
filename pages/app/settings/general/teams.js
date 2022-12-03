@@ -9,14 +9,12 @@ import {
 } from 'requests/settings';
 import * as Yup from 'yup';
 
-const validation_team = Yup.object()
-  .shape({
-    team: Yup.object().shape({
-      teamName: Yup.string().required(' name required.'),
-      description: Yup.string().required('type required.'),
-    }),
-  })
-  .required();
+const validation_team = Yup.object().shape({
+  team: Yup.object().shape({
+    teamName: Yup.string().required(' name required.'),
+    description: Yup.string().required('type required.'),
+  }),
+});
 
 const fields = [
   {

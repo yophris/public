@@ -41,14 +41,12 @@ const fields = [
   },
 ];
 
-const validation_department = Yup.object()
-  .shape({
-    department: Yup.object().shape({
-      departmentName: Yup.string().required(' name required.'),
-      description: Yup.string().required('type required.'),
-    }),
-  })
-  .required();
+const validation_department = Yup.object().shape({
+  department: Yup.object().shape({
+    departmentName: Yup.string().required(' name required.'),
+    description: Yup.string().required('type required.'),
+  }),
+});
 
 const DeparmentForm = {
   form: [

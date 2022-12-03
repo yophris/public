@@ -9,17 +9,20 @@ export default function SelectDropdown({
   register,
   name,
   error,
+  isRequired,
 }) {
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
         {label}
-        <Typography
-          variant="body_bold"
-          sx={{ marginLeft: '4px', color: '#F53E40' }}
-        >
-          *
-        </Typography>
+        {isRequired && (
+          <Typography
+            variant="body_bold"
+            sx={{ marginLeft: '4px', color: '#F53E40' }}
+          >
+            *
+          </Typography>
+        )}
       </Typography>
 
       <Select

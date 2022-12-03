@@ -44,7 +44,7 @@ const station = [
       ],
     },
     size: 12,
-  },  
+  },
 ];
 
 export const addressFields = [
@@ -85,14 +85,12 @@ export const addressFields = [
   },
 ];
 
-const validation_station = Yup.object()
-  .shape({
-    station: Yup.object().shape({
-      stationName: Yup.string().required('stationName'),
-      isMainStation: Yup.string().required('select main station'),
-    }),
-  })
-  .required();
+const validation_station = Yup.object().shape({
+  station: Yup.object().shape({
+    stationName: Yup.string().required('stationName'),
+    isMainStation: Yup.string().required('select main station'),
+  }),
+});
 
 export const validation_address = Yup.object()
   .shape({

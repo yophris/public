@@ -10,6 +10,7 @@ import {
   updateSetting,
 } from 'requests/settings';
 import * as Yup from 'yup';
+import { addressFields } from './station';
 
 /**********************************************************/
 /*        All Company Related Fields/Validation/Form      
@@ -53,16 +54,14 @@ const company = [
   },
 ];
 
-const validation_company = Yup.object()
-  .shape({
-    company: Yup.object().shape({
-      companyName: Yup.string().required(' name required.'),
-      industry: Yup.string().required('type required.'),
-      description: Yup.string().required('description required.'),
-      language: Yup.string().required('language required.'),
-    }),
-  })
-  .required();
+const validation_company = Yup.object().shape({
+  company: Yup.object().shape({
+    companyName: Yup.string().required(' name required.'),
+    industry: Yup.string().required('type required.'),
+    description: Yup.string().required('description required.'),
+    language: Yup.string().required('language required.'),
+  }),
+});
 
 const companyForm = {
   key: 'company',
@@ -72,8 +71,24 @@ const companyForm = {
       fields: company,
     },
     {
-      header: 'Organisation Details',
-      fields: company,
+      header: 'Primary Address',
+      fields: addressFields.map((field) => ({
+        ...field,
+        attr: {
+          ...field.attr,
+          name: 'primary.' + field.attr.name,
+        },
+      })),
+    },
+    {
+      header: 'Emergency Address',
+      fields: addressFields.map((field) => ({
+        ...field,
+        attr: {
+          ...field.attr,
+          name: 'emergency.' + field.attr.name,
+        },
+      })),
     },
   ],
   endpoint: 'settings/company',
@@ -137,27 +152,6 @@ const Organization = () => {
           submitData={(data) => onCreate.mutate({ ...data })}
           validationSchema={companyForm.validation}
         />
-
-        {/* <Stack spacing={3}>
-          <Typography variant="h3_bold_secondary" component="h3">
-            Organization Details
-          </Typography>
-          <TextInput
-            label="Organization Name"
-            register={register}
-            name="companyName"
-          />
-          <TextInput label="Industry" register={register} name="industry" />
-
-          <AppDatePicker
-            label="Established"
-            register={register}
-            name="established"
-          />
-          <SettingDrawer />
-
-          <AppButton label={'Save'} variant="contained" />
-        </Stack> */}
       </SettingPageLayout>
     </>
   );

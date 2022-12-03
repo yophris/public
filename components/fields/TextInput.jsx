@@ -4,18 +4,19 @@ import Paper from '@mui/material/Paper';
 import * as React from 'react';
 
 export default function TextInput(props) {
-  const { label, register, name, error } = props;
-
+  const { label, register, name, error, isRequired } = props;
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
         {label}
-        <Typography
-          variant="body_bold"
-          sx={{ marginLeft: '4px', color: '#F53E40' }}
-        >
-          *
-        </Typography>
+        {isRequired && (
+          <Typography
+            variant="body_bold"
+            sx={{ marginLeft: '4px', color: '#F53E40' }}
+          >
+            *
+          </Typography>
+        )}
       </Typography>
       <Paper
         elevation={0}
