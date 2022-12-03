@@ -30,6 +30,7 @@ const fields = [
     attr: {
       label: 'Description',
       name: 'team.description',
+      isMultiline: true,
     },
     size: 12,
   },

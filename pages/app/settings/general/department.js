@@ -24,6 +24,7 @@ const fields = [
     attr: {
       label: 'Description',
       name: 'department.description',
+      isMultiline: true,
     },
     size: 12,
   },
