@@ -64,7 +64,13 @@ function AppForm({
   return (
     <form onSubmit={handleSubmit(submitData)} style={{ height: '100%' }}>
       <Stack justifyContent="space-between" sx={{ height: '100%' }}>
-        <Stack sx={{ margin: 3, marginTop: 3, flex: 1, overflow: 'auto' }}>
+        <Stack
+          sx={{
+            padding: 3,
+            flex: 1,
+            overflow: 'auto',
+          }}
+        >
           <Grid container spacing={3}>
             {/* {renderFields(IDfield, errors)} */}
             {form?.map((setting, ind) => {

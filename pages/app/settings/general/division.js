@@ -42,6 +42,7 @@ const division = [
     attr: {
       label: 'Description',
       name: 'division.description',
+      isMultiline: true,
     },
     size: 12,
   },
