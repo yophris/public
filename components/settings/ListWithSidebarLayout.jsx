@@ -5,6 +5,7 @@ import AppForm from 'components/fields/AppForm';
 import SearchInput from 'components/fields/SearchInput';
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { jsonToFormData } from 'requests';
 import useFileUploadStore from 'store/useFileUploadStore';
 import { extractFromJSON } from 'Utils';
 import EditableList from './EditableList';
@@ -20,6 +21,7 @@ const ListWithSidebarLayout = ({ config }) => {
     deleteFn,
     validation,
     putFn,
+    transform = (data) => data,
   } = config;
 
   const setProgress = useFileUploadStore((state) => state.setProgress);
@@ -37,10 +39,11 @@ const ListWithSidebarLayout = ({ config }) => {
 
   // create
   const onCreate = useMutation(
-    (data) =>
-      !editId
-        ? postFn(endpoint, data, setProgress)
-        : putFn(endpoint, editId, data, setProgress),
+    (data) => {
+      return !editId
+        ? postFn(endpoint, transform(data), setProgress)
+        : putFn(endpoint, editId, transform(data), setProgress);
+    },
     {
       onSuccess: () => {
         setOpenSideMenu(false);

@@ -1,7 +1,14 @@
+import { Typography } from '@mui/material';
+import { Stack } from '@mui/system';
+import AppProgressBar from 'components/AppProgressBar';
 import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
+import { render } from 'react-dom';
 import { Controller, useFieldArray } from 'react-hook-form';
+import { useMutation, useQueries, useQuery } from 'react-query';
+import apiClient from 'requests';
+import useFileUploadStore from 'store/useFileUploadStore';
 const style = {
   boxSizing: 'border-box',
   height: '155px',
@@ -10,31 +17,21 @@ const style = {
   borderRadius: '8px',
 };
 
-const toBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => {
-      console.log('FILE UPLOAD:', error);
-      reject(error);
-    };
-  });
-
 export default function AppFileUpload(props) {
-  const { label, register, name, error, isRequired, control } = props;
+  const {
+    label,
+    limit,
+    type,
+    bucket,
+    register,
+    name,
+    error,
+    isRequired,
+    control,
+  } = props;
 
-  const onDrop = async (item) => {
-    console.log('dropped', item);
-
-    for (let index = 0; index < item.files.length; index++) {
-      const element = item.files[index];
-      // const base64 = await toBase64(element);
-      // if (base64) {
-      append({ name: element.name, data: element });
-      // }
-    }
-  };
+  const [fileError, setError] = useState(null);
+  const [localProgess, setlocalProgess] = useState(0);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -50,25 +47,82 @@ export default function AppFileUpload(props) {
         }
       },
       canDrop(item) {
-        console.log('canDrop', item.files, item.items);
         return true;
       },
       hover(item) {
-        console.log('hover', item.files, item.items);
+        setError(null);
       },
       collect: (monitor) => {
         const item = monitor.getItem();
+        // setError(null);
         if (item) {
-          console.log('collect', item.files, item.items);
+          console.log('Drag: collect', item.files, item.items);
         }
         return {
-          isOver: monitor.isOver(),
+          isOver: monitor.isOver({ shallow: true }),
           canDrop: monitor.canDrop(),
+          // allow:monitor.
         };
       },
     }),
-    [props]
+    [props.name]
   );
+
+  // let uploader = useMutation(
+  //   (data) =>
+  //     apiClient({
+  //       path: '/app/file-manager/' + bucket,
+  //       method: 'post',
+  //       data: data,
+  //       uploadProgessCB: setlocalProgess,
+  //     }),
+  //   {
+  //     onSuccess: ({ data }) => {
+  //       setlocalProgess(0);
+  //       console.log(data);
+  //       let key = data.key;
+  //       append({ id: key, file: key, name: data.originalname });
+  //       // append()
+  //     },
+  //     onError: (error) => {
+  //       setError('Error Uploading File');
+  //       setTimeout(
+  //         (_) => {
+  //           setError(null);
+  //         },
+  //         [2000]
+  //       );
+  //       // append()
+  //     },
+  //   }
+  // );
+  const onDrop = async (item) => {
+    console.log('dropped', item);
+
+    if (item.files.length > limit) {
+      setError('Only ' + limit + ' files allowed');
+      setTimeout(
+        (_) => {
+          setError(null);
+        },
+        [2000]
+      );
+      return;
+    }
+
+    if (item.files.some((e) => !type.includes(e.type))) {
+      setError('File not allowed');
+      setTimeout(
+        (_) => {
+          setError(null);
+        },
+        [2000]
+      );
+      return;
+    }
+
+    append(item.files);
+  };
 
   useEffect(
     (_) => {
@@ -76,27 +130,82 @@ export default function AppFileUpload(props) {
     },
     [fields]
   );
+
+  const handleChange = ({ target }) => {
+    const { files } = target;
+    console.log('files', files);
+    append([files[0]]);
+  };
+  const inputRef = useRef();
   const isActive = canDrop && isOver;
   return (
     <>
-      <div ref={drop} style={style}>
-        {isActive ? 'Release to drop' : 'Drag file here'}
+      <input
+        ref={inputRef}
+        onChange={handleChange}
+        type="file"
+        hidden
+        multiple={limit > 1 ? true : false}
+        accept={type}
+      />
+      <div
+        onClick={() => inputRef.current.click()}
+        ref={localProgess == 0 ? drop : null}
+        style={{
+          ...style,
+          background: isOver
+            ? 'lightgreen'
+            : fileError
+            ? 'orange'
+            : style.background,
+        }}
+      >
+        {/* {(error) => {
+          return;
+        }} */}
+        {localProgess ? (
+          <div style={{ margin: '20px', textAlign: 'center' }}>
+            <AppProgressBar total={100} consumed={localProgess} light={false} />
+          </div>
+        ) : isActive ? (
+          <Stack
+            sx={{ height: '100%', textAlign: 'center' }}
+            justifyContent="space-around"
+          >
+            <Typography variant="body_bold_primary" component="p">
+              'Release to drop'
+            </Typography>
+          </Stack>
+        ) : (
+          <Stack
+            sx={{ height: '100%', textAlign: 'center' }}
+            justifyContent="space-around"
+          >
+            <Typography variant="body_bold_primary" component="a">
+              {fileError ? fileError : 'Drag Here / Click'}
+            </Typography>
+          </Stack>
+        )}
       </div>
+
       <ul>
         {fields.map((item, index) => (
           <li key={item.id}>
             <input
-              key={item.id} // important to include key with field's id
-              {...register(`${name}.${index}.file`)}
+              key={item.id}
+              type="file" // important to include key with field's id
+              {...register(`${name}.${index}`)}
               hidden
             />
             <Controller
-              render={({ field: { value } }) => (
-                <>
-                  <p>{value}</p>
-                </>
-              )}
-              name={`${name}.${index}.name`}
+              render={({ field: { value } }) => {
+                return (
+                  <>
+                    <p>{value[index].name}</p>
+                  </>
+                );
+              }}
+              name={`${name}`}
               control={control}
             />
             <button type="button" onClick={() => remove(index)}>
@@ -105,10 +214,10 @@ export default function AppFileUpload(props) {
           </li>
         ))}
       </ul>
-
+      {/* 
       <button type="button" onClick={() => append(['a', 'b'])}>
         append
-      </button>
+      </button> */}
     </>
   );
 }

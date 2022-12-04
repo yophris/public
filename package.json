@@ -20,6 +20,7 @@
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
     "jsonata": "^1.8.6",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "next": "13.0.5",
     "nextjs-progressbar": "^0.0.16",

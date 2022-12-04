@@ -17,7 +17,7 @@ export const updateSetting = (endpoint, id, payload, cb) =>
     data: payload,
     uploadProgessCB: cb,
   });
-export const deleteSetting = (payload) =>
+export const deleteSetting = (endpoint, payload) =>
   apiClient({ path: endpoint + '/' + payload?.id, method: 'delete' });
 
 // // Company / Organization

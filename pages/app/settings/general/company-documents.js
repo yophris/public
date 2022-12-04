@@ -10,6 +10,7 @@ import SettingPageLayout from 'components/settings/SettingPageLayout';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SelectDropdown from 'components/fields/SelectDropdown';
 import AppFileUpload from 'components/fields/AppFileUpload';
+import { transformToFormData } from 'Utils';
 
 const fields = [
   {
@@ -24,7 +25,10 @@ const fields = [
     element: AppFileUpload,
     attr: {
       label: 'Document Name',
-      name: 'document.file',
+      name: 'file',
+      bucket: 'yop-company-docs',
+      limit: 1,
+      type: ['application/pdf'],
     },
     size: 12,
   },
@@ -39,9 +43,9 @@ const DeparmentForm = {
       fields: fields,
     },
   ],
-  endpoint: 'settings/department',
+  endpoint: 'settings/companyDocument',
   texts: {
-    key: 'companyDocument',
+    key: 'name',
     breadcrumbText: 'Comapny Documents',
     drawerTitle: 'Add Document',
     mainTitle: 'List of Documents',
@@ -55,6 +59,11 @@ const DeparmentForm = {
   postFn: createSetting,
   putFn: updateSetting,
   deleteFn: deleteSetting,
+  transform: (data) => {
+    let out = transformToFormData(data);
+    console.log('formData out', out);
+    return out;
+  },
 };
 
 export default function Page() {

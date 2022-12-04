@@ -19,51 +19,44 @@ function SettingDrawer({ open = false, callback, title, children }) {
 
   return (
     <div>
-      {
-        <React.Fragment>
-          <Drawer
-            anchor="right"
-            open={isOpen}
-            sx={{ '& .MuiDrawer-paper': { width: '50%' } }}
-          >
-            <Box role="presentation">
-              <Stack sx={{ height: '100vh' }}>
-                <Paper square elevation={2}>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    sx={{
-                      margin: 1.25,
-                      flexBasis: 'auto',
-                    }}
-                  >
-                    <Stack alignItems="center" justifyContent="center">
-                      <Typography variant="h1_bold_secondary" component="h1">
-                        {title}
-                      </Typography>
-                    </Stack>
-                    <Stack>
-                      <IconButton
-                        onClick={toggleDrawer(false)}
-                        sx={{ padding: 0 }}
-                      >
-                        <CloseIcon
-                          sx={{
-                            fontSize: '2.2rem',
-                            margin: '15px',
-                            color: '#000',
-                          }}
-                        />
-                      </IconButton>
-                    </Stack>
-                  </Stack>
-                </Paper>
-                {children}
+      <Drawer
+        anchor="right"
+        open={isOpen}
+        sx={{ '& .MuiDrawer-paper': { width: '50%' } }}
+      >
+        <Box role="presentation">
+          <Stack sx={{ height: '100vh' }}>
+            <Paper square elevation={2}>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                sx={{
+                  margin: 1.25,
+                  flexBasis: 'auto',
+                }}
+              >
+                <Stack alignItems="center" justifyContent="center">
+                  <Typography variant="h1_bold_secondary" component="h1">
+                    {title}
+                  </Typography>
+                </Stack>
+                <Stack>
+                  <IconButton onClick={toggleDrawer(false)} sx={{ padding: 0 }}>
+                    <CloseIcon
+                      sx={{
+                        fontSize: '2.2rem',
+                        margin: '15px',
+                        color: '#000',
+                      }}
+                    />
+                  </IconButton>
+                </Stack>
               </Stack>
-            </Box>
-          </Drawer>
-        </React.Fragment>
-      }
+            </Paper>
+            {children}
+          </Stack>
+        </Box>
+      </Drawer>
     </div>
   );
 }
