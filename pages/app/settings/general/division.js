@@ -17,6 +17,15 @@ const division = [
       label: 'Division Name',
       name: 'division.divisionName',
     },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['Division Name is Required'],
+        },
+      ],
+    },
     size: 6,
   },
   {
@@ -25,6 +34,7 @@ const division = [
       label: 'Division Type',
       name: 'division.divisionType',
     },
+
     size: 6,
   },
   {
@@ -49,13 +59,13 @@ const division = [
   },
 ];
 
-const validation_division = Yup.object().shape({
-  division: Yup.object().shape({
-    divisionName: Yup.string().required(' name required.'),
-    divisionType: Yup.string().required('type required.'),
-    description: Yup.string().required('description required.'),
-  }),
-});
+// const validation_division = Yup.object().shape({
+//   division: Yup.object().shape({
+//     divisionName: Yup.string().required(' name required.'),
+//     divisionType: Yup.string().required('type required.'),
+//     description: Yup.string().required('description required.'),
+//   }),
+// });
 
 const divisionForm = {
   key: 'division',
@@ -77,7 +87,6 @@ const divisionForm = {
     sideDescription:
       'This is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
-  validation: validation_division,
   getAllFn: getSetting,
   postFn: createSetting,
   putFn: updateSetting,

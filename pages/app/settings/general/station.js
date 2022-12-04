@@ -85,28 +85,29 @@ export const addressFields = [
   },
 ];
 
-const validation_station = Yup.object().shape({
-  station: Yup.object().shape({
-    stationName: Yup.string().required('stationName'),
-    isMainStation: Yup.string().required('select main station'),
-  }),
-});
+// const validation_station = Yup.object().shape({
+//   station: Yup.object().shape({
+//     stationName: Yup.string().required('stationName'),
+//     isMainStation: Yup.string().required('select main station'),
+//   }),
+// });
 
-export const validation_address = Yup.object()
-  .shape({
-    address: Yup.object().shape({
-      addressLn1: Yup.string().required(' Line 1 required.'),
-      addressLn2: Yup.string(),
-      city: Yup.string().required(),
-      state: Yup.string().required(),
-      postalCode: Yup.string().required(),
-      country: Yup.string().required(),
-      phone1: Yup.string().required(),
-    }),
-  })
-  .required();
+// export const validation_address = Yup.object()
+//   .shape({
+//     address: Yup.object().shape({
+//       addressLn1: Yup.string().required(' Line 1 required.'),
+//       addressLn2: Yup.string(),
+//       city: Yup.string().required(),
+//       state: Yup.string().required(),
+//       postalCode: Yup.string().required(),
+//       country: Yup.string().required(),
+//       phone1: Yup.string().required(),
+//     }),
+//   })
+//   .required();
 
 const stationForm = {
+  key: 'stationName',
   form: [
     {
       header: '',
@@ -128,7 +129,7 @@ const stationForm = {
     sideDescription:
       'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
-  validation: validation_station.concat(validation_address),
+  // validation: validation_station.concat(validation_address),
   getAllFn: getSetting,
   postFn: createSetting,
   putFn: updateSetting,

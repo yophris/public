@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function workflowSetup() {
-  return (
-    <div>workflowSetup</div>
-  )
+  return <div>workflowSetup</div>;
 }

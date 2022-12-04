@@ -1,27 +1,22 @@
-import { Button } from '@mui/material'
-import AppButton from 'components/AppButton'
-import Link from 'next/link'
-import React from 'react'
+import { Button } from '@mui/material';
+import AppButton from 'components/AppButton';
+import Link from 'next/link';
+import React from 'react';
 
 export default function NotFound() {
   return (
-    <div style={{height:"calc(100vh - 64px)"}}>
+    <div style={{ height: 'calc(100vh - 64px)' }}>
       <img src="" />
-      <h1 style={{textAlign:"center",color:"black",fontSize:"2rem"}}>
+      <h1 style={{ textAlign: 'center', color: 'black', fontSize: '2rem' }}>
         404 Page Not Found
       </h1>
-      <div style={{display:"flex"}}>
-      <div style={{margin:"20px auto"}}>
-      <Link href="/app">
-        <AppButton label={"Go Home"} 
-        color="secondary"
-        />
-      </Link>
+      <div style={{ display: 'flex' }}>
+        <div style={{ margin: '20px auto' }}>
+          <Link href="/app">
+            <AppButton label={'Go Home'} color="secondary" />
+          </Link>
+        </div>
       </div>
-      </div>
-      
-     
     </div>
-   
-  )  
+  );
 }

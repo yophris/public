@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function leavePolicy() {
-  return (
-    <div>leavePolicy</div>
-  )
+  return <div>leavePolicy</div>;
 }

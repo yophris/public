@@ -6,34 +6,44 @@ import Divider from '@mui/material/Divider';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import AppButton from '../AppButton';
+import TextInput from './TextInput';
+import validationSchemaGenerator from 'Utils/validationSchemaGenerator';
 
 function AppForm({
   form,
   submitData,
+  edit,
   validationSchema,
+
   cancelDrawer = () => {},
 }) {
   const {
     register,
+    control,
     handleSubmit,
+    setValue,
     getFieldState,
+    reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(validationSchemaGenerator(form)),
   });
 
   const renderFields = (d, error) => {
     const { attr } = d;
     const Field = d.element;
     const [domain, field] = attr.name.split('.');
+
     return (
       <>
         <Field
           {...attr}
+          control={control}
           register={register}
           error={getFieldState(attr.name).error}
+          setValue={setValue}
           isRequired={
-            validationSchema.fields[domain]?.fields[field]?.exclusiveTests
+            validationSchema?.fields[domain]?.fields[field]?.exclusiveTests
               ?.required
           }
         />
@@ -41,11 +51,22 @@ function AppForm({
     );
   };
 
+  React.useEffect(
+    (_) => {
+      if (edit) {
+        reset(edit);
+      }
+      console.log('Data for Edit', form);
+    },
+    [edit]
+  );
+
   return (
     <form onSubmit={handleSubmit(submitData)} style={{ height: '100%' }}>
       <Stack justifyContent="space-between" sx={{ height: '100%' }}>
         <Stack sx={{ margin: 3, marginTop: 3, flex: 1, overflow: 'auto' }}>
           <Grid container spacing={3}>
+            {/* {renderFields(IDfield, errors)} */}
             {form?.map((setting, ind) => {
               return (
                 <React.Fragment key={ind}>
@@ -74,6 +95,7 @@ function AppForm({
                       </Grid>
                     </>
                   )}
+
                   {setting?.fields?.map((field, j) => (
                     <Grid item key={j} md={field.size}>
                       {renderFields(field, errors)}

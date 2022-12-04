@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function reimbursementPolicy() {
-  return (
-    <div>reimbursementPolicy</div>
-  )
+  return <div>reimbursementPolicy</div>;
 }

@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 import { forwardRef } from 'react';
 
 const LinkBehaviour = forwardRef(function LinkBehaviour(props, ref) {
-    return <NextLink ref={ref} {...props} />;
+  return <NextLink ref={ref} {...props} />;
 });
 
 //all the MUI default styles can be customized here
@@ -11,16 +11,16 @@ const LinkBehaviour = forwardRef(function LinkBehaviour(props, ref) {
 const theme = createTheme({
   components: {
     MuiLink: {
-        defaultProps: {
-            component: LinkBehaviour
-        }
+      defaultProps: {
+        component: LinkBehaviour,
+      },
     },
     MuiButtonBase: {
-        defaultProps: {
-            LinkComponent: LinkBehaviour
-        }
-    }
-},
+      defaultProps: {
+        LinkComponent: LinkBehaviour,
+      },
+    },
+  },
   palette: {
     primary: {
       main: '#377DFF',

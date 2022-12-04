@@ -1,13 +1,24 @@
 import apiClient from 'requests';
 
 // common api calls for all the pages as of now, we can create another if we find differernt pattern or logic
-export const getSetting = (endpoint) => apiClient(endpoint, 'get');
-export const createSetting = (endpoint, payload) =>
-  apiClient(endpoint, 'post', payload);
-export const updateSetting = (endpoint, payload) =>
-  apiClient(endpoint, 'put', payload);
+export const getSetting = (endpoint, data) =>
+  apiClient({ path: endpoint, method: 'get', data });
+export const createSetting = (endpoint, payload, cb) =>
+  apiClient({
+    path: endpoint,
+    method: 'post',
+    data: payload,
+    uploadProgessCB: cb,
+  });
+export const updateSetting = (endpoint, id, payload, cb) =>
+  apiClient({
+    path: endpoint + '/' + id,
+    method: 'put',
+    data: payload,
+    uploadProgessCB: cb,
+  });
 export const deleteSetting = (payload) =>
-  apiClient(endpoint + '/' + payload?.id, 'delete');
+  apiClient({ path: endpoint + '/' + payload?.id, method: 'delete' });
 
 // // Company / Organization
 // export const getCompany = () => apiClient('/settings/company', 'get');

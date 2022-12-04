@@ -18,6 +18,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { styled, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
+import useFileUploadStore from 'store/useFileUploadStore';
+import FileUploadStatus from './FileUploadStatus';
 
 const drawerWidth = 240;
 
@@ -140,6 +142,7 @@ export default function AppLayout({ children }) {
           </IconButton>
           <Typography variant="h1_bold_secondary" component="h1" noWrap>
             Helpool Services Pvt Ltd.
+            <FileUploadStatus />
           </Typography>
         </Toolbar>
       </AppBar>

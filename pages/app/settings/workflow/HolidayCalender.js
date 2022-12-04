@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function HolidayCalender() {
-  return (
-    <div>HolidayCalender</div>
-  )
+  return <div>HolidayCalender</div>;
 }
