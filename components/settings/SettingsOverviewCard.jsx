@@ -80,7 +80,7 @@ export default function SettingsOverviewCard({
                     <Link
                       href={`/app/settings/${path.toString().toLowerCase()}`}
                     >
-                      <Typography variant="body_medium_primary" component="a">
+                      <Typography variant="body_medium_primary">
                         {title}
                       </Typography>
                     </Link>
