@@ -9,6 +9,7 @@ import {
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SelectDropdown from 'components/fields/SelectDropdown';
+import AppAutocomplete from 'components/fields/AppAutoComplete';
 
 const division = [
   {
@@ -47,13 +48,14 @@ const division = [
     size: 12,
   },
   {
-    element: SelectDropdown,
+    element: AppAutocomplete,
     attr: {
       label: 'Division Head',
       name: 'division.divisionHead',
       options: [
-        { text: 'Employee 1', value: 'e1' },
-        { text: 'Employee 2', value: 'e2' },
+        { text: 'Division Head 1', value: 'dh1' },
+        { text: 'Division Head 2', value: 'dh2' },
+        { text: 'Division Head 3', value: 'dh3' },
       ],
     },
     size: 12,

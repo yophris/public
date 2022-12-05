@@ -1,45 +1,112 @@
 import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
-import { InputBase, Paper, Typography } from '@mui/material';
+import {
+  CircularProgress,
+  InputAdornment,
+  InputBase,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-const options = ['Option 1', 'Option 2'];
+//demo only
+function sleep(delay = 0) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
+}
 
-//need to complete, as of now working,
-//do it as async, connect with our component
-export default function AppAutocomplete() {
+export default function AppAutocomplete(props) {
+  const {
+    label,
+    options = [{ text: '', value: '' }],
+    register,
+    name,
+    error,
+    isRequired,
+  } = props;
+
+  console.log('register autocomplete: ', register(name));
+  const [open, setOpen] = React.useState(false);
+  const [asyncOptions, setAsyncOptions] = React.useState([]);
+  const loading = open && asyncOptions.length === 0;
+
+  React.useEffect(() => {
+    let active = true;
+    if (!loading) {
+      return undefined;
+    }
+    (async () => {
+      await sleep(1e3); // For demo purposes.
+      //do throttling and check the key length if we need
+      if (active) {
+        //call api to fetch the options
+        setAsyncOptions([...options]);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [loading]);
+
+  React.useEffect(() => {
+    if (!open) {
+      setAsyncOptions([]);
+    }
+  }, [open]);
+
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
-        {'Auto Complete'}
-        {/* {label} */}
-        {/* {isRequired && ( */}
-        <Typography
-          variant="body_bold"
-          sx={{ marginLeft: '4px', color: '#F53E40' }}
-        >
-          *
-        </Typography>
-        {/* )} */}
+        {label}
+        {isRequired && (
+          <Typography
+            variant="body_bold"
+            sx={{ marginLeft: '4px', color: '#F53E40' }}
+          >
+            *
+          </Typography>
+        )}
       </Typography>
       <Autocomplete
+        popupIcon={
+          loading ? (
+            <CircularProgress color="inherit" size={20} />
+          ) : (
+            <KeyboardArrowDownIcon />
+          )
+        }
         sx={{
           '.MuiAutocomplete-option': {
             color: '#333',
             fontSize: '1.4rem',
           },
+          '.MuiAutocomplete-endAdornment': {
+            svg: {
+              fontSize: '2rem',
+              fontWeight: 500,
+              color: 'text.secondary',
+            },
+          },
         }}
-        id="app-autocomplete"
-        options={options}
-        renderOption={(props, option, state) => {
-          console.log('render option: ', props, option, state);
-          return (
-            <li {...props}>
-              <Typography variant="body_medium_secondary" component="p">
-                {option}
-              </Typography>
-            </li>
-          );
+        open={open}
+        onOpen={() => {
+          setOpen(true);
         }}
+        onClose={() => {
+          setOpen(false);
+        }}
+        getOptionLabel={(option) => option.text}
+        options={asyncOptions}
+        loading={loading}
+        renderOption={(props, option, state) => (
+          <li {...props}>
+            <Typography variant="body_medium_secondary" component="p">
+              {option.text}
+            </Typography>
+          </li>
+        )}
         renderInput={(params) => (
           <Paper
             elevation={0}
@@ -55,8 +122,6 @@ export default function AppAutocomplete() {
             ref={params.InputProps.ref}
           >
             <InputBase
-              type="text"
-              {...params.inputProps}
               sx={{
                 ml: 1,
                 flex: 1,
@@ -64,6 +129,13 @@ export default function AppAutocomplete() {
                 fontWeight: 500,
                 color: 'text.secondary',
               }}
+              {...params}
+              endAdornment={
+                <React.Fragment>
+                  {params.InputProps.endAdornment}
+                </React.Fragment>
+              }
+              {...register(name)}
             />
           </Paper>
         )}
