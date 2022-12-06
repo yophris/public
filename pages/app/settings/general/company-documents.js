@@ -45,7 +45,7 @@ const DeparmentForm = {
   ],
   endpoint: 'settings/companyDocument',
   texts: {
-    key: 'name',
+    key: 'document.name',
     breadcrumbText: 'Comapny Documents',
     drawerTitle: 'Add Document',
     mainTitle: 'List of Documents',

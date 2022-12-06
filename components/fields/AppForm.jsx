@@ -61,6 +61,7 @@ function AppForm({
     [edit]
   );
 
+  console.log('AppForm Error', errors);
   return (
     <form onSubmit={handleSubmit(submitData)} style={{ height: '100%' }}>
       <Stack justifyContent="space-between" sx={{ height: '100%' }}>

@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import AppProgressBar from 'components/AppProgressBar';
 import { useEffect, useRef, useState } from 'react';
@@ -68,34 +68,6 @@ export default function AppFileUpload(props) {
     [props.name]
   );
 
-  // let uploader = useMutation(
-  //   (data) =>
-  //     apiClient({
-  //       path: '/app/file-manager/' + bucket,
-  //       method: 'post',
-  //       data: data,
-  //       uploadProgessCB: setlocalProgess,
-  //     }),
-  //   {
-  //     onSuccess: ({ data }) => {
-  //       setlocalProgess(0);
-  //       console.log(data);
-  //       let key = data.key;
-  //       append({ id: key, file: key, name: data.originalname });
-  //       // append()
-  //     },
-  //     onError: (error) => {
-  //       setError('Error Uploading File');
-  //       setTimeout(
-  //         (_) => {
-  //           setError(null);
-  //         },
-  //         [2000]
-  //       );
-  //       // append()
-  //     },
-  //   }
-  // );
   const onDrop = async (item) => {
     console.log('dropped', item);
 
@@ -211,6 +183,7 @@ export default function AppFileUpload(props) {
             <button type="button" onClick={() => remove(index)}>
               Delete
             </button>
+            {item?.key && <button>Download</button>}
           </li>
         ))}
       </ul>

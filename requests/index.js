@@ -45,7 +45,7 @@ const apiClient = async ({
       method: method,
       data: data,
       headers: {
-        'X-TENANT-ID': '83b3b819-1dbe-404e-8ff2-c693037fdb2f',
+        'X-TENANT-ID': '2c9bc840-74c1-11ed-a1eb-0242ac120007',
       },
       onUploadProgress: (progressEvent) => {
         let percent = Math.round(

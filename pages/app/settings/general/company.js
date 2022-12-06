@@ -123,16 +123,19 @@ const Organization = () => {
   // } = useQuery('get' + companyForm.key, () => companyForm.getAllFn());
 
   // create
-  const onCreate = useMutation((data) => companyForm.postFn(data), {
-    onSuccess: () => {
-      qc.invalidateQueries('get' + key);
-      alert(`${endpoint} created`);
-      setOpenSideMenu(false);
-    },
-    onError: (data) => {
-      alert('Failed');
-    },
-  });
+  const onCreate = useMutation(
+    (data) => companyForm.postFn('settings/company', data),
+    {
+      onSuccess: () => {
+        qc.invalidateQueries('get' + key);
+        alert(`${endpoint} created`);
+        setOpenSideMenu(false);
+      },
+      onError: (data) => {
+        alert('Failed');
+      },
+    }
+  );
 
   return (
     <>
