@@ -1,13 +1,14 @@
+import { Box, Stack, Typography } from '@mui/material';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import { Controller, useFieldArray } from 'react-hook-form';
+import FileUploadList from './FileUploadList';
 const style = {
-  boxSizing: 'border-box',
   height: '155px',
-  background: '#FAFAFA',
-  border: '1px dashed #BDCEDD',
-  borderRadius: '8px',
+  background: "url('/images/borderDashed.svg') no-repeat",
+  backgroundSize: 'contain',
 };
 
 const toBase64 = (file) =>
@@ -20,6 +21,13 @@ const toBase64 = (file) =>
       reject(error);
     };
   });
+
+const iconSrcs = [
+  '/images/pdfIcon.svg',
+  '/images/jpgIcon.svg',
+  '/images/docIcon.svg',
+  '/images/xlsIcon.svg',
+];
 
 export default function AppFileUpload(props) {
   const { label, register, name, error, isRequired, control } = props;
@@ -79,36 +87,66 @@ export default function AppFileUpload(props) {
   const isActive = canDrop && isOver;
   return (
     <>
-      <div ref={drop} style={style}>
-        {isActive ? 'Release to drop' : 'Drag file here'}
-      </div>
-      <ul>
-        {fields.map((item, index) => (
-          <li key={item.id}>
-            <input
-              key={item.id} // important to include key with field's id
-              {...register(`${name}.${index}.file`)}
-              hidden
-            />
-            <Controller
-              render={({ field: { value } }) => (
-                <>
-                  <p>{value}</p>
-                </>
-              )}
-              name={`${name}.${index}.name`}
-              control={control}
-            />
-            <button type="button" onClick={() => remove(index)}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+      <Stack
+        ref={drop}
+        style={style}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box mb={2}>
+          {iconSrcs &&
+            iconSrcs.map((src) => (
+              <Image
+                src={src}
+                alt="Vercel Logo"
+                width={40}
+                height={40}
+                style={{ opacity: 0.7 }}
+              />
+            ))}
+        </Box>
+        <Box>
+          {isActive ? (
+            <Typography variant="body_medium_secondary" component="p">
+              Release to drop
+            </Typography>
+          ) : (
+            <Typography variant="body_medium_secondary" component="p">
+              Drag & Drop your document here, or{' '}
+              <Typography variant="body_bold_primary" component="span">
+                Browse
+              </Typography>
+            </Typography>
+          )}
+        </Box>
+        <Typography variant="smallcopy_regular_muted" component="p">
+          Upload .pdf, .doc, .xls, .jpg & etc
+        </Typography>
+      </Stack>
+      {fields.map((item, index) => (
+        <>
+          <input
+            key={item.id} // important to include key with field's id
+            {...register(`${name}.${index}.file`)}
+            hidden
+          />
+          <Controller
+            render={({ field: { value } }) => (
+              <FileUploadList
+                file={value}
+                handleRemove={() => remove(index)}
+                isLast={index === fields.length - 1}
+              />
+            )}
+            name={`${name}.${index}.name`}
+            control={control}
+          />
+        </>
+      ))}
 
-      <button type="button" onClick={() => append(['a', 'b'])}>
+      {/* <button type="button" onClick={() => append(['a', 'b'])}>
         append
-      </button>
+      </button> */}
     </>
   );
 }
