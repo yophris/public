@@ -104,7 +104,7 @@ function AppForm({
                   )}
 
                   {setting?.fields?.map((field, j) => (
-                    <Grid item key={j} md={field.size}>
+                    <Grid item key={j} xs={field.size}>
                       {renderFields(field, errors)}
                     </Grid>
                   ))}

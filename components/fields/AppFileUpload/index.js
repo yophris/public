@@ -1,3 +1,5 @@
+import { Box, Stack, Typography } from '@mui/material';
+import Image from 'next/image';
 import { Button, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import AppProgressBar from 'components/AppProgressBar';
@@ -6,16 +8,36 @@ import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import { render } from 'react-dom';
 import { Controller, useFieldArray } from 'react-hook-form';
+import FileUploadList from './FileUploadList';
 import { useMutation, useQueries, useQuery } from 'react-query';
 import apiClient from 'requests';
 import useFileUploadStore from 'store/useFileUploadStore';
 const style = {
-  boxSizing: 'border-box',
   height: '155px',
+  border: '2px dashed #BDCEDD',
   background: '#FAFAFA',
-  border: '1px dashed #BDCEDD',
   borderRadius: '8px',
+  // background: "url('/images/borderDashed.svg') no-repeat",
+  // backgroundSize: 'contain',
 };
+
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => {
+      console.log('FILE UPLOAD:', error);
+      reject(error);
+    };
+  });
+
+const iconSrcs = [
+  '/images/pdfIcon.svg',
+  '/images/jpgIcon.svg',
+  '/images/docIcon.svg',
+  '/images/xlsIcon.svg',
+];
 
 export default function AppFileUpload(props) {
   const {
@@ -120,8 +142,7 @@ export default function AppFileUpload(props) {
         multiple={limit > 1 ? true : false}
         accept={type}
       />
-      <div
-        onClick={() => inputRef.current.click()}
+      <Stack
         ref={localProgess == 0 ? drop : null}
         style={{
           ...style,
@@ -131,64 +152,67 @@ export default function AppFileUpload(props) {
             ? 'orange'
             : style.background,
         }}
+        justifyContent="center"
+        alignItems="center"
       >
-        {/* {(error) => {
-          return;
-        }} */}
-        {localProgess ? (
-          <div style={{ margin: '20px', textAlign: 'center' }}>
-            <AppProgressBar total={100} consumed={localProgess} light={false} />
-          </div>
-        ) : isActive ? (
-          <Stack
-            sx={{ height: '100%', textAlign: 'center' }}
-            justifyContent="space-around"
-          >
-            <Typography variant="body_bold_primary" component="p">
-              'Release to drop'
+        <Box mb={2}>
+          {iconSrcs &&
+            iconSrcs.map((src) => (
+              <Image
+                src={src}
+                alt="Vercel Logo"
+                width={40}
+                height={40}
+                style={{ opacity: 0.7 }}
+              />
+            ))}
+        </Box>
+        <Box>
+          {isActive ? (
+            <Typography variant="body_medium_secondary" component="p">
+              Release to drop
             </Typography>
-          </Stack>
-        ) : (
-          <Stack
-            sx={{ height: '100%', textAlign: 'center' }}
-            justifyContent="space-around"
-          >
-            <Typography variant="body_bold_primary" component="a">
-              {fileError ? fileError : 'Drag Here / Click'}
+          ) : (
+            <Typography variant="body_medium_secondary" component="p">
+              {fileError ? (
+                fileError
+              ) : (
+                <>
+                  Drag & Drop your document here, or{' '}
+                  <Typography variant="body_bold_primary" component="span">
+                    Browse
+                  </Typography>
+                </>
+              )}
             </Typography>
-          </Stack>
-        )}
-      </div>
+          )}
+        </Box>
+        <Typography variant="smallcopy_regular_muted" component="p">
+          {!fileError && 'Upload .pdf, .doc, .xls, .jpg & etc'}
+        </Typography>
+      </Stack>
+      {fields.map((item, index) => (
+        <>
+          <input
+            key={item.id} // important to include key with field's id
+            {...register(`${name}.${index}`)}
+            hidden
+          />
+          <Controller
+            render={({ field: { value } }) => (
+              <FileUploadList
+                file={value[index].name}
+                handleRemove={() => remove(index)}
+                isLast={index === fields.length - 1}
+              />
+            )}
+            name={`${name}`}
+            control={control}
+          />
+        </>
+      ))}
 
-      <ul>
-        {fields.map((item, index) => (
-          <li key={item.id}>
-            <input
-              key={item.id}
-              type="file" // important to include key with field's id
-              {...register(`${name}.${index}`)}
-              hidden
-            />
-            <Controller
-              render={({ field: { value } }) => {
-                return (
-                  <>
-                    <p>{value[index].name}</p>
-                  </>
-                );
-              }}
-              name={`${name}`}
-              control={control}
-            />
-            <button type="button" onClick={() => remove(index)}>
-              Delete
-            </button>
-            {item?.key && <button>Download</button>}
-          </li>
-        ))}
-      </ul>
-      {/* 
-      <button type="button" onClick={() => append(['a', 'b'])}>
+      {/* <button type="button" onClick={() => append(['a', 'b'])}>
         append
       </button> */}
     </>
