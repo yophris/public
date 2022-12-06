@@ -156,6 +156,7 @@ export default function AppFileUpload(props) {
           {iconSrcs &&
             iconSrcs.map((src) => (
               <Image
+                key={src}
                 src={src}
                 alt="Vercel Logo"
                 width={40}
@@ -196,6 +197,7 @@ export default function AppFileUpload(props) {
             hidden
           />
           <Controller
+            key={index}
             render={({ field: { value } }) => (
               <FileUploadList
                 file={value[index].name}

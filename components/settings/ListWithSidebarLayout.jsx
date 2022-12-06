@@ -127,6 +127,7 @@ const ListWithSidebarLayout = ({ config }) => {
           ? 'Loading'
           : response?.data?.map((e, index) => (
               <EditableList
+                key={index}
                 label={extractFromJSON(e, `**.${texts.key}`)}
                 cb={{
                   Edit: () => editClickCB(e.id),
