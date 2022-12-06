@@ -11,3 +11,7 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+#__react-alert__ > div{
+  z-index: 999999999 !important;
+}

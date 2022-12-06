@@ -2,15 +2,30 @@ import * as React from 'react';
 import { MenuItem, Select, styled, Typography } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useEffect } from 'react';
 
 export default function SelectDropdown({
   label,
   options = [{ text: '', value: '' }],
   register,
   name,
+  setValue,
   error,
   isRequired,
+  getValues,
+  watch,
 }) {
+  const [val, setVal] = React.useState('');
+  useEffect(
+    (_) => {
+      const val = watch(name);
+      if (val) {
+        setValue(name, val);
+        setVal(val);
+      }
+    },
+    [watch(name)]
+  );
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
@@ -30,6 +45,7 @@ export default function SelectDropdown({
         input={<BootstrapInput />}
         IconComponent={KeyboardArrowDownIcon}
         sx={{ fontSize: '1.4rem', fontWeight: 500, color: 'text.secondary' }}
+        value={val}
       >
         <MenuItem
           sx={{
@@ -37,6 +53,7 @@ export default function SelectDropdown({
             color: 'text.secondary',
             fontStyle: 'italic',
           }}
+          value=""
         >
           None
         </MenuItem>

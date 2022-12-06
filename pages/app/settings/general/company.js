@@ -2,7 +2,8 @@ import AppForm from 'components/fields/AppForm';
 import SelectDropdown from 'components/fields/SelectDropdown';
 import TextInput from 'components/fields/TextInput';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
-import { useMutation, useQueryClient } from 'react-query';
+import { useAlert } from 'react-alert';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   createSetting,
   deleteSetting,
@@ -115,24 +116,28 @@ const companyForm = {
 /**********************************************************/
 const Organization = () => {
   const qc = useQueryClient();
-
-  // const {
-  //   isLoading,
-  //   data: response,
-  //   error,
-  // } = useQuery('get' + companyForm.key, () => companyForm.getAllFn());
+  const alert = useAlert();
+  const {
+    isLoading,
+    data: response,
+    error,
+  } = useQuery('get' + companyForm.key, () =>
+    companyForm.getAllFn(companyForm.endpoint)
+  );
 
   // create
   const onCreate = useMutation(
-    (data) => companyForm.postFn('settings/company', data),
+    (data) =>
+      response?.data
+        ? companyForm.putFn(companyForm.endpoint, response.data.id, data)
+        : companyForm.postFn(companyForm.endpoint, data),
     {
       onSuccess: () => {
-        qc.invalidateQueries('get' + key);
-        alert(`${endpoint} created`);
-        setOpenSideMenu(false);
+        qc.invalidateQueries('get' + companyForm.key);
+        alert.success(response?.data ? `Updated` : `Company Created`);
       },
       onError: (data) => {
-        alert('Failed');
+        alert.error('Failed');
       },
     }
   );
@@ -154,6 +159,8 @@ const Organization = () => {
           form={companyForm.form}
           submitData={(data) => onCreate.mutate({ ...data })}
           validationSchema={companyForm.validation}
+          edit={response?.data}
+          cancelDrawer={null}
         />
       </SettingPageLayout>
     </>

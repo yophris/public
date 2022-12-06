@@ -4,6 +4,7 @@ import AppDivider from 'components/AppDivider';
 import AppForm from 'components/fields/AppForm';
 import SearchInput from 'components/fields/SearchInput';
 import React, { useEffect, useState } from 'react';
+import { useAlert } from 'react-alert';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { jsonToFormData } from 'requests';
 import useFileUploadStore from 'store/useFileUploadStore';
@@ -25,7 +26,7 @@ const ListWithSidebarLayout = ({ config }) => {
   } = config;
 
   const setProgress = useFileUploadStore((state) => state.setProgress);
-
+  const alert = useAlert();
   const qc = useQueryClient();
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
 
@@ -48,10 +49,10 @@ const ListWithSidebarLayout = ({ config }) => {
       onSuccess: () => {
         setOpenSideMenu(false);
         qc.invalidateQueries('get' + key);
-        alert(`${endpoint} created`);
+        alert.success(!editId ? 'created' : 'Updated');
       },
       onError: (data) => {
-        alert('Failed');
+        alert.error('Failed');
       },
     }
   );

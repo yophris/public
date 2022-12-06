@@ -24,7 +24,9 @@ function AppForm({
     setValue,
     getFieldState,
     reset,
+    watch,
     formState: { errors },
+    getValues,
   } = useForm({
     resolver: yupResolver(validationSchemaGenerator(form)),
   });
@@ -46,6 +48,8 @@ function AppForm({
             validationSchema?.fields[domain]?.fields[field]?.exclusiveTests
               ?.required
           }
+          watch={watch}
+          getValues={getValues}
         />
       </>
     );
@@ -56,7 +60,7 @@ function AppForm({
       if (edit) {
         reset(edit);
       }
-      console.log('Data for Edit', form);
+      console.log('Data for Edit', edit);
     },
     [edit]
   );
@@ -121,12 +125,19 @@ function AppForm({
           elevation={2}
         >
           <Stack direction="row" justifyContent="flex-end" spacing={1}>
+            {cancelDrawer && (
+              <AppButton
+                variant="outlined"
+                label="Cancel"
+                onClick={cancelDrawer}
+              />
+            )}
+
             <AppButton
-              variant="outlined"
-              label="Cancel"
-              onClick={cancelDrawer}
+              type="submit"
+              label={!edit ? 'Save' : 'Update'}
+              variant="contained"
             />
-            <AppButton type="submit" label="Save" variant="contained" />
           </Stack>
         </Paper>
       </Stack>

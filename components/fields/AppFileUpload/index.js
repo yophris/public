@@ -1,12 +1,8 @@
 import { Box, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
-import { Button, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
-import AppProgressBar from 'components/AppProgressBar';
 import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
-import { render } from 'react-dom';
 import { Controller, useFieldArray } from 'react-hook-form';
 import FileUploadList from './FileUploadList';
 import { useMutation, useQueries, useQuery } from 'react-query';
@@ -143,6 +139,7 @@ export default function AppFileUpload(props) {
         accept={type}
       />
       <Stack
+        onClick={() => inputRef?.current?.click()}
         ref={localProgess == 0 ? drop : null}
         style={{
           ...style,
