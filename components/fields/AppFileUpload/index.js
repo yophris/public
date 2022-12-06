@@ -7,8 +7,11 @@ import { Controller, useFieldArray } from 'react-hook-form';
 import FileUploadList from './FileUploadList';
 const style = {
   height: '155px',
-  background: "url('/images/borderDashed.svg') no-repeat",
-  backgroundSize: 'contain',
+  border: '2px dashed #BDCEDD',
+  background: '#FAFAFA',
+  borderRadius: '8px',
+  // background: "url('/images/borderDashed.svg') no-repeat",
+  // backgroundSize: 'contain',
 };
 
 const toBase64 = (file) =>
