@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Divider, Paper, Stack } from '@mui/material';
+import { Divider, Grid, Paper, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import AppProgressBar from '../AppProgressBar';
+import Image from 'next/image';
 
 export default function SettingsOverviewCard({
   children,
@@ -10,10 +11,6 @@ export default function SettingsOverviewCard({
   subtitle,
   settings = [],
 }) {
-  const [age, setAge] = React.useState('');
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
   return (
     <Paper
       sx={{
@@ -47,14 +44,18 @@ export default function SettingsOverviewCard({
         </Typography>
       </Stack>
       <Divider orientation="horizontal" sx={{ borderColor: '#EFEFEF' }} />
-      <Stack direction="row" sx={{ padding: 2 }}>
+      <Grid
+        container
+        sx={{ padding: 2 }}
+        rowSpacing={2}
+        columnSpacing={{ xs: 4, md: 3 }}
+      >
         {settings.map((setting, index) => (
-          <Stack
+          <Grid
+            item
+            md={4}
             key={index}
-            spacing={1}
             sx={{
-              width: `${100 / settings.length}%`,
-              marginX: 1,
               rowGap: 1,
             }}
             flexWrap
@@ -65,18 +66,28 @@ export default function SettingsOverviewCard({
             <Stack
               direction="row"
               alignItems="center"
-              sx={{ flexWrap: 'wrap', rowGap: 0.6 }}
+              sx={{ flexWrap: 'wrap', rowGap: 0.6, marginTop: 1 }}
             >
               {setting.types.map((type, index) => {
-                let path = type;
-                let title = type;
+                let path = '';
+                let title = '';
+                let isCompleted = false;
                 if (typeof type == 'object') {
                   path = type.path;
                   title = type.title;
+                  isCompleted = type.isCompleted;
                 }
 
                 return (
                   <span key={index}>
+                    {isCompleted && (
+                      <Image
+                        src="/images/circleTick.svg"
+                        width={11}
+                        height={11}
+                        style={{ marginRight: '4px' }}
+                      />
+                    )}
                     <Link
                       href={`/app/settings/${path.toString().toLowerCase()}`}
                     >
@@ -99,9 +110,9 @@ export default function SettingsOverviewCard({
                 );
               })}
             </Stack>
-          </Stack>
+          </Grid>
         ))}
-      </Stack>
+      </Grid>
     </Paper>
   );
 }

@@ -17,11 +17,12 @@ export default function SettingsMain() {
         subtitle="It is a long established fact that a reader will be distracted"
         settings={[
           {
-            title: 'Organisation',
+            title: 'Organization',
             types: [
               {
                 path: 'general/Company',
                 title: 'Company',
+                isCompleted: true,
               },
               {
                 path: 'general/division',
@@ -31,6 +32,7 @@ export default function SettingsMain() {
               {
                 path: 'general/department',
                 title: 'Department',
+                isCompleted: true,
               },
               {
                 path: 'general/station',
@@ -39,21 +41,24 @@ export default function SettingsMain() {
               {
                 path: 'general/teams',
                 title: 'Teams',
+                isCompleted: true,
               },
               {
                 path: 'general/company-documents',
-                title: 'Organisation document',
+                title: 'Organization Document',
               },
             ],
           },
           {
             title: 'Roles & Privileges',
-            types: ['User Roles'],
-          },
 
-          {
-            title: '',
-            types: [''],
+            types: [
+              {
+                path: 'general/userRoles',
+                title: 'User Roles',
+                isCompleted: true,
+              },
+            ],
           },
         ]}
       >
@@ -80,6 +85,7 @@ export default function SettingsMain() {
               {
                 path: 'offboarding_checklist',
                 title: 'Checklist',
+                isCompleted: true,
               },
             ],
           },
@@ -102,6 +108,7 @@ export default function SettingsMain() {
               {
                 path: 'leaveType',
                 title: 'Leave Type',
+                isCompleted: true,
               },
               {
                 path: 'holidayCalender',
@@ -110,6 +117,7 @@ export default function SettingsMain() {
               {
                 path: 'work_week',
                 title: 'Work Week',
+                isCompleted: true,
               },
             ],
           },
@@ -119,6 +127,7 @@ export default function SettingsMain() {
               {
                 path: 'reimbursement_policy',
                 title: 'Reimbursement Policy',
+                isCompleted: true,
               },
               {
                 path: 'reimbursement_type',
@@ -147,8 +156,14 @@ export default function SettingsMain() {
         subtitle="It is a long established fact that a reader will be distracted"
         settings={[
           {
-            title: 'Organisation',
-            types: ['Yet to be created'],
+            title: 'Organization',
+            types: [
+              {
+                path: 'finance/empPayroll',
+                title: 'Payroll',
+                isCompleted: true,
+              },
+            ],
           },
         ]}
       ></SettingsOverviewCard>

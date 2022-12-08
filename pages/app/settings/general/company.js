@@ -68,7 +68,7 @@ const companyForm = {
   key: 'company',
   form: [
     {
-      header: 'Organisation Details',
+      header: 'Organization Details',
       fields: company,
     },
     {
