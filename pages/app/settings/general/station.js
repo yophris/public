@@ -1,15 +1,13 @@
-import React from 'react';
+import AppDropdown from 'components/fields/AppDropdown';
 import TextInput from 'components/fields/TextInput';
-import * as Yup from 'yup';
+import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
+import SettingPageLayout from 'components/settings/SettingPageLayout';
 import {
   createSetting,
   deleteSetting,
   getSetting,
   updateSetting,
 } from 'requests/settings';
-import SettingPageLayout from 'components/settings/SettingPageLayout';
-import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
-import SelectDropdown from 'components/fields/SelectDropdown';
 
 const station = [
   {
@@ -21,7 +19,7 @@ const station = [
     size: 6,
   },
   {
-    element: SelectDropdown,
+    element: AppDropdown,
 
     attr: {
       label: 'Is main station?',
@@ -34,7 +32,7 @@ const station = [
     size: 6,
   },
   {
-    element: SelectDropdown,
+    element: AppDropdown,
     attr: {
       label: 'Station Head',
       name: 'station.stationHead',

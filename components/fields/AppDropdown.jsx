@@ -4,11 +4,12 @@ import InputBase from '@mui/material/InputBase';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect } from 'react';
 
-export default function SelectDropdown({
+export default function AppDropdown({
   label,
+  name,
+  defaultValue,
   options = [{ text: '', value: '' }],
   register,
-  name,
   setValue,
   error,
   isRequired,
@@ -46,6 +47,7 @@ export default function SelectDropdown({
         IconComponent={KeyboardArrowDownIcon}
         sx={{ fontSize: '1.4rem', fontWeight: 500, color: 'text.secondary' }}
         value={val}
+        defaultValue={defaultValue}
       >
         <MenuItem
           sx={{
@@ -66,6 +68,7 @@ export default function SelectDropdown({
             }}
             value={option.value}
             key={ind}
+            disabled={option.disabled}
           >
             {option.text}
           </MenuItem>

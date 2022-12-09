@@ -1,15 +1,13 @@
+import AppAutocomplete from 'components/fields/AppAutoComplete';
 import TextInput from 'components/fields/TextInput';
-import * as Yup from 'yup';
+import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
+import SettingPageLayout from 'components/settings/SettingPageLayout';
 import {
   createSetting,
   deleteSetting,
   getSetting,
   updateSetting,
 } from 'requests/settings';
-import SettingPageLayout from 'components/settings/SettingPageLayout';
-import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
-import SelectDropdown from 'components/fields/SelectDropdown';
-import AppAutocomplete from 'components/fields/AppAutoComplete';
 
 const division = [
   {

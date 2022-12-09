@@ -1,15 +1,13 @@
+import AppFileUpload from 'components/fields/AppFileUpload';
+import TextInput from 'components/fields/TextInput';
+import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
+import SettingPageLayout from 'components/settings/SettingPageLayout';
 import {
   createSetting,
   deleteSetting,
   getSetting,
   updateSetting,
 } from 'requests/settings';
-import TextInput from 'components/fields/TextInput';
-import * as Yup from 'yup';
-import SettingPageLayout from 'components/settings/SettingPageLayout';
-import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
-import SelectDropdown from 'components/fields/SelectDropdown';
-import AppFileUpload from 'components/fields/AppFileUpload';
 import { transformToFormData } from 'Utils';
 
 const fields = [

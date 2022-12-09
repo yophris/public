@@ -1,5 +1,5 @@
+import AppDropdown from 'components/fields/AppDropdown';
 import AppForm from 'components/fields/AppForm';
-import SelectDropdown from 'components/fields/SelectDropdown';
 import TextInput from 'components/fields/TextInput';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import { useAlert } from 'react-alert';
@@ -42,13 +42,14 @@ const company = [
     size: 4,
   },
   {
-    element: SelectDropdown,
+    element: AppDropdown,
     attr: {
       label: 'Language',
       name: 'company.language',
+      defaultValue: { text: 'English', value: 'en' },
       options: [
         { text: 'English', value: 'en' },
-        { text: 'Arabic', value: 'ar' },
+        { text: 'Arabic', value: 'ar', disabled: true },
       ],
     },
     size: 4,
@@ -68,7 +69,7 @@ const companyForm = {
   key: 'company',
   form: [
     {
-      header: 'Organization Details',
+      header: 'Organisation Details',
       fields: company,
     },
     {
