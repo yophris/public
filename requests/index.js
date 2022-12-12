@@ -55,7 +55,6 @@ const apiClient = async ({
         uploadProgessCB(percent);
       },
     });
-
     return {
       success: true,
       data: res.data,
