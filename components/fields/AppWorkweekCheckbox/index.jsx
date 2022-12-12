@@ -47,7 +47,7 @@ export default function AppWorkweekCheckbox(props) {
   return (
     // made position relative just to fix the alignment, this is just temp, need to find out
     // other way to fix the label issue for this component
-    <Box sx={{ position: 'relative', top: '-25px' }}>
+    <Box sx={{ position: 'relative', top: '-22px' }}>
       <FormGroup>
         <Stack
           alignItems="center"
