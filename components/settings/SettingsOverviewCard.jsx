@@ -71,7 +71,7 @@ export default function SettingsOverviewCard({ settingsData, completedData }) {
                 if (typeof type == 'object') {
                   path = type.path;
                   title = type.title;
-                  isCompleted = completedData[type.id];
+                  isCompleted = completedData?.[type.id];
                 }
 
                 return (
@@ -82,6 +82,7 @@ export default function SettingsOverviewCard({ settingsData, completedData }) {
                         width={11}
                         height={11}
                         style={{ marginRight: '4px' }}
+                        alt="completed"
                       />
                     )}
                     <Link
