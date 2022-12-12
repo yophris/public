@@ -57,7 +57,7 @@ const apiClient = async ({
     });
     return {
       success: true,
-      data: res.data,
+      data: res?.data ? res.data : res,
       status,
       message: 'success',
     };

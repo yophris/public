@@ -21,7 +21,7 @@ export default function SettingsMain() {
             <SettingsOverviewCard
               key={index}
               settingsData={sod}
-              completedData={response}
+              completedData={response.data}
             />
           ))}
     </Stack>
@@ -178,7 +178,7 @@ const settingsOverviewData = [
         title: 'Organization',
         types: [
           {
-            id: '',
+            id: 'Finance',
             path: 'finance/empPayroll',
             title: 'Payroll',
           },
