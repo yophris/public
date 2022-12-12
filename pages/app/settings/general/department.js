@@ -60,7 +60,7 @@ const DeparmentForm = {
   texts: {
     key: 'departmentName',
     breadcrumbText: 'Department',
-    drawerTitle: 'Add deparment',
+    drawerTitle: 'Add Deparment',
     mainTitle: 'List of Departments',
     mainDescription: 'This is short description for division',
     sideTitle: 'Deparment',

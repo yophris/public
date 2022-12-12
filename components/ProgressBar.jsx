@@ -4,6 +4,7 @@ import LinearProgress, {
   linearProgressClasses,
 } from '@mui/material/LinearProgress';
 import { Box, Divider, Stack, Typography } from '@mui/material';
+import AppColorCircle from './AppAppColorCircle';
 
 const BorderLinearProgress = styled(LinearProgress)(
   ({ theme, progresscolor }) => {
@@ -31,14 +32,7 @@ export default function ProgressBar({
   return (
     <Stack direction="column" spacing={1}>
       <Stack direction="row" spacing={1} alignItems="center">
-        <Box
-          sx={{
-            width: 13,
-            height: 13,
-            backgroundColor: colorVal,
-            borderRadius: 50,
-          }}
-        />
+        <AppColorCircle size={13} colorVal={colorVal} />
         <Typography variant="body_medium_secondary" component="p">
           {text}
         </Typography>

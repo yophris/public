@@ -79,7 +79,7 @@ export default function SettingsOverviewCard({ settingsData, completedData }) {
                   <span key={index}>
                     {isCompleted && (
                       <Image
-                        src="/images/circleTick.svg"
+                        src="/images/circleTickBgGreen.svg"
                         width={11}
                         height={11}
                         style={{ marginRight: '4px' }}

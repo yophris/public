@@ -133,7 +133,7 @@ const settingsOverviewData = [
           },
           {
             id: 'Workweek',
-            path: 'work_week',
+            path: 'workflow/workweek',
             title: 'Work Week',
           },
         ],

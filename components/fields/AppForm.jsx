@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import AppButton from '../AppButton';
 import TextInput from './TextInput';
 import validationSchemaGenerator from 'Utils/validationSchemaGenerator';
+import AppWorkweekCheckbox from './AppWorkweekCheckbox';
 
 function AppForm({
   form,
@@ -107,11 +108,36 @@ function AppForm({
                     </>
                   )}
 
-                  {setting?.fields?.map((field, j) => (
-                    <Grid item key={j} xs={field.size}>
-                      {renderFields(field, errors)}
-                    </Grid>
-                  ))}
+                  {setting?.fields?.map((field, j) =>
+                    field.element === 'label' ? (
+                      <Grid item xs={field.size}>
+                        <Typography
+                          variant="body_medium_muted"
+                          component="p"
+                          mb={1}
+                        >
+                          {field.attr.label}
+                          {field.attr.isRequired && (
+                            <Typography
+                              variant="body_bold"
+                              sx={{ marginLeft: '4px', color: '#F53E40' }}
+                            >
+                              *
+                            </Typography>
+                          )}
+                        </Typography>
+                      </Grid>
+                    ) : (
+                      <Grid
+                        item
+                        sx={{ paddingLeft: 0, margin: 0 }}
+                        key={j}
+                        xs={field.size}
+                      >
+                        {renderFields(field, errors)}
+                      </Grid>
+                    )
+                  )}
                 </React.Fragment>
               );
             })}

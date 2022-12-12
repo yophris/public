@@ -11,7 +11,7 @@ export default function AppButton({
       variant={variant}
       sx={{
         fontSize: '1.2rem',
-        padding: '4px 24px',
+        padding: '4px 32px',
         borderRadius: 2,
         textTransform: 'none',
       }}
