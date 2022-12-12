@@ -6,7 +6,6 @@ import AppProgressBar from '../AppProgressBar';
 import Image from 'next/image';
 
 export default function SettingsOverviewCard({ settingsData, completedData }) {
-  console.log('completedData', completedData);
   const { children, title, subtitle, settings = [] } = settingsData;
   return (
     <Paper
@@ -68,11 +67,11 @@ export default function SettingsOverviewCard({ settingsData, completedData }) {
               {setting.types.map((type, index) => {
                 let path = '';
                 let title = '';
-                let isCompleted = false;
+                let isCompleted;
                 if (typeof type == 'object') {
                   path = type.path;
                   title = type.title;
-                  isCompleted = type.isCompleted;
+                  isCompleted = completedData[type.id];
                 }
 
                 return (
