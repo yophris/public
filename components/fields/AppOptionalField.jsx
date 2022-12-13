@@ -4,14 +4,22 @@ import AppCountInput from './AppCountInput';
 import AppSwitch from './AppSwitch';
 
 export default function AppOptionalField(props) {
+  const { setValue, watch, name } = props;
   const [val, setVal] = React.useState(1);
   const [toggle, setToggle] = React.useState(false);
 
   const handleClick = (type) => {
     if (type === 'add') setVal(val + 1);
     else setVal((preVal) => (preVal === 1 ? 1 : val - 1));
-    // setValue(name, val);
   };
+
+  React.useEffect(() => {
+    if (!toggle) {
+      setValue(name, null);
+    } else {
+      setValue(name, val);
+    }
+  }, [toggle, val]);
 
   return (
     <Stack spacing={1.5}>
