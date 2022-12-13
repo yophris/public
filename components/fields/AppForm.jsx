@@ -1,21 +1,17 @@
 import * as React from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import { Grid, IconButton, Paper, Stack, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Grid, Paper, Stack, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import AppButton from '../AppButton';
-import TextInput from './TextInput';
 import validationSchemaGenerator from 'Utils/validationSchemaGenerator';
-import AppWorkweekCheckbox from './AppWorkweekCheckbox';
+import AppButton from '../AppButton';
 
 function AppForm({
   form,
   submitData,
   edit,
   validationSchema,
-  showButtons = false,
+  showButtons = true,
   padding = 3,
   cancelDrawer = () => {},
 }) {
