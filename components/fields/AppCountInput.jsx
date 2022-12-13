@@ -4,8 +4,9 @@ import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 import AppDivider from 'components/AppDivider';
 import Image from 'next/image';
+import { rest } from 'lodash';
 
-export default function AppCountInput(props) {
+export default function AppCountInput({ val, handleClick, ...rest }) {
   const {
     label,
     register,
@@ -15,16 +16,7 @@ export default function AppCountInput(props) {
     error,
     isRequired,
     isMultiline,
-  } = props;
-
-  const [val, setVal] = React.useState(1);
-  const handleClick = (type) => {
-    if (type === 'add') setVal(val + 1);
-    else setVal((preVal) => (preVal === 1 ? 1 : val - 1));
-    // setValue(name, val);
-  };
-
-  console.log('how many renders', val);
+  } = rest;
 
   return (
     <div>

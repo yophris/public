@@ -1,11 +1,11 @@
 import { Stack, styled, Switch, Typography } from '@mui/material';
 import Image from 'next/image';
 
-export default function AppSwitch(props) {
-  const { label, register, name, error, isRequired, isMultiline } = props;
+export default function AppSwitch({ label, toggle, setToggle }) {
+  //   const { label, register, name, error, isRequired, isMultiline } = props;
   return (
     <Stack direction="row" alignItems="center" spacing={1.5}>
-      <AntSwitch defaultChecked />
+      <AntSwitch checked={toggle} onChange={() => setToggle(!toggle)} />
       <Typography variant="h3_medium_secondary" component="p">
         {label}
       </Typography>

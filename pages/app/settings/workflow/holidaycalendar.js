@@ -5,6 +5,7 @@ import AppCountInput from 'components/fields/AppCountInput';
 import AppDatePicker from 'components/fields/AppDatePicker';
 import AppDropdown from 'components/fields/AppDropdown';
 import AppForm from 'components/fields/AppForm';
+import AppOptionalField from 'components/fields/AppOptionalField';
 import AppSwitch from 'components/fields/AppSwitch';
 import TextInput from 'components/fields/TextInput';
 import HolidayList from 'components/settings/HolidayList';
@@ -38,20 +39,13 @@ const holiday = [
     size: 8,
   },
   {
-    element: AppSwitch,
+    element: AppOptionalField,
     attr: {
-      label: 'Allow Optional Holidays',
-      name: 'holiday.divisionType',
+      switchLabel: 'Allow Optional Holidays',
+      label: 'Number of Opetional holidays that can be availed',
+      name: 'holiday.optionalHolidayNu',
     },
 
-    size: 6,
-  },
-  {
-    element: AppCountInput,
-    attr: {
-      label: 'Number of Optional holidays that can be availed',
-      name: 'holiday.optionalHolidaysCount',
-    },
     size: 12,
   },
   // {
