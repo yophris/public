@@ -27,16 +27,19 @@ export default function TextInput(props) {
           borderRadius: 2,
           display: 'flex',
           marginTop: 0,
-          p: 1,
         }}
       >
         <InputBase
+          size="small"
           sx={{
-            ml: 1,
+            m: 1.5,
             flex: 1,
             fontSize: '1.4rem',
             fontWeight: 500,
             color: 'text.secondary',
+            '& .MuiInputBase-input': {
+              p: 0,
+            },
           }}
           error={!!error?.message}
           placeholder={label}

@@ -154,14 +154,13 @@ function SettingDrawer({
                     >
                       <AppButton
                         variant="outlined"
-                        label="Cancel"
                         onClick={toggleDrawer(false)}
-                      />
-                      <AppButton
-                        type="submit"
-                        label="Save"
-                        variant="contained"
-                      />
+                      >
+                        Cancel
+                      </AppButton>
+                      <AppButton type="submit" variant="contained">
+                        Save
+                      </AppButton>
                     </Stack>
                   </Paper>
                 </Stack>

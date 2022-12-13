@@ -113,7 +113,7 @@ const workweekForm = {
   endpoint: 'settings/workweek',
   texts: {
     title: 'Workweek',
-    key: 'workweek',
+    key: 'name',
     breadcrumbText: 'Workweek',
     drawerTitle: 'Add New Workweek',
     mainTitle: 'List of Workweeks',

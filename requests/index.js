@@ -45,8 +45,10 @@ const apiClient = async ({
       method: method,
       data: data,
       headers: {
-        'X-TENANT-ID': '2c9bc840-74c1-11ed-a1eb-0242ac120011',
+        'X-TENANT-ID': localStorage.getItem('tenantId'),
       },
+
+      //2c9bc840-74c1-11ed-a1eb-0242ac120011
       onUploadProgress: (progressEvent) => {
         let percent = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total
@@ -57,7 +59,7 @@ const apiClient = async ({
     });
     return {
       success: true,
-      data: res?.data ? res.data : res,
+      data: res?.data ? res.data : res, //please check this @Abdullah
       status,
       message: 'success',
     };

@@ -98,12 +98,19 @@ function AppForm({
                         </Grid>
                       )}
                       <Grid item xs={12}>
-                        <Typography
-                          variant="h3_bold_secondary"
-                          sx={{ marginTop: 4 }}
-                        >
-                          {setting?.header}
-                        </Typography>
+                        <Stack sx={{ m: 0, p: 0 }}>
+                          <Typography
+                            variant="h3_bold_secondary"
+                            sx={{ marginTop: 1 }}
+                          >
+                            {setting?.header}
+                          </Typography>
+                          {setting?.subHeader && (
+                            <Typography variant="body_medium_muted">
+                              {setting.subHeader}
+                            </Typography>
+                          )}
+                        </Stack>
                       </Grid>
                     </>
                   )}
@@ -148,22 +155,18 @@ function AppForm({
             padding: 1.25,
           }}
           square
-          elevation={2}
+          elevation={1}
         >
           <Stack direction="row" justifyContent="flex-end" spacing={1}>
             {cancelDrawer && (
-              <AppButton
-                variant="outlined"
-                label="Cancel"
-                onClick={cancelDrawer}
-              />
+              <AppButton variant="outlined" onClick={cancelDrawer}>
+                Cancel
+              </AppButton>
             )}
 
-            <AppButton
-              type="submit"
-              label={!edit ? 'Save' : 'Update'}
-              variant="contained"
-            />
+            <AppButton type="submit" variant="contained">
+              {!edit ? 'Save' : 'Update'}
+            </AppButton>
           </Stack>
         </Paper>
       </Stack>

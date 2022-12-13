@@ -81,7 +81,7 @@ const theme = createTheme({
 
 export default function AppDatePicker(props) {
   const { name, label, register, isRequired } = props;
-  console.log('in date picker: ', name, register(name));
+  console.log('in date picker: ', name);
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>

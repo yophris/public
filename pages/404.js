@@ -13,7 +13,7 @@ export default function NotFound() {
       <div style={{ display: 'flex' }}>
         <div style={{ margin: '20px auto' }}>
           <Link href="/app">
-            <AppButton label={'Go Home'} color="secondary" />
+            <AppButton color="secondary">Go Home</AppButton>
           </Link>
         </div>
       </div>

@@ -118,17 +118,17 @@ const settingsOverviewData = [
         types: [
           {
             id: 'Leavepolicyitem',
-            path: 'leavePolicy',
+            path: 'workflow/leavePolicy',
             title: 'Leave Policy',
           },
           {
             id: 'Leave',
-            path: 'leaveType',
+            path: 'workflow/leaveType',
             title: 'Leave Type',
           },
           {
             id: 'Holiday',
-            path: 'holidayCalender',
+            path: 'workflow/holidayCalendar',
             title: 'Holiday Calender',
           },
           {
