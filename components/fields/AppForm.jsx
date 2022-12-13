@@ -15,7 +15,8 @@ function AppForm({
   submitData,
   edit,
   validationSchema,
-
+  showButtons = false,
+  padding = 3,
   cancelDrawer = () => {},
 }) {
   const {
@@ -72,7 +73,7 @@ function AppForm({
       <Stack justifyContent="space-between" sx={{ height: '100%' }}>
         <Stack
           sx={{
-            padding: 3,
+            padding,
             flex: 1,
             overflow: 'auto',
           }}
@@ -150,25 +151,27 @@ function AppForm({
             })}
           </Grid>
         </Stack>
-        <Paper
-          sx={{
-            padding: 1.25,
-          }}
-          square
-          elevation={1}
-        >
-          <Stack direction="row" justifyContent="flex-end" spacing={1}>
-            {cancelDrawer && (
-              <AppButton variant="outlined" onClick={cancelDrawer}>
-                Cancel
-              </AppButton>
-            )}
+        {showButtons && (
+          <Paper
+            sx={{
+              padding: 1.25,
+            }}
+            square
+            elevation={1}
+          >
+            <Stack direction="row" justifyContent="flex-end" spacing={1}>
+              {cancelDrawer && (
+                <AppButton variant="outlined" onClick={cancelDrawer}>
+                  Cancel
+                </AppButton>
+              )}
 
-            <AppButton type="submit" variant="contained">
-              {!edit ? 'Save' : 'Update'}
-            </AppButton>
-          </Stack>
-        </Paper>
+              <AppButton type="submit" variant="contained">
+                {!edit ? 'Save' : 'Update'}
+              </AppButton>
+            </Stack>
+          </Paper>
+        )}
       </Stack>
     </form>
   );

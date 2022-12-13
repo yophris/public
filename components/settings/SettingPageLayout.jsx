@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'next/link';
 import AppDivider from 'components/AppDivider';
 
-function SettingPageLayout({ children, texts }) {
+function SettingPageLayout({ children, texts, SideChildren }) {
   const matches = useMediaQuery('(max-width:900px)');
 
   const breadcrumbs = [
@@ -103,6 +103,7 @@ function SettingPageLayout({ children, texts }) {
                 <Typography variant="body_medium_muted">
                   {texts?.sideDescription}
                 </Typography>
+                <SideChildren />
               </Stack>
             </Grid>
           </Grid>

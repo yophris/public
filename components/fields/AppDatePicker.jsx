@@ -6,6 +6,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import moment from 'moment/moment';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { createTheme, ThemeProvider, Typography } from '@mui/material';
+import Image from 'next/image';
 
 //Need to work on year customization
 const theme = createTheme({
@@ -99,6 +100,14 @@ export default function AppDatePicker(props) {
         </Typography>
         <ThemeProvider theme={theme}>
           <DesktopDatePicker
+            InputAdornmentProps={
+              <Image
+                src="/images/plusIcon.svg"
+                width={8}
+                height={8}
+                alt="info"
+              />
+            }
             sx={{
               '& .MuiTypography-root-MuiDayPicker-weekDayLabel': {
                 fontSize: '2rem',
@@ -107,7 +116,6 @@ export default function AppDatePicker(props) {
             inputFormat="MM-DD-YYYY"
             {...register(name)}
             renderInput={(params) => {
-              console.log('params:', params);
               return (
                 <TextField
                   sx={{

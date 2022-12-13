@@ -1,6 +1,9 @@
+import { Box, Stack } from '@mui/material';
+import AppTable from 'components/AppTable';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
 import AppCountInput from 'components/fields/AppCountInput';
 import AppDatePicker from 'components/fields/AppDatePicker';
+import AppDropdown from 'components/fields/AppDropdown';
 import AppForm from 'components/fields/AppForm';
 import AppSwitch from 'components/fields/AppSwitch';
 import TextInput from 'components/fields/TextInput';
@@ -65,6 +68,35 @@ const holiday = [
   //   size: 12,
   // },
 ];
+const holidayTemplate = [
+  {
+    element: AppDropdown,
+    attr: {
+      label: 'Country',
+      name: 'holidayTemplate.country',
+      options: [
+        { text: 'UAE', value: 'uae' },
+        { text: 'India', value: 'ind' },
+      ],
+    },
+    size: 6,
+  },
+  {
+    element: AppDropdown,
+    attr: {
+      label: 'Year',
+      name: 'holidayTemplate.year',
+      options: [
+        { text: '2019', value: '2019' },
+        { text: '2020', value: '2020' },
+        { text: '2021', value: '2021' },
+        { text: '2022', value: '2022' },
+      ],
+    },
+
+    size: 6,
+  },
+];
 
 const holidayList = [
   {
@@ -116,6 +148,30 @@ const holidayForm = {
   putFn: updateSetting,
   deleteFn: deleteSetting,
 };
+const holidayTemplateForm = {
+  key: 'holiday',
+  form: [
+    {
+      header: '',
+      fields: holidayTemplate,
+    },
+  ],
+  endpoint: 'settings/holiday',
+  texts: {
+    title: 'Holiday',
+    key: 'holidayName',
+    breadcrumbText: 'Holiday',
+    drawerTitle: 'Add Holiday',
+    mainTitle: 'Add New Holiday Calendar',
+    mainDescription: 'It is short description for holiday',
+    sideTitle: 'Add Holiday from templates',
+    sideDescription: 'This is india public holidays',
+  },
+  getAllFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
+};
 
 export default function Page() {
   const qc = useQueryClient();
@@ -145,7 +201,7 @@ export default function Page() {
     }
   );
   return (
-    <SettingPageLayout texts={holidayForm.texts}>
+    <SettingPageLayout texts={holidayForm.texts} SideChildren={SideChildren}>
       <AppForm
         form={holidayForm.form}
         submitData={(data) => onCreate.mutate({ ...data })}
@@ -155,3 +211,20 @@ export default function Page() {
     </SettingPageLayout>
   );
 }
+
+//Zustand need to be configured for this component, The table data is
+//from third party api, we can add those to our holiday table
+const SideChildren = () => {
+  return (
+    <Stack spacing={3}>
+      <AppForm
+        form={holidayTemplateForm.form}
+        cancelDrawer={null}
+        showButtons={false}
+        padding={0}
+      />
+      {/* make this dynamic */}
+      <AppTable />
+    </Stack>
+  );
+};
