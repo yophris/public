@@ -18,7 +18,7 @@ export default function HolidayList(props) {
         <div>
           <Box sx={{ height: '20px', marginBottom: 1 }}></Box>
           <AppButton
-            restProps={{
+            styleOverrides={{
               fontSize: '1.6rem',
               height: '44px',
               width: 'auto',

@@ -4,7 +4,8 @@ import { Button } from '@mui/material';
 export default function AppButton({
   children,
   variant = 'contained',
-  restProps,
+  styleOverrides,
+  ...restProps
 }) {
   return (
     <Button
@@ -15,8 +16,9 @@ export default function AppButton({
         padding: '4px 32px',
         borderRadius: 2,
         textTransform: 'none',
-        ...restProps,
+        ...styleOverrides,
       }}
+      {...restProps}
     >
       {children}
     </Button>

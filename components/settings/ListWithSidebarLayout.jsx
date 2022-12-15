@@ -95,7 +95,13 @@ const ListWithSidebarLayout = ({ config }) => {
     <Stack spacing={2} m={2} divider={<AppDivider />}>
       <Stack direction="row" spacing={3}>
         <SearchInput sx={{ flex: 1 }} />
-        <AppButton variant="contained" onClick={() => setOpenSideMenu(true)}>
+        <AppButton
+          variant="contained"
+          onClick={() => {
+            console.log('open', openSideMenu);
+            setOpenSideMenu(true);
+          }}
+        >
           {texts?.drawerTitle}
         </AppButton>
         {openSideMenu && (
