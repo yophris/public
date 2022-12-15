@@ -103,7 +103,7 @@ function SettingPageLayout({ children, texts, SideChildren }) {
                 <Typography variant="body_medium_muted">
                   {texts?.sideDescription}
                 </Typography>
-                <SideChildren />
+                {SideChildren && <SideChildren />}
               </Stack>
             </Grid>
           </Grid>
