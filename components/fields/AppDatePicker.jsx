@@ -81,7 +81,7 @@ const theme = createTheme({
 });
 
 export default function AppDatePicker(props) {
-  const { name, label, register, isRequired } = props;
+  const { name, label, register, isRequired, ...rest } = props;
   console.log('in date picker: ', name);
 
   return (
@@ -114,7 +114,8 @@ export default function AppDatePicker(props) {
               },
             }}
             inputFormat="MM-DD-YYYY"
-            {...register(name)}
+            {...(register && register)}
+            {...rest}
             renderInput={(params) => {
               return (
                 <TextField
