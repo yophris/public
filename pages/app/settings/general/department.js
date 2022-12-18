@@ -16,7 +16,7 @@ const fields = [
       label: 'Department Name',
       name: 'department.departmentName',
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
@@ -25,7 +25,7 @@ const fields = [
       name: 'department.description',
       isMultiline: true,
     },
-    size: 12,
+    xs: 12,
   },
   {
     element: AppDropdown,
@@ -37,7 +37,7 @@ const fields = [
         { text: 'Employee 2', value: 'e2' },
       ],
     },
-    size: 12,
+    xs: 12,
   },
 ];
 

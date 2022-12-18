@@ -23,7 +23,7 @@ const company = [
       label: 'Organization Name',
       name: 'company.companyName',
     },
-    size: 12,
+    xs: 12,
   },
   {
     element: TextInput,
@@ -31,7 +31,7 @@ const company = [
       label: 'Start Year',
       name: 'company.startYear',
     },
-    size: 4,
+    xs: 4,
   },
   {
     element: TextInput,
@@ -39,7 +39,7 @@ const company = [
       label: 'Country',
       name: 'company.country',
     },
-    size: 4,
+    xs: 4,
   },
   {
     element: AppDropdown,
@@ -52,7 +52,7 @@ const company = [
         { text: 'Arabic', value: 'ar', disabled: true },
       ],
     },
-    size: 4,
+    xs: 4,
   },
 ];
 

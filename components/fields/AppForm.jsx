@@ -114,7 +114,7 @@ function AppForm({
                   {setting?.fields?.map((field, j) =>
                     //group element rendering
                     field.type === 'group' ? (
-                      <Grid item xs={field.size}>
+                      <Grid item {...field}>
                         <field.element
                           key={j}
                           setValue={setValue}
@@ -129,7 +129,7 @@ function AppForm({
                         item
                         sx={{ paddingLeft: 0, margin: 0 }}
                         key={j}
-                        xs={field.size}
+                        {...field}
                       >
                         {renderFields(field, errors)}
                       </Grid>

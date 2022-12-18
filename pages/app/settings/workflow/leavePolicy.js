@@ -19,7 +19,7 @@ const leavePolicy = [
       label: 'Leave Policy Name',
       name: 'leavePolicy.name',
     },
-    size: 7,
+    xs: 7,
   },
   {
     element: AppAutocomplete,
@@ -32,7 +32,7 @@ const leavePolicy = [
         { text: 'Workweek 3', value: 'ww3' },
       ],
     },
-    size: 7,
+    xs: 7,
   },
   // {
   //   element: TextInput,
@@ -40,7 +40,7 @@ const leavePolicy = [
   //     label: 'need to do',
   //     name: 'leavePolicy.namedd',
   //   },
-  //   size: 5,
+  //   xs: 5,
   // },
   {
     element: AppAutocomplete,
@@ -53,7 +53,7 @@ const leavePolicy = [
         { text: 'Holiday 3', value: 'hc3' },
       ],
     },
-    size: 7,
+    xs: 7,
   },
 ];
 
@@ -69,7 +69,7 @@ const holidayList = [
         { text: 'March 2022', value: 'mar' },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: AppDropdown,
@@ -82,7 +82,7 @@ const holidayList = [
         { text: 'December 2022', value: 'dec' },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
@@ -95,7 +95,7 @@ const holidayList = [
         { text: 'December 2022', value: 'dec' },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: AppDropdown,
@@ -108,7 +108,7 @@ const holidayList = [
         { text: 'Heirarchy 3', value: 'h3' },
       ],
     },
-    size: 6,
+    xs: 6,
   },
 ];
 const leaveType = [
@@ -177,7 +177,7 @@ const leaveType = [
         ],
       },
     ],
-    size: 12,
+    xs: 12,
   },
 ];
 

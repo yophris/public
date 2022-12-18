@@ -36,7 +36,7 @@ const holiday = [
         },
       ],
     },
-    size: 8,
+    xs: 8,
   },
   {
     element: AppOptionalField,
@@ -46,7 +46,7 @@ const holiday = [
       name: 'holiday.optionalHolidayNu',
     },
 
-    size: 12,
+    xs: 12,
   },
   // {
   //   element: AppAutocomplete,
@@ -59,7 +59,7 @@ const holiday = [
   //       { text: 'Holiday Head 3', value: 'dh3' },
   //     ],
   //   },
-  //   size: 12,
+  //   xs: 12,
   // },
 ];
 const holidayTemplate = [
@@ -73,7 +73,7 @@ const holidayTemplate = [
         { text: 'India', value: 'ind' },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: AppDropdown,
@@ -88,7 +88,7 @@ const holidayTemplate = [
       ],
     },
 
-    size: 6,
+    xs: 6,
   },
 ];
 
@@ -108,7 +108,7 @@ const holidayList = [
         },
       ],
     },
-    size: 12,
+    xs: 12,
   },
 ];
 

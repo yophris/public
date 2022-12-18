@@ -16,7 +16,7 @@ const station = [
       label: 'Station Name',
       name: 'station.stationName',
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: AppDropdown,
@@ -29,7 +29,7 @@ const station = [
         { text: 'No', value: false },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: AppDropdown,
@@ -41,7 +41,7 @@ const station = [
         { text: 'Employee 2', value: 'e2' },
       ],
     },
-    size: 12,
+    xs: 12,
   },
 ];
 
@@ -49,37 +49,37 @@ export const addressFields = [
   {
     element: TextInput,
     attr: { label: 'Address Line 1', name: 'address.addressLn1' },
-    size: 12,
+    xs: 12,
   },
   {
     element: TextInput,
     attr: { label: 'Address Line 2', name: 'address.addressLn2' },
-    size: 12,
+    xs: 12,
   },
   {
     element: TextInput,
     attr: { label: 'City', name: 'address.city' },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
     attr: { label: 'State', name: 'address.state' },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
     attr: { label: 'Postal Code', name: 'address.postalCode' },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
     attr: { label: 'Country', name: 'address.country' },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
     attr: { label: 'Phone', name: 'address.phone1' },
-    size: 6,
+    xs: 6,
   },
 ];
 
