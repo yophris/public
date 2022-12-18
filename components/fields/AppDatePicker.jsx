@@ -82,7 +82,6 @@ const theme = createTheme({
 
 export default function AppDatePicker(props) {
   const { name, label, register, isRequired, ...rest } = props;
-  console.log('in date picker: ', name);
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -100,6 +99,8 @@ export default function AppDatePicker(props) {
         </Typography>
         <ThemeProvider theme={theme}>
           <DesktopDatePicker
+            {...(register && register)}
+            {...rest}
             InputAdornmentProps={
               <Image
                 src="/images/plusIcon.svg"
@@ -114,8 +115,6 @@ export default function AppDatePicker(props) {
               },
             }}
             inputFormat="MM-DD-YYYY"
-            {...(register && register)}
-            {...rest}
             renderInput={(params) => {
               return (
                 <TextField

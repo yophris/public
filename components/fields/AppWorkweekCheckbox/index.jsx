@@ -19,7 +19,7 @@ export default function AppWorkweekCheckbox(props) {
       </Typography>
       <Stack direction="row" spacing={1}>
         {rest.attr.names.map((name) => (
-          <SingleWorkweek name={name} setValue={setValue} />
+          <SingleWorkweek key={name} name={name} setValue={setValue} />
         ))}
       </Stack>
     </div>
