@@ -10,6 +10,97 @@ import {
   updateSetting,
 } from 'requests/settings';
 
+// const workweek = [
+//   {
+//     element: TextInput,
+//     attr: {
+//       label: 'Workweek Name',
+//       name: 'workweek.name',
+//     },
+//     validation: {
+//       validationType: 'string',
+//       validations: [
+//         {
+//           type: 'required',
+//           params: ['Workweek Name is Required'],
+//         },
+//       ],
+//     },
+//     size: 12,
+//   },
+//   {
+//     element: 'label',
+//     attr: {
+//       label: 'Select the work days for this week',
+//       isRequired: true,
+//     },
+//     size: 12,
+//   },
+//   {
+//     element: AppWorkweekCheckbox,
+//     attr: {
+//       name: 'workweek.sunday',
+//     },
+//     validation: {
+//       validationType: 'string',
+//       validations: [
+//         {
+//           type: 'required',
+//           params: ['Please select the days'],
+//         },
+//       ],
+//     },
+//     size: 1.7,
+//   },
+//   {
+//     element: AppWorkweekCheckbox,
+//     attr: {
+//       name: 'workweek.monday',
+//     },
+
+//     size: 1.7,
+//   },
+//   {
+//     element: AppWorkweekCheckbox,
+//     attr: {
+//       name: 'workweek.tuesday',
+//     },
+
+//     size: 1.7,
+//   },
+//   {
+//     element: AppWorkweekCheckbox,
+//     attr: {
+//       name: 'workweek.wednesday',
+//     },
+
+//     size: 1.7,
+//   },
+//   {
+//     element: AppWorkweekCheckbox,
+//     attr: {
+//       name: 'workweek.thursday',
+//     },
+
+//     size: 1.7,
+//   },
+//   {
+//     element: AppWorkweekCheckbox,
+//     attr: {
+//       name: 'workweek.friday',
+//     },
+
+//     size: 1.7,
+//   },
+//   {
+//     element: AppWorkweekCheckbox,
+//     attr: {
+//       name: 'workweek.saturday',
+//     },
+
+//     size: 1.7,
+//   },
+// ];
 const workweek = [
   {
     element: TextInput,
@@ -29,76 +120,32 @@ const workweek = [
     size: 12,
   },
   {
-    element: 'label',
+    element: AppWorkweekCheckbox,
+    type: 'group',
+    label: 'Select the work days for this week',
     attr: {
-      label: 'Select the work days for this week',
+      names: [
+        'workweek.sunday',
+        'workweek.monday',
+        'workweek.tuesday',
+        'workweek.wednesday',
+        'workweek.thursday',
+        'workweek.friday',
+        'workweek.saturday',
+      ],
       isRequired: true,
     },
     size: 12,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.sunday',
-    },
-    validation: {
-      validationType: 'string',
-      validations: [
-        {
-          type: 'required',
-          params: ['Please select the days'],
-        },
-      ],
-    },
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.monday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.tuesday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.wednesday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.thursday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.friday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.saturday',
-    },
-
-    size: 1.7,
+    //need to find the way to validate each individual field or as common error for all the names
+    // validation: {
+    //   validationType: 'string',
+    //   validations: [
+    //     {
+    //       type: 'required',
+    //       params: ['Please select the days'],
+    //     },
+    //   ],
+    // },
   },
 ];
 

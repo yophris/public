@@ -15,6 +15,7 @@ export default function AppDropdown({
   isRequired,
   getValues,
   watch,
+  ...rest
 }) {
   const [val, setVal] = React.useState('');
   useEffect(
@@ -42,7 +43,8 @@ export default function AppDropdown({
       </Typography>
 
       <Select
-        {...register(name)}
+        {...(register && register)}
+        {...rest}
         input={<BootstrapInput />}
         IconComponent={KeyboardArrowDownIcon}
         sx={{ fontSize: '1.4rem', fontWeight: 500, color: 'text.secondary' }}

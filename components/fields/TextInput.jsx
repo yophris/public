@@ -4,7 +4,8 @@ import Paper from '@mui/material/Paper';
 import * as React from 'react';
 
 export default function TextInput(props) {
-  const { label, register, name, error, isRequired, isMultiline } = props;
+  const { label, register, name, error, isRequired, isMultiline, ...rest } =
+    props;
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
@@ -44,7 +45,8 @@ export default function TextInput(props) {
           error={!!error?.message}
           placeholder={label}
           inputProps={{ 'aria-label': label }}
-          {...register(name)}
+          {...(register && register)}
+          {...rest}
           multiline={isMultiline}
           rows={4}
         />

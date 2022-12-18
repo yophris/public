@@ -5,8 +5,6 @@ import { getSetting } from 'requests/settings';
 import { useQuery } from 'react-query';
 
 export default function SettingsMain() {
-  //@abdullah data coming as undefined here when i console in settingsoverviwew card
-  //but in the network i can see the response
   const {
     isLoading,
     data: response,
@@ -118,7 +116,7 @@ const settingsOverviewData = [
         types: [
           {
             id: 'Leavepolicyitem',
-            path: 'workflow/leavePolicy',
+            path: 'workflow/leavepolicy',
             title: 'Leave Policy',
           },
           {
