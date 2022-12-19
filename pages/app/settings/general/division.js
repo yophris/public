@@ -25,7 +25,7 @@ const division = [
         },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
@@ -34,7 +34,7 @@ const division = [
       name: 'division.divisionType',
     },
 
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
@@ -43,7 +43,7 @@ const division = [
       name: 'division.description',
       isMultiline: true,
     },
-    size: 12,
+    xs: 12,
   },
   {
     element: AppAutocomplete,
@@ -56,7 +56,7 @@ const division = [
         { text: 'Division Head 3', value: 'dh3' },
       ],
     },
-    size: 12,
+    xs: 12,
   },
 ];
 

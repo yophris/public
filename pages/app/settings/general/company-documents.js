@@ -17,7 +17,7 @@ const fields = [
       label: 'Document Name',
       name: 'document.name',
     },
-    size: 12,
+    xs: 12,
   },
   {
     element: AppFileUpload,
@@ -28,7 +28,7 @@ const fields = [
       limit: 1,
       type: ['application/pdf'],
     },
-    size: 12,
+    xs: 12,
   },
 ];
 

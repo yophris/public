@@ -22,15 +22,14 @@ export default function AppAutocomplete(props) {
   const {
     label,
     options = [{ text: '', value: '' }],
-    register,
     name,
     error,
     isRequired,
     watch,
-    setValue
+    setValue,
+    ...rest
   } = props;
 
-  console.log('register autocomplete: ', register(name));
   const [open, setOpen] = React.useState(false);
   const [asyncOptions, setAsyncOptions] = React.useState([]);
   const loading = open && asyncOptions.length === 0;
@@ -152,7 +151,7 @@ export default function AppAutocomplete(props) {
                   {params.InputProps.endAdornment}
                 </React.Fragment>
               }
-              {...register(name)}
+              {...rest}
             />
           </Paper>
         )}

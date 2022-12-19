@@ -23,7 +23,7 @@ const fields = [
       label: 'team Name',
       name: 'team.teamName',
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
@@ -32,7 +32,7 @@ const fields = [
       name: 'team.description',
       isMultiline: true,
     },
-    size: 12,
+    xs: 12,
   },
 ];
 

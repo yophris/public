@@ -89,7 +89,7 @@ function SettingPageLayout({ children, texts, SideChildren }) {
                   {texts?.mainDescription}
                 </Typography>
               </Box>
-              <Stack sx={{ height: '80vh', paddingTop: 3 }}>{children}</Stack>
+              <Stack sx={{ height: '80vh' }}>{children}</Stack>
             </Grid>
             <Grid
               item

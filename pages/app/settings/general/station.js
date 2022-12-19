@@ -29,7 +29,7 @@ const station = [
         },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: AppDropdown,
@@ -42,7 +42,7 @@ const station = [
         { text: 'No', value: false },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: AppDropdown,
@@ -63,7 +63,7 @@ const station = [
         },
       ],
     },
-    size: 12,
+    xs: 12,
   },
 ];
 
@@ -80,12 +80,12 @@ export const addressFields = [
         },
       ],
     },
-    size: 12,
+    xs: 12,
   },
   {
     element: TextInput,
     attr: { label: 'Address Line 2', name: 'address.addressLn2' },
-    size: 12,
+    xs: 12,
   },
   {
     element: AppAutocomplete,
@@ -110,7 +110,7 @@ export const addressFields = [
         },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
@@ -124,7 +124,7 @@ export const addressFields = [
         },
       ],
     },
-    size: 6,
+    xs: 6,
   },
   {
     element: TextInput,
@@ -138,7 +138,7 @@ export const addressFields = [
         },
       ],
     },
-    size: 6,
+    xs: 6,
   },
 
   {
@@ -153,7 +153,7 @@ export const addressFields = [
         },
       ],
     },
-    size: 6,
+    xs: 6,
   },
 
   {
@@ -168,7 +168,7 @@ export const addressFields = [
         },
       ],
     },
-    size: 6,
+    xs: 6,
   },
 ];
 

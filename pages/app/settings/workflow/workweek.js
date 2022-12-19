@@ -26,79 +26,36 @@ const workweek = [
         },
       ],
     },
-    size: 12,
+    xs: 12,
   },
   {
-    element: 'label',
+    element: AppWorkweekCheckbox,
+    type: 'group',
+    label: 'Select the work days for this week',
     attr: {
-      label: 'Select the work days for this week',
+      names: [
+        'workweek.sunday',
+        'workweek.monday',
+        'workweek.tuesday',
+        'workweek.wednesday',
+        'workweek.thursday',
+        'workweek.friday',
+        'workweek.saturday',
+      ],
       isRequired: true,
     },
-    size: 12,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.sunday',
-    },
-    validation: {
-      validationType: 'string',
-      validations: [
-        {
-          type: 'required',
-          params: ['Please select the days'],
-        },
-      ],
-    },
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.monday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.tuesday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.wednesday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.thursday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.friday',
-    },
-
-    size: 1.7,
-  },
-  {
-    element: AppWorkweekCheckbox,
-    attr: {
-      name: 'workweek.saturday',
-    },
-
-    size: 1.7,
+    xs: 12,
+    //need to find the way to validate each individual field or as common error for all the names
+    //might need Abdullah help
+    // validation: {
+    //   validationType: 'string',
+    //   validations: [
+    //     {
+    //       type: 'required',
+    //       params: ['Please select the days'],
+    //     },
+    //   ],
+    // },
   },
 ];
 

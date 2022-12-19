@@ -39,7 +39,7 @@ function AppForm({
         <Field
           {...attr}
           control={control}
-          register={register}
+          register={register(attr.name)}
           error={getFieldState(attr.name).error}
           setValue={setValue}
           isRequired={
@@ -63,7 +63,6 @@ function AppForm({
     [edit]
   );
 
-  console.log('AppForm Error', errors);
   return (
     <form onSubmit={handleSubmit(submitData)} style={{ height: '100%' }}>
       <Stack justifyContent="space-between" sx={{ height: '100%' }}>
@@ -113,30 +112,24 @@ function AppForm({
                   )}
 
                   {setting?.fields?.map((field, j) =>
-                    field.element === 'label' ? (
-                      <Grid item xs={field.size}>
-                        <Typography
-                          variant="body_medium_muted"
-                          component="p"
-                          mb={1}
-                        >
-                          {field.attr.label}
-                          {field.attr.isRequired && (
-                            <Typography
-                              variant="body_bold"
-                              sx={{ marginLeft: '4px', color: '#F53E40' }}
-                            >
-                              *
-                            </Typography>
-                          )}
-                        </Typography>
+                    //group element rendering
+                    field.type === 'group' ? (
+                      <Grid item {...field}>
+                        <field.element
+                          key={j}
+                          setValue={setValue}
+                          renderFields={renderFields}
+                          errors={errors}
+                          {...field}
+                        />
                       </Grid>
                     ) : (
+                      //individual field rendering
                       <Grid
                         item
                         sx={{ paddingLeft: 0, margin: 0 }}
                         key={j}
-                        xs={field.size}
+                        {...field}
                       >
                         {renderFields(field, errors)}
                       </Grid>
