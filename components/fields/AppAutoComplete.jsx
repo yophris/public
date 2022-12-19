@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useQuery, useQueryClient } from 'react-query';
 
 //demo only
 function sleep(delay = 0) {
@@ -25,12 +26,17 @@ export default function AppAutocomplete(props) {
     name,
     error,
     isRequired,
+    watch,
+    setValue
   } = props;
 
   console.log('register autocomplete: ', register(name));
   const [open, setOpen] = React.useState(false);
   const [asyncOptions, setAsyncOptions] = React.useState([]);
   const loading = open && asyncOptions.length === 0;
+  const [val, setVal] = React.useState('');
+
+  // Fetch Data
 
   React.useEffect(() => {
     let active = true;
@@ -55,6 +61,17 @@ export default function AppAutocomplete(props) {
       setAsyncOptions([]);
     }
   }, [open]);
+
+  React.useEffect(
+    (_) => {
+      const val = watch(name);
+      if (val) {
+        setValue(name, val);
+        setVal(val);
+      }
+    },
+    [watch(name)]
+  );
 
   return (
     <div>
@@ -140,6 +157,11 @@ export default function AppAutocomplete(props) {
           </Paper>
         )}
       />
+      {error?.message && (
+        <Typography variant="h6" sx={{ marginLeft: '4px', color: 'red' }}>
+          {error.message}
+        </Typography>
+      )}
     </div>
   );
 }

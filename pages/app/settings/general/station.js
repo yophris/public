@@ -1,7 +1,11 @@
+import AppAutocomplete from 'components/fields/AppAutoComplete';
 import AppDropdown from 'components/fields/AppDropdown';
 import TextInput from 'components/fields/TextInput';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useQuery, useQueryClient } from 'react-query';
 import {
   createSetting,
   deleteSetting,
@@ -15,6 +19,15 @@ const station = [
     attr: {
       label: 'Station Name',
       name: 'station.stationName',
+    },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['Station Name is Required'],
+        },
+      ],
     },
     size: 6,
   },
@@ -41,6 +54,15 @@ const station = [
         { text: 'Employee 2', value: 'e2' },
       ],
     },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['Station Head is Required'],
+        },
+      ],
+    },
     size: 12,
   },
 ];
@@ -49,6 +71,15 @@ export const addressFields = [
   {
     element: TextInput,
     attr: { label: 'Address Line 1', name: 'address.addressLn1' },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['Address Line 1 is Required'],
+        },
+      ],
+    },
     size: 12,
   },
   {
@@ -57,28 +88,86 @@ export const addressFields = [
     size: 12,
   },
   {
-    element: TextInput,
-    attr: { label: 'City', name: 'address.city' },
+    element: AppAutocomplete,
+    attr: {
+      label: 'Country',
+      name: 'address.country',
+      options: [
+        { text: 'India', value: 'india' },
+        { text: 'uae', value: 'uae' },
+      ],
+    },
+    validation: {
+      validationType: 'object',
+      validations: [
+        {
+          type: 'nullable',
+          params: ['Country is Required'],
+        },
+        {
+          type: 'required',
+          params: ['Country is Required'],
+        },
+      ],
+    },
     size: 6,
   },
   {
     element: TextInput,
     attr: { label: 'State', name: 'address.state' },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['State is Required'],
+        },
+      ],
+    },
     size: 6,
   },
+  {
+    element: TextInput,
+    attr: { label: 'City', name: 'address.city' },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['City is Required'],
+        },
+      ],
+    },
+    size: 6,
+  },
+
   {
     element: TextInput,
     attr: { label: 'Postal Code', name: 'address.postalCode' },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['Postal code is Required'],
+        },
+      ],
+    },
     size: 6,
   },
-  {
-    element: TextInput,
-    attr: { label: 'Country', name: 'address.country' },
-    size: 6,
-  },
+
   {
     element: TextInput,
     attr: { label: 'Phone', name: 'address.phone1' },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['Phone number is Required'],
+        },
+      ],
+    },
     size: 6,
   },
 ];
@@ -135,6 +224,46 @@ const stationForm = {
 };
 
 export default function Page() {
+  const { watch } = useForm();
+  const qc = useQueryClient();
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedState, setSelectedState] = useState('');
+  console.log(watch(),"lklk");
+  console.log(stationForm,"lklk")
+  // const alert = useAlert();
+  const {
+    isLoading: countryLoading,
+    data: countryResponse,
+    error: countryError,
+  } = useQuery('getcountries', () =>
+    stationForm.getAllFn('app/valueHelp/countries')
+  );
+
+  // const {
+  //   isLoading: stateLoading,
+  //   data: stateResponse,
+  //   // refetch: stateRefetch,
+  //   error: stateError,
+  // } = useQuery(
+  //   'getstate',
+  //   () => stationForm.getAllFn(`app/valueHelp/states/${selectedCountry}`),
+  //   { enabled: selectedCountry }
+  // );
+
+  // const {
+  //   isLoading: cityLoading,
+  //   data: cityResponse,
+  //   refetch: cityFetch,
+  //   error: cityError,
+  // } = useQuery(
+  //   'getcity',
+  //   () => stationForm.getAllFn(`app/valueHelp/cities/${selectedCountry}`),
+  //   { enabled: selectedState }
+  // );
+  console.log(countryResponse, 'response');
+  // console.log(stateResponse, 'response');
+  // console.log(cityResponse, 'response');
+
   return (
     <SettingPageLayout texts={stationForm.texts}>
       <ListWithSidebarLayout config={stationForm} />

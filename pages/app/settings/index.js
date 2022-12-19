@@ -21,7 +21,7 @@ export default function SettingsMain() {
             <SettingsOverviewCard
               key={index}
               settingsData={sod}
-              completedData={response.data}
+              completedData={response?.data}
             />
           ))}
     </Stack>

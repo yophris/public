@@ -22,6 +22,7 @@ const ListWithSidebarLayout = ({ config }) => {
     deleteFn,
     validation,
     putFn,
+    watch,
     transform = (data) => data,
   } = config;
 
@@ -116,6 +117,7 @@ const ListWithSidebarLayout = ({ config }) => {
               submitData={(data) => onCreate.mutate({ ...data })}
               validationSchema={validation}
               cancelDrawer={() => setOpenSideMenu(false)}
+              watch={watch}
             />
           </SettingDrawer>
         )}
