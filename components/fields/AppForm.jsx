@@ -114,9 +114,8 @@ function AppForm({
                   {setting?.fields?.map((field, j) =>
                     //group element rendering
                     field.type === 'group' ? (
-                      <Grid item {...field}>
+                      <Grid item {...field} key={j}>
                         <field.element
-                          key={j}
                           setValue={setValue}
                           renderFields={renderFields}
                           errors={errors}
@@ -131,7 +130,23 @@ function AppForm({
                         key={j}
                         {...field}
                       >
-                        {renderFields(field, errors)}
+                        {field.children ? (
+                          <Grid
+                            container
+                            direction="row"
+                            alignItems="flex-start"
+                            spacing={3}
+                          >
+                            <Grid item {...field.children}>
+                              {renderFields(field, errors)}
+                            </Grid>
+                            <Grid item {...field.children}>
+                              {renderFields(field.children, errors)}
+                            </Grid>
+                          </Grid>
+                        ) : (
+                          renderFields(field, errors)
+                        )}
                       </Grid>
                     )
                   )}
