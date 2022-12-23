@@ -92,6 +92,7 @@ export const addressFields = [
     attr: {
       label: 'Country',
       name: 'address.country',
+      endPoint:'app/valueHelp/countries',
       options: [
         { text: 'India', value: 'india' },
         { text: 'uae', value: 'uae' },
@@ -114,7 +115,7 @@ export const addressFields = [
   },
   {
     element: TextInput,
-    attr: { label: 'State', name: 'address.state' },
+    attr: { label: 'State', name: 'address.state',endPoint:'' },
     validation: {
       validationType: 'string',
       validations: [
@@ -128,7 +129,7 @@ export const addressFields = [
   },
   {
     element: TextInput,
-    attr: { label: 'City', name: 'address.city' },
+    attr: { label: 'City', name: 'address.city',dependOn:'address.state' },
     validation: {
       validationType: 'string',
       validations: [
@@ -228,7 +229,7 @@ export default function Page() {
   const qc = useQueryClient();
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedState, setSelectedState] = useState('');
-  console.log(watch(),"lklk");
+  console.log(watch('city'),"lklk");
   console.log(stationForm,"lklk")
   // const alert = useAlert();
   const {
