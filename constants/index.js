@@ -21,7 +21,7 @@ export const WORKTYPES = [
     value: 'Remote: Only Second Half Working Day',
     bgColor: 'linear-gradient(to left, #a0d433 50%, #a0d4336e 50%)',
   },
-  { key: 'WEEKOFF', value: 'Weekoff', bgColor: '#F8FAFC' },
+  { key: 'WEEKOFF', value: 'Weekoff', bgColor: '#EFEFEF' },
 ];
 
 export const DAYS = {
@@ -33,6 +33,17 @@ export const DAYS = {
   friday: 'FRI',
   saturday: 'SAT',
 };
+
+export const DAYS_NU = {
+  0: 'sunday',
+  1: 'monday',
+  2: 'tuesday',
+  3: 'wednesday',
+  4: 'thursday',
+  5: 'friday',
+  6: 'saturday',
+};
+
 export const NUMBERS = {
   ONE: 1,
   TWO: 2,

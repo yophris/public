@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import * as React from 'react';
 
 //Month
@@ -44,31 +44,44 @@ export default function UpcomingHolidays({ dateData, holiday, themeColor }) {
         borderLeft: `4px solid ${themeColor}`,
       }}
     >
-      <Stack
+      <Box
         sx={{
           border: `0.5px solid ${themeColor}`,
           borderRadius: '2.14286px',
           marginLeft: 2.5,
-          height: 46,
           width: 46,
+          height: 46,
         }}
         justifyContent="start"
       >
-        <Stack>
+        <Stack sx={{ height: '100%' }} justifyContent="center">
           <Typography
-            sx={{ backgroundColor: themeColor, color: '#fff' }}
+            sx={{
+              backgroundColor: themeColor,
+              color: '#fff',
+              textAlign: 'center',
+              height: '18px',
+            }}
             variant="smallcopy_bold_light"
             component="p"
           >
             {months[monthIndex]}
           </Typography>
-        </Stack>
-        <Stack justifyContent="center" sx={{ height: '100%' }}>
-          <Typography variant="body_medium_tertiary" component="p">
+
+          <Typography
+            variant="body_medium_tertiary"
+            component="p"
+            sx={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             {dateNum}
           </Typography>
         </Stack>
-      </Stack>
+      </Box>
 
       <Stack direction="column" sx={{ marginLeft: 2 }}>
         <Typography

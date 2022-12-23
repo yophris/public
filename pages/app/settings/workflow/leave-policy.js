@@ -1,7 +1,10 @@
 import AppAccordion from 'components/AppAccordion';
+import AppSideViewButton from 'components/AppSideViewButton';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
+import AppCheckbox from 'components/fields/AppCheckbox';
 import AppDropdown from 'components/fields/AppDropdown';
 import AppForm from 'components/fields/AppForm';
+import WorkweekReadonly from 'components/fields/AppWorkweekCheckbox/WorkweekReadonly';
 import TextInput from 'components/fields/TextInput';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import { useMutation } from 'react-query';
@@ -19,41 +22,51 @@ const leavePolicy = [
       label: 'Leave Policy Name',
       name: 'leavePolicy.name',
     },
-    xs: 7,
+    xs: 6,
   },
   {
     element: AppAutocomplete,
     attr: {
       label: 'Select Workweek',
       name: 'leavePolicy.workweekId',
-      options: [
-        { text: 'Workweek 1', value: 'ww1' },
-        { text: 'Workweek 2', value: 'ww2' },
-        { text: 'Workweek 3', value: 'ww3' },
-      ],
+      asyncData: {
+        endpointApi: getSetting,
+        endpoint: 'settings/workweek',
+        key: 'workweek',
+      },
     },
-    xs: 7,
+    children: {
+      element: WorkweekReadonly,
+      attr: {
+        name: 'leavePolicy.workReadonly',
+        lookup: 'leavePolicy.workweekId',
+      },
+      xs: 12,
+      md: 6,
+    },
+    xs: 12,
   },
-  // {
-  //   element: TextInput,
-  //   attr: {
-  //     label: 'need to do',
-  //     name: 'leavePolicy.namedd',
-  //   },
-  //   xs: 5,
-  // },
   {
     element: AppAutocomplete,
     attr: {
       label: 'Select Holiday Calendar',
       name: 'leavePolicy.holidayCalendarId',
-      options: [
-        { text: 'Holiday 1', value: 'hc1' },
-        { text: 'Holiday 2', value: 'hc2' },
-        { text: 'Holiday 3', value: 'hc3' },
-      ],
+      asyncData: {
+        endpointApi: getSetting,
+        endpoint: 'settings/workweek',
+        key: 'workweek',
+      },
     },
-    xs: 7,
+    children: {
+      element: AppSideViewButton,
+      attr: {
+        name: 'leavePolicy.workReadonly',
+        lookup: 'leavePolicy.workweekId',
+      },
+      xs: 12,
+      md: 6,
+    },
+    xs: 12,
   },
 ];
 
@@ -124,14 +137,14 @@ const leaveType = [
             element: TextInput,
             attr: {
               label: 'Select Balance Type',
-              name: 'accurateRule.balanceType',
+              name: 'holidayList.accurateRule.balanceType',
             },
           },
           {
             element: TextInput,
             attr: {
               label: 'Accurate Rate',
-              name: 'accurateRule.startDate',
+              name: 'holidayList.accurateRule.startDate',
             },
           },
         ],
@@ -143,15 +156,26 @@ const leaveType = [
           {
             element: TextInput,
             attr: {
-              label: 'Balance type',
-              name: 'balanceRule.balanceType',
+              label: 'Enter Limit',
+              name: 'holidayList.balanceRule.limit',
             },
           },
           {
             element: TextInput,
             attr: {
-              label: 'balance Rate',
-              name: 'balanceRule.startDate',
+              label: 'Enter Days to request when balance is “0”',
+              name: 'holidayList.balanceRule.daysToReq',
+            },
+          },
+          {
+            element: AppDropdown,
+            attr: {
+              label: 'Select carry forward type',
+              name: 'holidayList.balanceRule.carryForwardType',
+              options: [
+                { text: 'Total remaining count', value: 'trc' },
+                { text: 'Limit count', value: 'lc' },
+              ],
             },
           },
         ],
@@ -161,17 +185,17 @@ const leaveType = [
         text: 'Request Rules',
         fields: [
           {
-            element: TextInput,
+            element: AppCheckbox,
             attr: {
-              label: 'Request type',
-              name: 'requestRule.requestType',
+              label: 'Restrict back-dated leave action',
+              name: 'holidayList.requestRule.restrictBackdated',
             },
           },
           {
             element: TextInput,
             attr: {
               label: 'Request Rate',
-              name: 'requestRule.startDate',
+              name: 'holidayList.requestRule.limit',
             },
           },
         ],

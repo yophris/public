@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useQuery, useQueryClient } from 'react-query';
+import apiClient from 'requests';
 
 //demo only
 function sleep(delay = 0) {
@@ -37,6 +38,15 @@ export default function AppAutocomplete(props) {
   const [val, setVal] = React.useState('');
 
   // Fetch Data
+  const qc = useQueryClient();
+
+  const {
+    isLoading: countryLoading,
+    data: countryResponse,
+    error: countryError,
+  } = useQuery('getcountries', () =>
+  apiClient({path:''},)
+  );
 
   React.useEffect(() => {
     let active = true;
@@ -165,8 +175,6 @@ export default function AppAutocomplete(props) {
     </div>
   );
 }
-
-
 
 // country-api
 // state-api-dependon(country)
