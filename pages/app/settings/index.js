@@ -19,7 +19,7 @@ export default function SettingsMain() {
             <SettingsOverviewCard
               key={index}
               settingsData={sod}
-              completedData={response.data}
+              completedData={response?.data}
             />
           ))}
     </Stack>
@@ -121,7 +121,7 @@ const settingsOverviewData = [
           },
           {
             id: 'Leave',
-            path: 'workflow/leaveType',
+            path: 'workflow/leavetype',
             title: 'Leave Type',
           },
           {
@@ -141,12 +141,12 @@ const settingsOverviewData = [
         types: [
           {
             id: 'Reimbursementpolicy',
-            path: 'reimbursement_policy',
+            path: 'workflow/reimbursementpolicy',
             title: 'Reimbursement Policy',
           },
           {
             id: 'Reimbursementtype',
-            path: 'reimbursement_type',
+            path: 'workflow/reimbursement_type',
             title: 'Reimbursement Type',
           },
         ],

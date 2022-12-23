@@ -198,7 +198,10 @@ export default function Page() {
     <SettingPageLayout texts={holidayForm.texts} SideChildren={SideChildren}>
       <AppForm
         form={holidayForm.form}
-        submitData={(data) => onCreate.mutate({ ...data })}
+        submitData={(data) => {
+          console.log("first")
+          return onCreate.mutate({ ...data });
+        }}
         edit={response?.data}
         cancelDrawer={null}
       />

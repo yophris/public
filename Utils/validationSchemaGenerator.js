@@ -2,6 +2,7 @@ import { extractFromJSON } from 'Utils';
 import * as Yup from 'yup';
 
 const validationSchemaGenerator = (form) => {
+  console.log(form,"formmm")
   let schema = extractFromJSON(
     form,
     `**.fields.{

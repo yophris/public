@@ -4,8 +4,30 @@ import Paper from '@mui/material/Paper';
 import * as React from 'react';
 
 export default function TextInput(props) {
-  const { label, register, name, error, isRequired, isMultiline, ...rest } =
-    props;
+  const {
+    label,
+    register,
+    watch,
+    name,
+    error,
+    isRequired,
+    isMultiline,
+    setValue,
+    ...rest
+  } = props;
+
+  const [val, setVal] = React.useState('');
+  React.useEffect(
+    (_) => {
+      const val = watch(name);
+      if (val) {
+        setValue(name, val);
+        setVal(val);
+      }
+    },
+    [watch(name)]
+  );
+  console.log(val, 'lklk');
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
