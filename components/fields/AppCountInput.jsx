@@ -17,18 +17,17 @@ export default function AppCountInput({ val, handleClick, ...rest }) {
     isRequired,
     isMultiline,
   } = rest;
-  const [val, setVal] = React.useState('');
-  useEffect(
+
+  React.useEffect(
     (_) => {
       const val = watch(name);
       if (val) {
         setValue(name, val);
-        setVal(val);
       }
     },
     [watch(name)]
   );
-  console.log(val,'lklk')
+  console.log(val, 'lklk');
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
