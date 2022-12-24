@@ -146,7 +146,7 @@ const settingsOverviewData = [
           },
           {
             id: 'Reimbursementtype',
-            path: 'workflow/reimbursement_type',
+            path: 'workflow/reimbursementtype',
             title: 'Reimbursement Type',
           },
         ],

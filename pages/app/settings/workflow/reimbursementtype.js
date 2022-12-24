@@ -3,7 +3,7 @@ import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import React from 'react';
 import { useAlert } from 'react-alert';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import {
   createSetting,
   deleteSetting,
@@ -51,11 +51,11 @@ const reimbursementTypeForm = {
   endpoint: 'settings/reimbursementtype/',
   texts: {
     key: 'reimbursementType',
-    breadcrumbText: 'reimbursement Type',
-    drawerTitle: 'Add reimbursement Type',
-    mainTitle: 'reimbursement Type',
+    breadcrumbText: 'Reimbursement Type',
+    drawerTitle: 'Add Reimbursement Type',
+    mainTitle: 'Reimbursement Type',
     mainDescription: 'this is short description for division',
-    sideTitle: 'reimbursement Types',
+    sideTitle: 'Reimbursement Types',
     sideDescription:
       'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },

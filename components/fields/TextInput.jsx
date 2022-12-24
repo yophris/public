@@ -7,7 +7,7 @@ export default function TextInput(props) {
   const {
     label,
     register,
-    watch,
+    // watch,
     name,
     error,
     isRequired,
@@ -16,18 +16,18 @@ export default function TextInput(props) {
     ...rest
   } = props;
 
-  const [val, setVal] = React.useState('');
-  React.useEffect(
-    (_) => {
-      const val = watch(name);
-      if (val) {
-        setValue(name, val);
-        setVal(val);
-      }
-    },
-    [watch(name)]
-  );
-  console.log(val, 'lklk');
+  // const [val, setVal] = React.useState('');
+  // React.useEffect(
+  //   (_) => {
+  //     const val = watch(name);
+  //     if (val) {
+  //       setValue(name, val);
+  //       setVal(val);
+  //     }
+  //   },
+  //   [watch(name)]
+  // );
+  // console.log(val, 'lklk');
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
