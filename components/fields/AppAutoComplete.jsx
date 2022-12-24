@@ -9,44 +9,36 @@ import {
   Typography,
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useQuery, useQueryClient } from 'react-query';
-import apiClient from 'requests';
-
-//demo only
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
+import { useQuery } from 'react-query';
 
 export default function AppAutocomplete(props) {
   const {
+    setValue,
     label,
     options = [{ text: '', value: '' }],
     name,
     error,
     isRequired,
-    watch,
-    setValue,
-    dependOn,
+    asyncData,
     ...rest
   } = props;
+
+  const {
+    isLoading,
+    data: response,
+    error: getError,
+  } = useQuery('get' + asyncData.key, () =>
+    asyncData.endpointApi(asyncData.endpoint, { page: 1 })
+  );
 
   const [open, setOpen] = React.useState(false);
   const [asyncOptions, setAsyncOptions] = React.useState([]);
   const loading = open && asyncOptions.length === 0;
-  const [val, setVal] = React.useState('');
 
-  // Fetch Data
-  const qc = useQueryClient();
-
-  const {
-    isLoading: countryLoading,
-    data: countryResponse,
-    error: countryError,
-  } = useQuery('getcountries', () =>
-  apiClient({path:''},)
-  );
+  const handleChange = () => {
+    // const dataL = asyncData.endpointApi(asyncData.endpoint, { page: 1 });
+    // dataL.then((d) => console.log('data from workweek: ', d));
+  };
 
   React.useEffect(() => {
     let active = true;
@@ -54,11 +46,14 @@ export default function AppAutocomplete(props) {
       return undefined;
     }
     (async () => {
-      await sleep(1e3); // For demo purposes.
       //do throttling and check the key length if we need
+      //we need to do async fetch while typing
+      //as there is no api available yet
+      let optionsData;
       if (active) {
+        optionsData = response.data.map((d) => ({ text: d.name, value: d.id }));
         //call api to fetch the options
-        setAsyncOptions([...options]);
+        setAsyncOptions([...optionsData]);
       }
     })();
     return () => {
@@ -71,17 +66,6 @@ export default function AppAutocomplete(props) {
       setAsyncOptions([]);
     }
   }, [open]);
-
-  React.useEffect(
-    (_) => {
-      const val = watch(name);
-      if (val) {
-        setValue(name, val);
-        setVal(val);
-      }
-    },
-    [watch(name)]
-  );
 
   return (
     <div>
@@ -98,7 +82,7 @@ export default function AppAutocomplete(props) {
       </Typography>
       <Autocomplete
         popupIcon={
-          loading ? (
+          isLoading ? (
             <CircularProgress color="inherit" size={20} />
           ) : (
             <KeyboardArrowDownIcon />
@@ -124,6 +108,8 @@ export default function AppAutocomplete(props) {
         onClose={() => {
           setOpen(false);
         }}
+        isOptionEqualToValue={(option, value) => option.value === value.value}
+        onChange={(e, option) => setValue(name, option?.value)}
         getOptionLabel={(option) => option.text}
         options={asyncOptions}
         loading={loading}
@@ -167,15 +153,6 @@ export default function AppAutocomplete(props) {
           </Paper>
         )}
       />
-      {error?.message && (
-        <Typography variant="h6" sx={{ marginLeft: '4px', color: 'red' }}>
-          {error.message}
-        </Typography>
-      )}
     </div>
   );
 }
-
-// country-api
-// state-api-dependon(country)
-// city-api-dependOn(state)
