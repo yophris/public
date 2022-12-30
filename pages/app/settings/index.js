@@ -74,7 +74,7 @@ const settingsOverviewData = [
         types: [
           {
             id: 'UserRoles',
-            path: 'general/userRoles',
+            path: 'general/user-roles',
             title: 'User Roles',
           },
         ],

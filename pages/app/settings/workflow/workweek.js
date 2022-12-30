@@ -32,19 +32,30 @@ const workweek = [
     element: AppWorkweekCheckbox,
     type: 'group',
     label: 'Select the work days for this week',
-    attr: {
-      names: [
-        'workweek.sunday',
-        'workweek.monday',
-        'workweek.tuesday',
-        'workweek.wednesday',
-        'workweek.thursday',
-        'workweek.friday',
-        'workweek.saturday',
-      ],
-      isRequired: true,
-    },
-    xs: 12,
+    attrs: [
+      {
+        name: 'workweek.sunday',
+      },
+      {
+        name: 'workweek.monday',
+      },
+      {
+        name: 'workweek.tuesday',
+      },
+      {
+        name: 'workweek.wednesday',
+      },
+      {
+        name: 'workweek.thursday',
+      },
+      {
+        name: 'workweek.friday',
+      },
+      {
+        name: 'workweek.saturday',
+      },
+    ],
+    isRequired: true,
     //need to find the way to validate each individual field or as common error for all the names
     //might need Abdullah help
     // validation: {

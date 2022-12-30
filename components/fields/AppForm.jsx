@@ -81,7 +81,7 @@ function AppForm({
                 <React.Fragment key={ind}>
                   {setting?.header && (
                     <>
-                      {ind > 0 && (
+                      {ind > 0 && !setting.noDivider && (
                         <Grid item xs={12}>
                           <Divider
                             orientation="horizontal"
@@ -98,12 +98,16 @@ function AppForm({
                         <Stack sx={{ m: 0, p: 0 }}>
                           <Typography
                             variant="h3_bold_secondary"
+                            component="h3"
                             sx={{ marginTop: 1 }}
                           >
                             {setting?.header}
                           </Typography>
                           {setting?.subHeader && (
-                            <Typography variant="body_medium_muted">
+                            <Typography
+                              variant="body_medium_muted"
+                              component="p"
+                            >
                               {setting.subHeader}
                             </Typography>
                           )}
@@ -115,10 +119,15 @@ function AppForm({
                   {setting?.fields?.map((field, j) =>
                     //group element rendering
                     field.type === 'group' ? (
-                      <Grid item {...field} key={j}>
+                      <Grid
+                        item
+                        key={j}
+                        sx={{ paddingLeft: 0, margin: 0, width: '100%' }}
+                      >
                         <field.element
                           setValue={setValue}
                           renderFields={renderFields}
+                          getValues={getValues}
                           errors={errors}
                           {...field}
                         />
@@ -127,7 +136,7 @@ function AppForm({
                       //individual field rendering
                       <Grid
                         item
-                        sx={{ paddingLeft: 0, margin: 0 }}
+                        sx={{ paddingLeft: 0, margin: 0, width: '100%' }}
                         key={j}
                         {...field}
                       >

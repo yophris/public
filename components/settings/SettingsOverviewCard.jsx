@@ -6,7 +6,7 @@ import AppProgressBar from '../AppProgressBar';
 import Image from 'next/image';
 
 export default function SettingsOverviewCard({ settingsData, completedData }) {
-  const { children, title, subtitle, settings = [] } = settingsData;
+  const { title, subtitle, settings = [] } = settingsData;
   return (
     <Paper
       sx={{
