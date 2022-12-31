@@ -119,19 +119,14 @@ function AppForm({
                   {setting?.fields?.map((field, j) =>
                     //group element rendering
                     field.type === 'group' ? (
-                      <Grid
-                        item
+                      <field.element
+                        setValue={setValue}
+                        renderFields={renderFields}
+                        getValues={getValues}
+                        errors={errors}
                         key={j}
-                        sx={{ paddingLeft: 0, margin: 0, width: '100%' }}
-                      >
-                        <field.element
-                          setValue={setValue}
-                          renderFields={renderFields}
-                          getValues={getValues}
-                          errors={errors}
-                          {...field}
-                        />
-                      </Grid>
+                        {...field}
+                      />
                     ) : (
                       //individual field rendering
                       <Grid

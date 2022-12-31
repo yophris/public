@@ -3,6 +3,7 @@ import {
   Box,
   Checkbox,
   FormControlLabel,
+  Grid,
   Stack,
   Typography,
 } from '@mui/material';
@@ -32,7 +33,7 @@ export default function UserRolesPermissions({
     }
   };
   return (
-    <>
+    <Grid item sx={{ paddingLeft: 0, margin: 0, width: '100%' }}>
       {selectAllOption?.isEnabled && (
         <AppControlledCheckbox
           width="100%"
@@ -72,6 +73,6 @@ export default function UserRolesPermissions({
             );
           })}
       </Stack>
-    </>
+    </Grid>
   );
 }

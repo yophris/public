@@ -11,6 +11,7 @@ import {
 } from 'requests/settings';
 import { useQuery, useQueryClient } from 'react-query';
 import { useAlert } from 'react-alert';
+import ApprovalRange from 'components/settings/ApprovalRange';
 
 const reimbursementPolicy = [
   {
@@ -43,98 +44,200 @@ const reimbursementPolicy = [
 
 const approvalRange = [
   {
-    element: TextInput,
-    attr: {
-      label: 'Max Expences',
-      name: 'reimbursementPolicy.leaveTypeName',
-      unit: 'INR',
-    },
-    validation: {
-      validationType: 'string',
-      validations: [
-        {
-          type: 'required',
-          params: ['Max Expences is Required'],
+    element: ApprovalRange,
+    type: 'group',
+    fields: [
+      {
+        element: TextInput,
+        attr: {
+          label: 'Min. Expenses',
+          name: 'approvalRange.minExpense',
+          inputAdornment: {
+            text: 'INR',
+            placement: 'start',
+          },
         },
-      ],
-    },
-    xs: 6,
+        validation: {
+          validationType: 'string',
+          validations: [
+            {
+              type: 'required',
+              params: ['Max Expences is Required'],
+            },
+          ],
+        },
+        xs: 6,
+      },
+      {
+        element: AppDropdown,
+        attr: {
+          label: 'Select Approval Heirarchy Type',
+          name: 'approvalRange.heirarchyType1',
+          options: [
+            {
+              text: 'Approval Heirarchy Type 1',
+              value: 'Approval Heirarchy Type1',
+            },
+            {
+              text: 'Approval Heirarchy Type 2',
+              value: 'Approval Heirarchy Type2',
+            },
+          ],
+        },
+        validation: {
+          validationType: 'string',
+          validations: [
+            {
+              type: 'required',
+              params: ['Approval Heirarchy Type is Required'],
+            },
+          ],
+        },
+        xs: 6,
+      },
+      {
+        element: TextInput,
+        attr: {
+          label: 'Max. Expenses',
+          name: 'approvalRange.maxExpense',
+          inputAdornment: {
+            text: 'INR',
+            placement: 'start',
+          },
+        },
+        validation: {
+          validationType: 'string',
+          validations: [
+            {
+              type: 'required',
+              params: ['Max Expences is Required'],
+            },
+          ],
+        },
+        xs: 6,
+      },
+      {
+        element: AppDropdown,
+        attr: {
+          label: 'Select Approval Heirarchy Type',
+          name: 'approvalRange.heirarchyType2',
+          options: [
+            {
+              text: 'Approval Heirarchy Type 1',
+              value: 'Approval Heirarchy Type1',
+            },
+            {
+              text: 'Approval Heirarchy Type 2',
+              value: 'Approval Heirarchy Type2',
+            },
+          ],
+        },
+        validation: {
+          validationType: 'string',
+          validations: [
+            {
+              type: 'required',
+              params: ['Approval Heirarchy Type is Required'],
+            },
+          ],
+        },
+        xs: 6,
+      },
+    ],
   },
-  {
-    element: AppDropdown,
+  // {
+  //   element: TextInput,
+  //   attr: {
+  //     label: 'Min. Expenses',
+  //     name: 'reimbursementPolicy.leaveTypeName',
+  //     unit: 'INR',
+  //   },
+  //   validation: {
+  //     validationType: 'string',
+  //     validations: [
+  //       {
+  //         type: 'required',
+  //         params: ['Max Expences is Required'],
+  //       },
+  //     ],
+  //   },
+  //   xs: 6,
+  // },
+  // {
+  //   element: AppDropdown,
 
-    attr: {
-      label: 'Select Approval Heirarchy Type',
-      name: 'approvalRange.heirarchyType1',
-      options: [
-        {
-          text: 'Approval Heirarchy Type 1',
-          value: 'Approval Heirarchy Type1',
-        },
-        {
-          text: 'Approval Heirarchy Type 2',
-          value: 'Approval Heirarchy Type2',
-        },
-      ],
-    },
-    validation: {
-      validationType: 'string',
-      validations: [
-        {
-          type: 'required',
-          params: ['Approval Heirarchy Type is Required'],
-        },
-      ],
-    },
-    xs: 6,
-  },
+  //   attr: {
+  //     label: 'Select Approval Heirarchy Type',
+  //     name: 'approvalRange.heirarchyType1',
+  //     options: [
+  //       {
+  //         text: 'Approval Heirarchy Type 1',
+  //         value: 'Approval Heirarchy Type1',
+  //       },
+  //       {
+  //         text: 'Approval Heirarchy Type 2',
+  //         value: 'Approval Heirarchy Type2',
+  //       },
+  //     ],
+  //   },
+  //   validation: {
+  //     validationType: 'string',
+  //     validations: [
+  //       {
+  //         type: 'required',
+  //         params: ['Approval Heirarchy Type is Required'],
+  //       },
+  //     ],
+  //   },
+  //   xs: 6,
+  // },
 
-  {
-    element: TextInput,
-    attr: {
-      label: 'Max Expences',
-      name: 'reimbursementPolicy.leaveTypeName',
-      unit: 'INR',
-    },
-    validation: {
-      validationType: 'string',
-      validations: [
-        {
-          type: 'required',
-          params: ['Max Expences is Required'],
-        },
-      ],
-    },
-    xs: 6,
-  },
-  {
-    element: AppDropdown,
+  // {
+  //   element: TextInput,
+  //   attr: {
+  //     label: 'Max. Expenses',
+  //     name: 'reimbursementPolicy.leaveTypeName',
+  //     unit: 'INR',
+  //   },
+  //   validation: {
+  //     validationType: 'string',
+  //     validations: [
+  //       {
+  //         type: 'required',
+  //         params: ['Max Expences is Required'],
+  //       },
+  //     ],
+  //   },
+  //   xs: 6,
+  // },
+  // {
+  //   element: AppDropdown,
 
-    attr: {
-      label: 'Select Approval Heirarchy Type',
-      name: 'approvalRange.heirarchyType2',
-      options: [
-        {
-          text: 'Approval Heirarchy Type 1',
-          value: 'Approval Heirarchy Type1',
-        },
-        {
-          text: 'Approval Heirarchy Type 2',
-          value: 'Approval Heirarchy Type2',
-        },
-      ],
-    },
-    validation: {
-      validationType: 'string',
-      validations: [
-        {
-          type: 'required',
-          params: ['Approval Heirarchy Type is Required'],
-        },
-      ],
-    },
-    xs: 6,
-  },
+  //   attr: {
+  //     label: 'Select Approval Heirarchy Type',
+  //     name: 'approvalRange.heirarchyType2',
+  //     options: [
+  //       {
+  //         text: 'Approval Heirarchy Type 1',
+  //         value: 'Approval Heirarchy Type1',
+  //       },
+  //       {
+  //         text: 'Approval Heirarchy Type 2',
+  //         value: 'Approval Heirarchy Type2',
+  //       },
+  //     ],
+  //   },
+  //   validation: {
+  //     validationType: 'string',
+  //     validations: [
+  //       {
+  //         type: 'required',
+  //         params: ['Approval Heirarchy Type is Required'],
+  //       },
+  //     ],
+  //   },
+  //   xs: 6,
+  // },
 ];
 
 const reimbursementPolicyForm = {
@@ -146,6 +249,7 @@ const reimbursementPolicyForm = {
     },
     {
       header: 'Approval Range',
+      subHeader: 'You may add mulltiple Expense limit & Approval Heirarchy',
       fields: approvalRange,
     },
   ],

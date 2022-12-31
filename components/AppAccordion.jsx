@@ -25,7 +25,7 @@ export default function AppAccordion({ renderFields, errors, ...rest }) {
   };
 
   return (
-    <>
+    <Grid item sx={{ paddingLeft: 0, margin: 0, width: '100%' }}>
       <Grid container sx={{ marginBottom: 2 }} spacing={2}>
         <Grid item xs={9}>
           <TextInput label="Select Leave Type to Add in policy" />
@@ -98,7 +98,7 @@ export default function AppAccordion({ renderFields, errors, ...rest }) {
           />
         </AccordionDetails>
       </Accordion>
-    </>
+    </Grid>
   );
 }
 

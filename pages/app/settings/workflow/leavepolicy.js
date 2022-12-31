@@ -134,15 +134,24 @@ const leaveType = [
         text: 'Accurat Rule',
         fields: [
           {
-            element: TextInput,
+            element: AppDropdown,
             attr: {
               label: 'Select Balance Type',
               name: 'holidayList.accurateRule.balanceType',
+              options: [
+                { text: 'Fixed Balance 1', value: 'f1' },
+                { text: 'Fixed Balance 2', value: 'f2' },
+                { text: 'Fixed Balance 3', value: 'f3' },
+              ],
             },
           },
           {
             element: TextInput,
             attr: {
+              inputAdornment: {
+                text: 'Days',
+                placement: 'end',
+              },
               label: 'Accurate Rate',
               name: 'holidayList.accurateRule.startDate',
             },
@@ -158,6 +167,10 @@ const leaveType = [
             attr: {
               label: 'Enter Limit',
               name: 'holidayList.balanceRule.limit',
+              inputAdornment: {
+                text: 'Days',
+                placement: 'end',
+              },
             },
           },
           {
@@ -165,6 +178,10 @@ const leaveType = [
             attr: {
               label: 'Enter Days to request when balance is “0”',
               name: 'holidayList.balanceRule.daysToReq',
+              inputAdornment: {
+                text: 'Days',
+                placement: 'end',
+              },
             },
           },
           {

@@ -72,10 +72,6 @@ const employeeDirectory = [
   {
     element: UserRolesPermissions,
     type: 'group',
-    attr: {
-      name: 'employeeDirectory.all',
-      label: 'Select all of the functionality',
-    },
     attrs: [
       {
         name: 'employeeDirectory.showEmployeeStatus',

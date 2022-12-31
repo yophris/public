@@ -1,12 +1,16 @@
+import * as React from 'react';
 import { Box, Typography } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
-import * as React from 'react';
 
 export default function TextInput(props) {
   const {
     label,
     unit = '',
+    inputAdornment = {
+      text: '',
+      placement: 'start',
+    },
     register,
     // watch,
     name,
@@ -54,25 +58,13 @@ export default function TextInput(props) {
           overflow: 'hidden',
         }}
       >
-        {unit !== '' && (
-          <Box
-            sx={{
-              background: '#fff',
-              // borderRadius: 2,
-              borderRight: '1px solid #EFEFEF',
-              px: 2.5,
-              py: 1.4,
-              height: '100%',
-            }}
-          >
-            <Typography variant="body_medium_secondary">{unit}</Typography>
-          </Box>
+        {inputAdornment.placement === 'start' && inputAdornment.text !== '' && (
+          <InputAdornmentComp text={inputAdornment.text} />
         )}
         <InputBase
           size="small"
           sx={{
             p: 1.4,
-            flex: 1,
             fontSize: '1.4rem',
             fontWeight: 500,
             color: 'text.secondary',
@@ -88,6 +80,9 @@ export default function TextInput(props) {
           multiline={isMultiline}
           rows={4}
         />
+        {inputAdornment.placement === 'end' && inputAdornment.text !== '' && (
+          <InputAdornmentComp text={inputAdornment.text} />
+        )}
       </Paper>
       {error?.message && (
         <Typography variant="h6" sx={{ marginLeft: '4px', color: 'red' }}>
@@ -97,3 +92,20 @@ export default function TextInput(props) {
     </div>
   );
 }
+
+const InputAdornmentComp = ({ text }) => {
+  return (
+    <Box
+      sx={{
+        background: '#fff',
+        // borderRadius: 2,
+        borderRight: '1px solid #EFEFEF',
+        px: 2.5,
+        py: 1.4,
+        height: '100%',
+      }}
+    >
+      <Typography variant="body_medium_secondary">{text}</Typography>
+    </Box>
+  );
+};

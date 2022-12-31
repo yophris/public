@@ -13,8 +13,8 @@ export default function AppButton({
       sx={{
         fontSize: '1.2rem',
         fontWeight: 500,
-        padding: '4px 32px',
-        borderRadius: 2,
+        padding: '8px 32px',
+        borderRadius: 1.25,
         textTransform: 'none',
         ...styleOverrides,
       }}
