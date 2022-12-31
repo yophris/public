@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 
@@ -21,18 +21,6 @@ export default function TextInput(props) {
     ...rest
   } = props;
 
-  // const [val, setVal] = React.useState('');
-  // React.useEffect(
-  //   (_) => {
-  //     const val = watch(name);
-  //     if (val) {
-  //       setValue(name, val);
-  //       setVal(val);
-  //     }
-  //   },
-  //   [watch(name)]
-  // );
-  // console.log(val, 'lklk');
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
@@ -46,8 +34,9 @@ export default function TextInput(props) {
           </Typography>
         )}
       </Typography>
-      <Paper
-        elevation={0}
+      <Stack
+        direction="row"
+        justifyContent="space-between"
         sx={{
           alignItems: 'center',
           backgroundColor: 'background.main',
@@ -83,7 +72,7 @@ export default function TextInput(props) {
         {inputAdornment.placement === 'end' && inputAdornment.text !== '' && (
           <InputAdornmentComp text={inputAdornment.text} />
         )}
-      </Paper>
+      </Stack>
       {error?.message && (
         <Typography variant="h6" sx={{ marginLeft: '4px', color: 'red' }}>
           {error.message}
@@ -98,8 +87,6 @@ const InputAdornmentComp = ({ text }) => {
     <Box
       sx={{
         background: '#fff',
-        // borderRadius: 2,
-        borderRight: '1px solid #EFEFEF',
         px: 2.5,
         py: 1.4,
         height: '100%',

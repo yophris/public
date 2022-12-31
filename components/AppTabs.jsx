@@ -87,16 +87,13 @@ export default function AppTabs({
       <Stack
         spacing={2}
         sx={{
-          width: '100%',
           padding: 2,
         }}
       >
         {tabs.map((tab, index) => (
           <TabPanel key={index} value={value} index={index}>
             {tab.fields.map((field, j) => (
-              <Box key={j} sx={{ width: '40%' }}>
-                {renderFields(field, errors)}
-              </Box>
+              <Box key={j}>{renderFields(field, errors)}</Box>
             ))}
           </TabPanel>
         ))}
