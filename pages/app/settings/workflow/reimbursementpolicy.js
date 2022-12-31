@@ -38,15 +38,16 @@ const reimbursementPolicy = [
       isMultiline: true,
     },
     xs: 12,
-  }
+  },
 ];
 
-const approvalRange=[
+const approvalRange = [
   {
     element: TextInput,
     attr: {
       label: 'Max Expences',
       name: 'reimbursementPolicy.leaveTypeName',
+      unit: 'INR',
     },
     validation: {
       validationType: 'string',
@@ -66,9 +67,14 @@ const approvalRange=[
       label: 'Select Approval Heirarchy Type',
       name: 'approvalRange.heirarchyType1',
       options: [
-        { text: 'Approval Heirarchy Type 1', value: 'Approval Heirarchy Type1' },
-        { text: 'Approval Heirarchy Type 2', value: 'Approval Heirarchy Type2' }
-
+        {
+          text: 'Approval Heirarchy Type 1',
+          value: 'Approval Heirarchy Type1',
+        },
+        {
+          text: 'Approval Heirarchy Type 2',
+          value: 'Approval Heirarchy Type2',
+        },
       ],
     },
     validation: {
@@ -88,6 +94,7 @@ const approvalRange=[
     attr: {
       label: 'Max Expences',
       name: 'reimbursementPolicy.leaveTypeName',
+      unit: 'INR',
     },
     validation: {
       validationType: 'string',
@@ -107,9 +114,14 @@ const approvalRange=[
       label: 'Select Approval Heirarchy Type',
       name: 'approvalRange.heirarchyType2',
       options: [
-        { text: 'Approval Heirarchy Type 1', value: 'Approval Heirarchy Type1' },
-        { text: 'Approval Heirarchy Type 2', value: 'Approval Heirarchy Type2' }
-
+        {
+          text: 'Approval Heirarchy Type 1',
+          value: 'Approval Heirarchy Type1',
+        },
+        {
+          text: 'Approval Heirarchy Type 2',
+          value: 'Approval Heirarchy Type2',
+        },
       ],
     },
     validation: {
@@ -123,7 +135,7 @@ const approvalRange=[
     },
     xs: 6,
   },
-]
+];
 
 const reimbursementPolicyForm = {
   key: 'reimbursementPolicy',

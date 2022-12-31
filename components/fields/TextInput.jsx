@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 import * as React from 'react';
@@ -6,6 +6,7 @@ import * as React from 'react';
 export default function TextInput(props) {
   const {
     label,
+    unit = '',
     register,
     // watch,
     name,
@@ -49,13 +50,28 @@ export default function TextInput(props) {
           border: '1px solid #EFEFEF',
           borderRadius: 2,
           display: 'flex',
-          marginTop: 0,
+          margin: 0,
+          overflow: 'hidden',
         }}
       >
+        {unit !== '' && (
+          <Box
+            sx={{
+              background: '#fff',
+              // borderRadius: 2,
+              borderRight: '1px solid #EFEFEF',
+              px: 2.5,
+              py: 1.4,
+              height: '100%',
+            }}
+          >
+            <Typography variant="body_medium_secondary">{unit}</Typography>
+          </Box>
+        )}
         <InputBase
           size="small"
           sx={{
-            m: 1.5,
+            p: 1.4,
             flex: 1,
             fontSize: '1.4rem',
             fontWeight: 500,
