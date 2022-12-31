@@ -8,6 +8,7 @@ import AppButton from '../AppButton';
 
 function AppForm({
   form,
+  defaultValues,
   submitData,
   edit,
   validationSchema,
@@ -27,6 +28,7 @@ function AppForm({
     getValues,
   } = useForm({
     resolver: yupResolver(validationSchemaGenerator(form)),
+    defaultValues,
   });
 
   const renderFields = (d, error) => {

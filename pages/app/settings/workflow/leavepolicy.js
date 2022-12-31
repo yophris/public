@@ -211,8 +211,12 @@ const leaveType = [
           {
             element: TextInput,
             attr: {
-              label: 'Request Rate',
+              label: 'Enter Days to limit to requested at once',
               name: 'holidayList.requestRule.limit',
+              inputAdornment: {
+                text: 'Days',
+                placement: 'end',
+              },
             },
           },
         ],
@@ -238,6 +242,33 @@ const leavePolicyForm = {
       fields: leaveType,
     },
   ],
+  defaultValues: {
+    leavePolicy: {
+      name: '',
+      workweekId: '',
+    },
+    holidayList: {
+      startMonth: '',
+      endMonth: '',
+      startDate: '',
+      heirarchyType: '',
+    },
+    leaveType: {
+      accurateRule: {
+        balanceType: '',
+        startDate: '',
+      },
+      balanceRule: {
+        limit: '',
+        daysToReq: '',
+        carryForwardType: '',
+      },
+      requestRule: {
+        restrictBackdated: '',
+        limit: '',
+      },
+    },
+  },
   endpoint: 'settings/leavePolicy',
   texts: {
     title: 'Leave',
@@ -292,6 +323,7 @@ export default function Page() {
     <SettingPageLayout texts={leavePolicyForm.texts}>
       <AppForm
         form={leavePolicyForm.form}
+        defaultValues={leavePolicyForm.defaultValues}
         submitData={(data) => onCreate.mutate({ ...data })}
         edit={false}
         cancelDrawer={null}

@@ -45,6 +45,7 @@ export default function TextInput(props) {
           display: 'flex',
           margin: 0,
           overflow: 'hidden',
+          // width: '50%',
         }}
       >
         {inputAdornment.placement === 'start' && inputAdornment.text !== '' && (
