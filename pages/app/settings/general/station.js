@@ -92,11 +92,11 @@ export const addressFields = [
     attr: {
       label: 'Country',
       name: 'address.country',
-      endPoint:'app/valueHelp/countries',
-      options: [
-        { text: 'India', value: 'india' },
-        { text: 'uae', value: 'uae' },
-      ],
+      asyncData: {
+        endpointApi: getSetting,
+        endpoint: 'app/valueHelp/countries',
+        key: 'countries',
+      },
     },
     validation: {
       validationType: 'object',
@@ -114,8 +114,17 @@ export const addressFields = [
     xs: 6,
   },
   {
-    element: TextInput,
-    attr: { label: 'State', name: 'address.state',endPoint:'' },
+    element: AppAutocomplete,
+    attr: {
+      label: 'State',
+      name: 'address.state',
+      asyncData: {
+        endpointApi: getSetting,
+        endpoint: 'app/valueHelp/states/IN',
+        lookup: 'address.country',
+        key: 'states',
+      },
+    },
     validation: {
       validationType: 'string',
       validations: [
@@ -129,7 +138,7 @@ export const addressFields = [
   },
   {
     element: TextInput,
-    attr: { label: 'City', name: 'address.city',dependOn:'address.state' },
+    attr: { label: 'City', name: 'address.city', dependOn: 'address.state' },
     validation: {
       validationType: 'string',
       validations: [
@@ -229,8 +238,8 @@ export default function Page() {
   const qc = useQueryClient();
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedState, setSelectedState] = useState('');
-  console.log(watch('city'),"lklk");
-  console.log(stationForm,"lklk")
+  console.log(watch('city'), 'lklk');
+  console.log(stationForm, 'lklk');
   // const alert = useAlert();
   const {
     isLoading: countryLoading,

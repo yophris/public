@@ -1,4 +1,3 @@
-import AppAccordion from 'components/AppAccordion';
 import AppSideViewButton from 'components/AppSideViewButton';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
 import AppCheckbox from 'components/fields/AppCheckbox';
@@ -6,6 +5,7 @@ import AppDropdown from 'components/fields/AppDropdown';
 import AppForm from 'components/fields/AppForm';
 import WorkweekReadonly from 'components/fields/AppWorkweekCheckbox/WorkweekReadonly';
 import TextInput from 'components/fields/TextInput';
+import LeaveTypeRulesSetting from 'components/settings/LeaveTypeRulesSetting';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import { useMutation } from 'react-query';
 import {
@@ -60,8 +60,8 @@ const leavePolicy = [
     children: {
       element: AppSideViewButton,
       attr: {
-        name: 'leavePolicy.workReadonly',
-        lookup: 'leavePolicy.workweekId',
+        name: 'leavePolicy.calendarSideView',
+        lookup: 'leavePolicy.holidayCalendarId',
       },
       xs: 12,
       md: 6,
@@ -70,12 +70,12 @@ const leavePolicy = [
   },
 ];
 
-const holidayList = [
+const policyPeriod = [
   {
     element: AppDropdown,
     attr: {
       label: 'Select Start Month',
-      name: 'holidayList.startMonth',
+      name: 'policyPeriod.startMonth',
       options: [
         { text: 'January 2022', value: 'jan' },
         { text: 'February 2022', value: 'feb' },
@@ -88,7 +88,7 @@ const holidayList = [
     element: AppDropdown,
     attr: {
       label: 'Select End Month',
-      name: 'holidayList.endMonth',
+      name: 'policyPeriod.endMonth',
       options: [
         { text: 'September 2022', value: 'sep' },
         { text: 'November 2022', value: 'nov' },
@@ -101,7 +101,7 @@ const holidayList = [
     element: TextInput,
     attr: {
       label: 'Applicable from start date',
-      name: 'holidayList.startDate',
+      name: 'policyPeriod.startDate',
       options: [
         { text: 'September 2022', value: 'sep' },
         { text: 'November 2022', value: 'nov' },
@@ -114,7 +114,7 @@ const holidayList = [
     element: AppDropdown,
     attr: {
       label: 'Select Approval Heirarchy Type',
-      name: 'holidayList.heirarchyType',
+      name: 'policyPeriod.heirarchyType',
       options: [
         { text: 'Heirarchy 1', value: 'h1' },
         { text: 'Heirarchy 2', value: 'h2' },
@@ -126,8 +126,25 @@ const holidayList = [
 ];
 const leaveType = [
   {
-    element: AppAccordion,
+    element: LeaveTypeRulesSetting,
     type: 'group',
+    name: 'leaveType',
+    fieldForArray: {
+      leaveTypeId: '',
+      accurateRule: {
+        balanceType: '',
+        startDate: '',
+      },
+      balanceRule: {
+        limit: '',
+        daysToReq: '',
+        carryForwardType: '',
+      },
+      requestRule: {
+        restrictBackdated: false,
+        limit: '',
+      },
+    },
     tabs: [
       {
         id: 'accurateRule',
@@ -137,7 +154,7 @@ const leaveType = [
             element: AppDropdown,
             attr: {
               label: 'Select Balance Type',
-              name: 'holidayList.accurateRule.balanceType',
+              name: 'accurateRule.balanceType',
               options: [
                 { text: 'Fixed Balance 1', value: 'f1' },
                 { text: 'Fixed Balance 2', value: 'f2' },
@@ -153,7 +170,7 @@ const leaveType = [
                 placement: 'end',
               },
               label: 'Accurate Rate',
-              name: 'holidayList.accurateRule.startDate',
+              name: 'accurateRule.startDate',
             },
           },
         ],
@@ -166,7 +183,7 @@ const leaveType = [
             element: TextInput,
             attr: {
               label: 'Enter Limit',
-              name: 'holidayList.balanceRule.limit',
+              name: 'balanceRule.limit',
               inputAdornment: {
                 text: 'Days',
                 placement: 'end',
@@ -177,7 +194,7 @@ const leaveType = [
             element: TextInput,
             attr: {
               label: 'Enter Days to request when balance is “0”',
-              name: 'holidayList.balanceRule.daysToReq',
+              name: 'balanceRule.daysToReq',
               inputAdornment: {
                 text: 'Days',
                 placement: 'end',
@@ -188,7 +205,7 @@ const leaveType = [
             element: AppDropdown,
             attr: {
               label: 'Select carry forward type',
-              name: 'holidayList.balanceRule.carryForwardType',
+              name: 'balanceRule.carryForwardType',
               options: [
                 { text: 'Total remaining count', value: 'trc' },
                 { text: 'Limit count', value: 'lc' },
@@ -205,14 +222,14 @@ const leaveType = [
             element: AppCheckbox,
             attr: {
               label: 'Restrict back-dated leave action',
-              name: 'holidayList.requestRule.restrictBackdated',
+              name: 'requestRule.restrictBackdated',
             },
           },
           {
             element: TextInput,
             attr: {
               label: 'Enter Days to limit to requested at once',
-              name: 'holidayList.requestRule.limit',
+              name: 'requestRule.limit',
               inputAdornment: {
                 text: 'Days',
                 placement: 'end',
@@ -235,7 +252,7 @@ const leavePolicyForm = {
     },
     {
       header: 'Policy Period',
-      fields: holidayList,
+      fields: policyPeriod,
     },
     {
       header: 'Leave Type Rules Setting',
@@ -247,27 +264,13 @@ const leavePolicyForm = {
       name: '',
       workweekId: '',
     },
-    holidayList: {
+    policyPeriod: {
       startMonth: '',
       endMonth: '',
       startDate: '',
       heirarchyType: '',
     },
-    leaveType: {
-      accurateRule: {
-        balanceType: '',
-        startDate: '',
-      },
-      balanceRule: {
-        limit: '',
-        daysToReq: '',
-        carryForwardType: '',
-      },
-      requestRule: {
-        restrictBackdated: '',
-        limit: '',
-      },
-    },
+    leaveType: [leaveType.fieldForArray],
   },
   endpoint: 'settings/leavePolicy',
   texts: {
@@ -300,14 +303,7 @@ export default function Page() {
 
   // create
   const onCreate = useMutation(
-    (data) =>
-      response?.data
-        ? leavePolicyForm.putFn(
-            leavePolicyForm.endpoint,
-            response.data.id,
-            data
-          )
-        : leavePolicyForm.postFn(leavePolicyForm.endpoint, data),
+    (data) => leavePolicyForm.postFn(leavePolicyForm.endpoint, data),
     {
       onSuccess: () => {
         qc.invalidateQueries('get' + leavePolicyForm.key);

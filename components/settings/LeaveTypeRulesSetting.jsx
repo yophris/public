@@ -1,24 +1,21 @@
 import * as React from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {
-  Box,
-  Grid,
-  LinearProgress,
-  linearProgressClasses,
-  Stack,
-  styled,
-} from '@mui/material';
+import { Box, Grid, Stack } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
+import AppTabs from 'components/AppTabs';
 import { useFieldArray } from 'react-hook-form';
-import AppButton from './AppButton';
-import AppColorCircle from './AppColorCircle';
-import AppTabs from './AppTabs';
-import AppDropdown from './fields/AppDropdown';
+import AppButton from 'components/AppButton';
+import AppColorCircle from 'components/AppColorCircle';
+import AppDropdown from 'components/fields/AppDropdown';
 
-export default function AppAccordion({ renderFields, errors, ...rest }) {
+export default function LeaveTypeRulesSetting({
+  renderFields,
+  errors,
+  ...rest
+}) {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control: rest.control,
@@ -151,20 +148,3 @@ export default function AppAccordion({ renderFields, errors, ...rest }) {
     </Grid>
   );
 }
-
-const BorderLinearProgress = styled(LinearProgress)(
-  ({ theme, progresscolor }) => {
-    return {
-      height: 10,
-      borderRadius: 5,
-      [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor:
-          theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-      },
-      [`& .${linearProgressClasses.bar}`]: {
-        borderRadius: 5,
-        backgroundColor: progresscolor,
-      },
-    };
-  }
-);

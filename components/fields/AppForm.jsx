@@ -125,6 +125,8 @@ function AppForm({
                         setValue={setValue}
                         renderFields={renderFields}
                         getValues={getValues}
+                        control={control}
+                        watch={watch}
                         errors={errors}
                         key={j}
                         {...field}

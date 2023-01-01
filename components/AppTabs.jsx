@@ -2,6 +2,7 @@ import { Box, Divider, Stack, Tab, Tabs } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import { useFieldArray } from 'react-hook-form';
 
 export function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -29,11 +30,14 @@ TabPanel.propTypes = {
 };
 
 export default function AppTabs({
+  index,
   tabs,
   fields,
   renderFields,
   errors,
-  ...props
+  name,
+  setFieldValue,
+  leaveType,
 }) {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -90,11 +94,19 @@ export default function AppTabs({
           padding: 2,
         }}
       >
-        {tabs.map((tab, index) => (
-          <TabPanel key={index} value={value} index={index}>
-            {tab.fields.map((field, j) => (
-              <Box key={j}>{renderFields(field, errors)}</Box>
-            ))}
+        {tabs.map((tab, i) => (
+          <TabPanel key={i} value={value} index={i}>
+            {tab.fields.map((field, j) => {
+              setFieldValue(`${name}.${index}.${name}Id`, leaveType.value);
+              const modifiedField = {
+                ...field,
+                attr: {
+                  ...field.attr,
+                  name: `${name}.${index}.${field.attr.name}`,
+                },
+              };
+              return <Box key={j}>{renderFields(modifiedField, errors)}</Box>;
+            })}
           </TabPanel>
         ))}
       </Stack>

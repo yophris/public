@@ -7,8 +7,7 @@ import { useEffect } from 'react';
 export default function AppDropdown({
   label,
   name,
-  defaultValue,
-  options = [{ text: '', value: '' }],
+  options,
   register,
   setValue,
   error,
@@ -17,17 +16,17 @@ export default function AppDropdown({
   watch,
   ...rest
 }) {
-  const [val, setVal] = React.useState('');
-  useEffect(
-    (_) => {
-      const val = watch(name);
-      if (val) {
-        setValue(name, val);
-        setVal(val);
-      }
-    },
-    [watch(name)]
-  );
+  // const [val, setVal] = React.useState('');
+  // useEffect(
+  //   (_) => {
+  //     const val = watch(name);
+  //     if (val) {
+  //       setValue(name, val);
+  //       setVal(val);
+  //     }
+  //   },
+  //   [watch(name)]
+  // );
   return (
     <div>
       <Typography variant="body_medium_muted" component="p" mb={1}>
@@ -48,10 +47,9 @@ export default function AppDropdown({
         input={<BootstrapInput />}
         IconComponent={KeyboardArrowDownIcon}
         sx={{ fontSize: '1.4rem', fontWeight: 500, color: 'text.secondary' }}
-        value={val}
-        defaultValue={defaultValue}
       >
         <MenuItem
+          selected
           sx={{
             fontSize: '1.4rem',
             color: 'text.secondary',
@@ -61,20 +59,21 @@ export default function AppDropdown({
         >
           None
         </MenuItem>
-        {options.map((option, ind) => (
-          <MenuItem
-            sx={{
-              fontSize: '1.4rem',
-              fontWeight: 500,
-              color: 'text.secondary',
-            }}
-            value={option.value}
-            key={ind}
-            disabled={option.disabled}
-          >
-            {option.text}
-          </MenuItem>
-        ))}
+        {options.length &&
+          options.map((option, ind) => (
+            <MenuItem
+              sx={{
+                fontSize: '1.4rem',
+                fontWeight: 500,
+                color: 'text.secondary',
+              }}
+              value={option.value}
+              key={ind}
+              disabled={option.disabled}
+            >
+              {option.text}
+            </MenuItem>
+          ))}
       </Select>
       {error?.message && (
         <Typography variant="h6" sx={{ marginLeft: '4px', color: 'red' }}>
