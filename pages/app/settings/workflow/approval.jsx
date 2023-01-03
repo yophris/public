@@ -12,6 +12,10 @@ import {
   getSetting,
   updateSetting,
 } from 'requests/settings';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useAlert } from 'react-alert';
+import AppForm from 'components/fields/AppForm';
+import AppDropdown from 'components/fields/AppDropdown';
 
 export function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,11 +23,11 @@ export function TabPanel(props) {
   return (
     <div
       role="tabpanel"
-      hidden={value !== 0}
+      hidden={value !== index}
       {...other}
-      style={{ marginTop: 0 }}
+      style={{ marginTop: index }}
     >
-      {value === 0 && (
+      {value === index && (
         <Stack direction="column" spacing={2}>
           {children}
         </Stack>
@@ -67,14 +71,78 @@ const workflowHierarchy = [
     xs: 12,
   },
 ];
-
-// const validation_workflowHierarchy = Yup.object().shape({
-//   workflowHierarchy: Yup.object().shape({
-//     workflowHierarchyName: Yup.string().required(' name required.'),
-//     workflowHierarchyType: Yup.string().required('type required.'),
-//     description: Yup.string().required('description required.'),
-//   }),
-// });
+const TransferApprovals = [
+  {
+    element: AppDropdown,
+    attr: {
+      label: 'Select Approval Hierarchy Type',
+      name: 'workflowSetting.trasferApprovalHierarchy',
+      options: [
+        { text: 'hierarchy 1', value: 'h1' },
+        { text: 'hierarchy 2', value: 'h2' },
+        { text: 'hierarchy 3', value: 'h3' },
+      ],
+    },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['Workflow Hierarchy Type is Required'],
+        },
+      ],
+    },
+    xs: 6,
+  },
+];
+const TerminationApprovals = [
+  {
+    element: AppDropdown,
+    attr: {
+      label: 'Select Approval Hierarchy Type',
+      name: 'workflowSetting.terminationApprovalHierarchy',
+      options: [
+        { text: 'hierarchy 1', value: 'h1' },
+        { text: 'hierarchy 2', value: 'h2' },
+        { text: 'hierarchy 3', value: 'h3' },
+      ],
+    },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['Workflow Hierarchy Type is Required'],
+        },
+      ],
+    },
+    xs: 6,
+  },
+];
+const LeaveApprovals = [
+  {
+    element: AppDropdown,
+    attr: {
+      label: 'Select Approval Hierarchy Type',
+      name: 'workflowSetting.leaveApprovalHierarchy',
+      options: [
+        { text: 'hierarchy 1', value: 'h1' },
+        { text: 'hierarchy 2', value: 'h2' },
+        { text: 'hierarchy 3', value: 'h3' },
+      ],
+    },
+    validation: {
+      validationType: 'string',
+      validations: [
+        {
+          type: 'required',
+          params: ['Workflow Hierarchy Type is Required'],
+        },
+      ],
+    },
+    xs: 6,
+  },
+];
 
 const workflowHierarchyForm = {
   key: 'workflowHierarchy',
@@ -101,8 +169,55 @@ const workflowHierarchyForm = {
   putFn: updateSetting,
   deleteFn: deleteSetting,
 };
+const workflowApprovalsForm = {
+  key: 'workflowApprovals',
+  form: [
+    {
+      header: 'Transfer Approvals',
+      fields: TransferApprovals,
+    },
+    {
+      header: 'Termination Approvals',
+      fields: TerminationApprovals,
+    },
+    {
+      header: 'Leave Approvals',
+      fields: LeaveApprovals,
+    },
+  ],
+};
 
 export default function Pages(props) {
+  const qc = useQueryClient();
+  const alert = useAlert();
+  const {
+    isLoading,
+    data: response,
+    error,
+  } = useQuery('get' + workflowHierarchyForm.key, () =>
+    workflowHierarchyForm.getAllFn(workflowHierarchyForm.endpoint)
+  );
+
+  // create
+  const onCreate = useMutation(
+    (data) =>
+      response?.data
+        ? workflowHierarchyForm.putFn(
+            workflowHierarchyForm.endpoint,
+            response.data.id,
+            data
+          )
+        : workflowHierarchyForm.postFn(workflowHierarchyForm.endpoint, data),
+    {
+      onSuccess: () => {
+        qc.invalidateQueries('get' + workflowHierarchyForm.key);
+        alert.success(response?.data ? `Updated` : `Company Created`);
+      },
+      onError: (data) => {
+        alert.error('Failed');
+      },
+    }
+  );
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -141,11 +256,8 @@ export default function Pages(props) {
             indicatorColor="primary"
             value={value}
             onChange={handleChange}
-            centered
           >
-            {/* {tabs.map((tab, 0) => ( */}
             <Tab
-              key={0}
               sx={{
                 '&.Mui-selected': { fontWeight: 600, color: '#333333' },
               }}
@@ -154,29 +266,27 @@ export default function Pages(props) {
                   variant={
                     0 === value ? 'body_medium_secondary' : 'body_medium_muted'
                   }
-                  component="p"
+                  component="h3"
                 >
                   Workflow Hierarchy Type
                 </Typography>
               }
             />
             <Tab
-              key={0}
               sx={{
                 '&.Mui-selected': { fontWeight: 600, color: '#333333' },
               }}
               label={
                 <Typography
                   variant={
-                    0 === value ? 'body_medium_secondary' : 'body_medium_muted'
+                    1 === value ? 'body_medium_secondary' : 'body_medium_muted'
                   }
-                  component="p"
+                  component="h3"
                 >
                   Workflow Setting
                 </Typography>
               }
             />
-            {/* ))} */}
           </Tabs>
         </Stack>
         {/* <Divider orientation="horizontal" /> */}
@@ -189,6 +299,15 @@ export default function Pages(props) {
           {/* {tabs.map((tab, i) => ( */}
           <TabPanel value={value} index={0}>
             <ListWithSidebarLayout config={workflowHierarchyForm} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <AppForm
+              form={workflowApprovalsForm.form}
+              submitData={(data) => onCreate.mutate({ ...data })}
+              validationSchema={workflowHierarchyForm.validation}
+              edit={response?.data}
+              cancelDrawer={null}
+            />
           </TabPanel>
           {/* ))} */}
         </Stack>
