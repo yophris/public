@@ -1,24 +1,16 @@
 import { useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { IconButton, Stack, Typography } from '@mui/material';
+import { Box, IconButton, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import AppDropdown from '../../fields/AppDropdown';
-
-const style = {
-  cursor: 'move',
-};
-
-export const ItemTypes = {
-  CARD: 'card',
-};
 
 export const AppItem = ({
   id,
   item,
   options,
   index,
-  moveCard,
+  moveItem,
   items,
   setItems,
   ...rest
@@ -78,7 +70,7 @@ export const AppItem = ({
         return;
       }
       // Time to actually perform the action
-      moveCard(dragIndex, hoverIndex);
+      moveItem(dragIndex, hoverIndex);
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
@@ -101,7 +93,14 @@ export const AppItem = ({
   drag(drop(ref));
 
   return (
-    <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+    <Box
+      ref={ref}
+      sx={{
+        cursor: 'move',
+        opacity,
+      }}
+      data-handler-id={handlerId}
+    >
       <Stack
         direction="row"
         sx={{
@@ -134,6 +133,6 @@ export const AppItem = ({
           />
         </IconButton>
       </Stack>
-    </div>
+    </Box>
   );
 };

@@ -26,20 +26,21 @@ export default function AppSequenceDropdown({ ...rest }) {
     rest.setValue(rest.name, items);
   }, [items]);
 
-  const moveCard = useCallback(
+  //need help here to update the sequence value
+  const moveItem = useCallback(
     (dragIndex, hoverIndex) => {
-      setItems((prevCards) =>
-        update(prevCards, {
+      setItems((prevItems) =>
+        update(prevItems, {
           $splice: [
             [dragIndex, 1],
-            [hoverIndex, 0, prevCards[dragIndex]],
+            [hoverIndex, 0, prevItems[dragIndex]],
           ],
         })
       );
     },
     [items]
   );
-  const renderCard = useCallback(
+  const renderItem = useCallback(
     (item, index) => {
       return (
         <AppItem
@@ -50,7 +51,7 @@ export default function AppSequenceDropdown({ ...rest }) {
           setItems={setItems}
           items={items}
           options={options}
-          moveCard={moveCard}
+          moveItem={moveItem}
           {...rest}
         />
       );
@@ -75,7 +76,7 @@ export default function AppSequenceDropdown({ ...rest }) {
           </Typography>
         )}
       </Typography>
-      {items.map((item, i) => renderCard(item, i))}
+      {items.map((item, i) => renderItem(item, i))}
       <AppButton
         onClick={() =>
           setItems([
