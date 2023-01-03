@@ -134,6 +134,11 @@ const settingsOverviewData = [
             path: 'workflow/workweek',
             title: 'Work Week',
           },
+          {
+            id: 'approval',
+            path: 'workflow/approval',
+            title: 'WorkFlow Approval',
+          },
         ],
       },
       {

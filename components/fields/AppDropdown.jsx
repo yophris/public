@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MenuItem, Select, styled, Typography } from '@mui/material';
+import { Box, MenuItem, Select, styled, Typography } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect } from 'react';
@@ -14,6 +14,7 @@ export default function AppDropdown({
   isRequired,
   getValues,
   watch,
+  hideLabel = false,
   ...rest
 }) {
   // const [val, setVal] = React.useState('');
@@ -28,25 +29,32 @@ export default function AppDropdown({
   //   [watch(name)]
   // );
   return (
-    <div>
-      <Typography variant="body_medium_muted" component="p" mb={1}>
-        {label}
-        {isRequired && (
-          <Typography
-            variant="body_bold"
-            sx={{ marginLeft: '4px', color: '#F53E40' }}
-          >
-            *
-          </Typography>
-        )}
-      </Typography>
+    <Box sx={{ width: '100%' }}>
+      {!hideLabel && (
+        <Typography variant="body_medium_muted" component="p" mb={1}>
+          {label}
+          {isRequired && (
+            <Typography
+              variant="body_bold"
+              sx={{ marginLeft: '4px', color: '#F53E40' }}
+            >
+              *
+            </Typography>
+          )}
+        </Typography>
+      )}
 
       <Select
         {...(register && register)}
         {...rest}
         input={<BootstrapInput />}
         IconComponent={KeyboardArrowDownIcon}
-        sx={{ fontSize: '1.4rem', fontWeight: 500, color: 'text.secondary' }}
+        sx={{
+          fontSize: '1.4rem',
+          fontWeight: 500,
+          color: 'text.secondary',
+          width: '100%',
+        }}
       >
         <MenuItem
           selected
@@ -80,7 +88,7 @@ export default function AppDropdown({
           {error.message}
         </Typography>
       )}
-    </div>
+    </Box>
   );
 }
 

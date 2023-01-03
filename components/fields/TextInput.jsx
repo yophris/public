@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper';
 
 export default function TextInput(props) {
   const {
+    headLabel,
     label,
     unit = '',
     inputAdornment = {
@@ -23,6 +24,11 @@ export default function TextInput(props) {
 
   return (
     <div>
+      {headLabel && (
+        <Typography variant="h3_bold_secondary" component="h3" mb={1}>
+          {headLabel}
+        </Typography>
+      )}
       <Typography variant="body_medium_muted" component="p" mb={1}>
         {label}
         {isRequired && (

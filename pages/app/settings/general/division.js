@@ -50,6 +50,11 @@ const division = [
     attr: {
       label: 'Division Head',
       name: 'division.divisionHead',
+      asyncData: {
+        endpointApi: getSetting,
+        endpoint: 'settings/workweek',
+        key: 'data',
+      },
       options: [
         { text: 'Division Head 1', value: 'dh1' },
         { text: 'Division Head 2', value: 'dh2' },

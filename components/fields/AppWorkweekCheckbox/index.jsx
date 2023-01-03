@@ -1,11 +1,11 @@
-import { Stack, Typography } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 import SingleWorkweek from './SingleWorkweek';
 
 export default function AppWorkweekCheckbox(props) {
   const { setValue, name, ...rest } = props;
 
   return (
-    <div>
+    <Grid item sx={{ paddingLeft: 0, margin: 0, width: '100%' }}>
       <Typography variant="body_medium_muted" component="p" mb={1}>
         {rest.label}
         {rest.isRequired && (
@@ -26,6 +26,6 @@ export default function AppWorkweekCheckbox(props) {
           />
         ))}
       </Stack>
-    </div>
+    </Grid>
   );
 }
