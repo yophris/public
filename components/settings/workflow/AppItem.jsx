@@ -1,12 +1,9 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { Box, IconButton, Stack, Typography } from '@mui/material';
-import InputBase from '@mui/material/InputBase';
-import Paper from '@mui/material/Paper';
-import AppDropdown from '../../fields/AppDropdown';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import { IconButton, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
-import AppButton from 'components/AppButton';
+import AppDropdown from '../../fields/AppDropdown';
 
 const style = {
   cursor: 'move',
@@ -16,8 +13,32 @@ export const ItemTypes = {
   CARD: 'card',
 };
 
-export const AppItem = ({ id, item, options, index, moveCard, ...rest }) => {
+export const AppItem = ({
+  id,
+  item,
+  options,
+  index,
+  moveCard,
+  items,
+  setItems,
+  ...rest
+}) => {
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleSelectedOption = (event) => {
+    setSelectedOption(event.target.value);
+    setItems((current) =>
+      current.map((obj) => {
+        if (obj.id === item.id) {
+          return { ...obj, approvers: event.target.value };
+        }
+        return obj;
+      })
+    );
+  };
+
   const ref = useRef(null);
+
   const [{ handlerId }, drop] = useDrop({
     accept: 'item',
     collect(monitor) {
@@ -65,6 +86,7 @@ export const AppItem = ({ id, item, options, index, moveCard, ...rest }) => {
       item.index = hoverIndex;
     },
   });
+
   const [{ isDragging }, drag] = useDrag({
     type: 'item',
     item: () => {
@@ -74,8 +96,10 @@ export const AppItem = ({ id, item, options, index, moveCard, ...rest }) => {
       isDragging: monitor.isDragging(),
     }),
   });
+
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
+
   return (
     <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
       <Stack
@@ -95,7 +119,12 @@ export const AppItem = ({ id, item, options, index, moveCard, ...rest }) => {
         <Typography variant="h3_bold_secondary" component="h3" mb={1}>
           {item.sequence}
         </Typography>
-        <AppDropdown hideLabel={true} {...rest} options={options} />
+        <AppDropdown
+          hideLabel={true}
+          options={options}
+          value={selectedOption}
+          onChange={handleSelectedOption}
+        />
         <IconButton>
           <Image
             src="/images/trashIcon.svg"
