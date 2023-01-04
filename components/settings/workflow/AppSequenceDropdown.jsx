@@ -26,7 +26,6 @@ export default function AppSequenceDropdown({ ...rest }) {
     rest.setValue(rest.name, items);
   }, [items]);
 
-  //need help here to update the sequence value
   const moveItem = useCallback(
     (dragIndex, hoverIndex) => {
       setItems((prevItems) =>
@@ -36,6 +35,12 @@ export default function AppSequenceDropdown({ ...rest }) {
             [hoverIndex, 0, prevItems[dragIndex]],
           ],
         })
+      );
+
+      //set the sequence now, need to find how to update
+      //in above sorting itself
+      setItems((current) =>
+        current.map((obj, index) => ({ ...obj, sequence: index + 1 }))
       );
     },
     [items]
