@@ -1,6 +1,6 @@
 import axios from 'axios';
 const axiosInstance = axios.create({
-  baseURL: 'http://ec2-54-161-143-145.compute-1.amazonaws.com:3000/api/v1/',
+  baseURL: 'http://ec2-18-207-190-120.compute-1.amazonaws.com:3000/api/v1/',
   // baseURL: 'http://localhost:5000/api/v1/',
 });
 var qs = require('qs');

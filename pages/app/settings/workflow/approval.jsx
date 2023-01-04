@@ -65,7 +65,7 @@ const workflowHierarchy = [
     attr: {
       headLabel: 'Approver sequence in role',
       label: 'Select the Approvers in order of Hierarchy',
-      name: 'workflowHierarchy.order',
+      name: 'workflowHierarchy.approverSequence',
     },
 
     xs: 12,
