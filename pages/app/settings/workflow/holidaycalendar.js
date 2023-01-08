@@ -180,10 +180,7 @@ export default function Page() {
 
   // create
   const onCreate = useMutation(
-    (data) =>
-      response?.data
-        ? holidayForm.putFn(holidayForm.endpoint, response.data.id, data)
-        : holidayForm.postFn(holidayForm.endpoint, data),
+    (data) => holidayForm.postFn(holidayForm.endpoint, data),
     {
       onSuccess: () => {
         qc.invalidateQueries('get' + holidayForm.key);
@@ -199,10 +196,10 @@ export default function Page() {
       <AppForm
         form={holidayForm.form}
         submitData={(data) => {
-          console.log("first")
+          console.log('first', data);
           return onCreate.mutate({ ...data });
         }}
-        edit={response?.data}
+        edit={false}
         cancelDrawer={null}
       />
     </SettingPageLayout>

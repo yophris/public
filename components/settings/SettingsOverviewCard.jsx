@@ -19,6 +19,9 @@ export default function SettingsOverviewCard({ settingsData, completedData }) {
     >
       <Stack
         direction="row"
+        flexWrap="wrap"
+        rowGap={1}
+        columnGap={1}
         justifyContent="space-between"
         sx={{ padding: 2, height: '100%' }}
       >

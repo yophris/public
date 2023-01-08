@@ -47,7 +47,7 @@ const rows = [
   createData('National Holiday', 'Sep 1, 2022 (Sat)', true),
 ];
 
-export default function AppTable() {
+export default function AppTable({data}) {
   return (
     <TableContainer>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">

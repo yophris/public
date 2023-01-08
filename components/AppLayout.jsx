@@ -3,6 +3,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import { Tab, Tabs, Typography } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,6 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { styled, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
+import Link from 'next/link';
 import * as React from 'react';
 import useFileUploadStore from 'store/useFileUploadStore';
 import FileUploadStatus from './FileUploadStatus';
@@ -126,10 +128,9 @@ export default function AppLayout({ children }) {
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar sx={{ zIndex: 9999 }} position="fixed" open={open}>
         <Toolbar>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -159,35 +160,45 @@ export default function AppLayout({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Dashboard', 'Settings', 'Leave', 'Profile'].map((text, index) => (
-            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+          {[
+            { label: 'Dashboard', path: 'dashboard', iconComponent: InboxIcon },
+            {
+              label: 'Settings',
+              path: 'settings',
+              iconComponent: SettingsApplicationsIcon,
+            },
+          ].map((menu, index) => (
+            <Link href={`/app/${menu.path}`} key={index}>
+              <ListItem disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                  {index % 2 === 0 ? (
-                    <InboxIcon
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <menu.iconComponent
                       sx={{ color: !open && '#fff', fontSize: '2rem' }}
                     />
-                  ) : (
-                    <MailIcon
-                      sx={{ color: !open && '#fff', fontSize: '2rem' }}
-                    />
-                  )}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography variant="body_bold_secondary">
+                        {menu.label}
+                      </Typography>
+                    }
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Drawer>
