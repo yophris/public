@@ -128,7 +128,7 @@ export default function AppLayout({ children }) {
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
       <CssBaseline />
-      <AppBar sx={{ zIndex: 9999 }} position="fixed" open={open}>
+      <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
             aria-label="open drawer"

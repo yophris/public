@@ -22,7 +22,7 @@ function SettingDrawer({ open = false, callback, title, children }) {
       <Drawer
         anchor="right"
         open={isOpen}
-        sx={{ zIndex: 999999, '& .MuiDrawer-paper': { width: '50%' } }}
+        sx={{ '& .MuiDrawer-paper': { width: '50%' } }}
       >
         <Box role="presentation">
           <Stack sx={{ height: '100vh' }}>

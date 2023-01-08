@@ -39,7 +39,7 @@ export default function WorkTypeMenu({
               display: 'block',
               position: 'absolute',
               top: 0,
-              right: isLast ? '15%' : '50%',
+              right: isLast ? '30%' : '50%',
               width: 10,
               height: 10,
               bgcolor: 'background.paper',
