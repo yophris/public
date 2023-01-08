@@ -147,7 +147,7 @@ export default function AppLayout({ children }) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer sx={{ zIndex: !open && -1 }} variant="permanent" open={open}>
+      <Drawer sx={{ position: 'sticky' }} variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {open &&
@@ -208,40 +208,6 @@ export default function AppLayout({ children }) {
         mt={8}
         sx={{ flexGrow: 1, backgroundColor: '#F5F5F5' }}
       >
-        {/* <Tabs
-          value={tabVal}
-          onChange={handleChange}
-          sx={{
-            borderBottom: '1px solid #EBEBEB',
-            background: '#FAFBFC',
-            paddingLeft: 3,
-            '& .MuiButtonBase-root': {
-              padding: 2,
-            },
-            '& .MuiTabs-indicator': {
-              height: '3px',
-              borderRadius: '2px',
-            },
-          }}
-          indicatorColor="primary"
-        >
-          <LinkTab
-            to="/my-dashboard"
-            sx={{
-              fontSize: '1.6rem',
-              '& .Mui-selected': { fontWeight: 600, color: '#333333' },
-            }}
-            label="My Dashboard"
-          />
-          <LinkTab
-            to="/hr-dashboard"
-            sx={{
-              fontSize: '1.6rem',
-              '& .Mui-selected': { fontWeight: 600, color: '#333333' },
-            }}
-            label="HR Dashboard"
-          />
-        </Tabs> */}
         {children}
       </Box>
     </Box>
