@@ -43,7 +43,6 @@ function MyApp({ Component, pageProps }) {
         height={6}
         showOnShallow={true}
       />
-
       <AlertProvider template={AlertTemplate} {...options}>
         <QueryClientProvider client={queryClient}>
           <DndProvider backend={HTML5Backend}>

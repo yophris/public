@@ -79,6 +79,10 @@ const companyForm = {
         attr: {
           ...field.attr,
           name: 'primary.' + field.attr.name,
+          asyncData: {
+            ...field.attr?.asyncData,
+            lookup: field.attr?.asyncData?.lookup?.map((e) => 'primary.' + e),
+          },
         },
       })),
     },
@@ -89,6 +93,10 @@ const companyForm = {
         attr: {
           ...field.attr,
           name: 'emergency.' + field.attr.name,
+          asyncData: {
+            ...field.attr?.asyncData,
+            lookup: field.attr?.asyncData?.lookup?.map((e) => 'emergency.' + e),
+          },
         },
       })),
     },

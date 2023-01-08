@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider';
 import { useForm } from 'react-hook-form';
 import validationSchemaGenerator from 'Utils/validationSchemaGenerator';
 import AppButton from '../AppButton';
+import { DevTool } from '@hookform/devtools';
 
 function AppForm({
   form,
@@ -23,6 +24,7 @@ function AppForm({
     setValue,
     getFieldState,
     reset,
+    resetField,
     watch,
     formState: { errors },
     getValues,
@@ -49,6 +51,8 @@ function AppForm({
               ?.required
           }
           watch={watch}
+          reset={reset}
+          resetField={resetField}
           // endPoint={endPoint}
           getValues={getValues}
         />
@@ -67,126 +71,129 @@ function AppForm({
   );
 
   return (
-    <form onSubmit={handleSubmit(submitData)} style={{ height: '100%' }}>
-      <Stack justifyContent="space-between" sx={{ height: '100%' }}>
-        <Stack
-          sx={{
-            padding,
-            flex: 1,
-            overflow: 'auto',
-          }}
-        >
-          <Grid container spacing={3}>
-            {/* {renderFields(IDfield, errors)} */}
-            {form?.map((setting, ind) => {
-              return (
-                <React.Fragment key={ind}>
-                  {setting?.header && (
-                    <>
-                      {ind > 0 && !setting.noDivider && (
-                        <Grid item xs={12}>
-                          <Divider
-                            orientation="horizontal"
-                            flexItem
-                            sx={{
-                              borderColor: '#EFEFEF',
-                              marginTop: 2,
-                              width: '100%',
-                            }}
-                          />
-                        </Grid>
-                      )}
-                      <Grid item xs={12}>
-                        <Stack sx={{ m: 0, p: 0 }}>
-                          <Typography
-                            variant="h3_bold_secondary"
-                            component="h3"
-                            sx={{ marginTop: 1 }}
-                          >
-                            {setting?.header}
-                          </Typography>
-                          {setting?.subHeader && (
-                            <Typography
-                              variant="body_medium_muted"
-                              component="p"
-                            >
-                              {setting.subHeader}
-                            </Typography>
-                          )}
-                        </Stack>
-                      </Grid>
-                    </>
-                  )}
-
-                  {setting?.fields?.map((field, j) =>
-                    //group element rendering
-                    field.type === 'group' ? (
-                      <field.element
-                        setValue={setValue}
-                        renderFields={renderFields}
-                        getValues={getValues}
-                        control={control}
-                        watch={watch}
-                        errors={errors}
-                        key={j}
-                        {...field}
-                      />
-                    ) : (
-                      //individual field rendering
-                      <Grid
-                        item
-                        sx={{ paddingLeft: 0, margin: 0, width: '100%' }}
-                        key={j}
-                        {...field}
-                      >
-                        {field.children ? (
-                          <Grid
-                            container
-                            direction="row"
-                            alignItems="flex-start"
-                            spacing={3}
-                          >
-                            <Grid item {...field.children}>
-                              {renderFields(field, errors)}
-                            </Grid>
-                            <Grid item {...field.children}>
-                              {renderFields(field.children, errors)}
-                            </Grid>
-                          </Grid>
-                        ) : (
-                          renderFields(field, errors)
-                        )}
-                      </Grid>
-                    )
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </Grid>
-        </Stack>
-        {showButtons && (
-          <Paper
+    <>
+      <form onSubmit={handleSubmit(submitData)} style={{ height: '100%' }}>
+        <Stack justifyContent="space-between" sx={{ height: '100%' }}>
+          <Stack
             sx={{
-              padding: 1.25,
+              padding,
+              flex: 1,
+              overflow: 'auto',
             }}
-            square
-            elevation={1}
           >
-            <Stack direction="row" justifyContent="flex-end" spacing={1}>
-              {cancelDrawer && (
-                <AppButton variant="outlined" onClick={cancelDrawer}>
-                  Cancel
-                </AppButton>
-              )}
+            <Grid container spacing={3}>
+              {/* {renderFields(IDfield, errors)} */}
+              {form?.map((setting, ind) => {
+                return (
+                  <React.Fragment key={ind}>
+                    {setting?.header && (
+                      <>
+                        {ind > 0 && !setting.noDivider && (
+                          <Grid item xs={12}>
+                            <Divider
+                              orientation="horizontal"
+                              flexItem
+                              sx={{
+                                borderColor: '#EFEFEF',
+                                marginTop: 2,
+                                width: '100%',
+                              }}
+                            />
+                          </Grid>
+                        )}
+                        <Grid item xs={12}>
+                          <Stack sx={{ m: 0, p: 0 }}>
+                            <Typography
+                              variant="h3_bold_secondary"
+                              component="h3"
+                              sx={{ marginTop: 1 }}
+                            >
+                              {setting?.header}
+                            </Typography>
+                            {setting?.subHeader && (
+                              <Typography
+                                variant="body_medium_muted"
+                                component="p"
+                              >
+                                {setting.subHeader}
+                              </Typography>
+                            )}
+                          </Stack>
+                        </Grid>
+                      </>
+                    )}
 
-              <AppButton type="submit" variant="contained">
-                {!edit ? 'Save' : 'Update'}
-              </AppButton>
-            </Stack>
-          </Paper>
-        )}
-      </Stack>
-    </form>
+                    {setting?.fields?.map((field, j) =>
+                      //group element rendering
+                      field.type === 'group' ? (
+                        <field.element
+                          setValue={setValue}
+                          renderFields={renderFields}
+                          getValues={getValues}
+                          control={control}
+                          watch={watch}
+                          errors={errors}
+                          key={j}
+                          {...field}
+                        />
+                      ) : (
+                        //individual field rendering
+                        <Grid
+                          item
+                          sx={{ paddingLeft: 0, margin: 0, width: '100%' }}
+                          key={j}
+                          {...field}
+                        >
+                          {field.children ? (
+                            <Grid
+                              container
+                              direction="row"
+                              alignItems="flex-start"
+                              spacing={3}
+                            >
+                              <Grid item {...field.children}>
+                                {renderFields(field, errors)}
+                              </Grid>
+                              <Grid item {...field.children}>
+                                {renderFields(field.children, errors)}
+                              </Grid>
+                            </Grid>
+                          ) : (
+                            renderFields(field, errors)
+                          )}
+                        </Grid>
+                      )
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </Grid>
+          </Stack>
+          {showButtons && (
+            <Paper
+              sx={{
+                padding: 1.25,
+              }}
+              square
+              elevation={1}
+            >
+              <Stack direction="row" justifyContent="flex-end" spacing={1}>
+                {cancelDrawer && (
+                  <AppButton variant="outlined" onClick={cancelDrawer}>
+                    Cancel
+                  </AppButton>
+                )}
+
+                <AppButton type="submit" variant="contained">
+                  {!edit ? 'Save' : 'Update'}
+                </AppButton>
+              </Stack>
+            </Paper>
+          )}
+        </Stack>
+        <DevTool control={control} placement={'top-right'} />
+      </form>
+    </>
   );
 }
 export default AppForm;

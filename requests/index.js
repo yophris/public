@@ -1,7 +1,7 @@
 import axios from 'axios';
 const axiosInstance = axios.create({
-  baseURL: 'http://ec2-52-90-135-16.compute-1.amazonaws.com:3000/api/v1/',
-  // baseURL: 'http://localhost:5000/api/v1/',
+  // baseURL: 'http://ec2-52-90-135-16.compute-1.amazonaws.com:3000/api/v1/',
+  baseURL: 'http://localhost:5000/api/v1/',
 });
 var qs = require('qs');
 
@@ -41,7 +41,10 @@ const apiClient = async ({
       method: method,
       data: data,
       headers: {
-        'X-TENANT-ID': localStorage.getItem('tenantId'),
+        // 'X-TENANT-ID': localStorage.getItem('tenantId'),
+        'X-TENANT-ID':
+          process.env.NEXT_PUBLIC_DEV_TENANT_ID ||
+          localStorage.getItem('tenantId'),
       },
 
       //2c9bc840-74c1-11ed-a1eb-0242ac120011

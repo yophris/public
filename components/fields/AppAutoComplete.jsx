@@ -10,50 +10,86 @@ import {
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useQuery } from 'react-query';
+import { useWatch } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
 export default function AppAutocomplete(props) {
   const {
     setValue,
+    reset,
     label,
     options = [{ text: '', value: '' }],
     name,
     error,
     isRequired,
     asyncData,
+    watch,
+    resetField,
+    control,
+    getValues,
     ...rest
   } = props;
+  const watchFields =
+    asyncData?.lookup &&
+    useWatch({
+      control,
+      name: asyncData?.lookup,
+    });
 
+  const [inputValue, setInputValue] = React.useState('');
+  console.log('watchFields', name, asyncData?.lookup, watchFields);
   const {
     isLoading,
     data: response,
     error: getError,
-  } = useQuery('get' + asyncData.key, () =>
-    asyncData.endpointApi(asyncData.endpoint, { page: 1 })
-  );
+    isSuccess,
+  } = useQuery({
+    queryKey: [
+      'get' + asyncData?.key,
+      ...(asyncData?.lookup || []),
+      watchFields,
+      inputValue,
+    ],
+    queryFn: () =>
+      asyncData.endpointApi(
+        typeof asyncData.endpoint == 'function'
+          ? asyncData.endpoint(watchFields)
+          : asyncData.endpoint,
+        { name: inputValue }
+      ),
+    enabled: asyncData?.lookup
+      ? Array.isArray(watchFields)
+        ? !watchFields.some((e) => !e)
+        : !!watchFields
+      : true,
+  });
 
   const [open, setOpen] = React.useState(false);
   const [asyncOptions, setAsyncOptions] = React.useState([]);
   const loading = open && asyncOptions.length === 0;
 
-  const handleChange = () => {
-    // const dataL = asyncData.endpointApi(asyncData.endpoint, { page: 1 });
-    // dataL.then((d) => console.log('data from workweek: ', d));
-  };
-
   React.useEffect(() => {
     let active = true;
     if (!loading) {
-      return undefined;
+      return;
     }
+
     (async () => {
       //do throttling and check the key length if we need
       //we need to do async fetch while typing
       //as there is no api available yet
       let optionsData;
       if (active) {
-        optionsData = response.data.map((d) => ({ text: d.name, value: d.id }));
+        optionsData = response?.data.map(
+          asyncData?.optionTransformation ||
+            ((d) => ({
+              text: d.name,
+              value: d.id || d.stateCode || d.code || d.isoCode,
+            }))
+        );
         //call api to fetch the options
-        setAsyncOptions([...optionsData]);
+        setAsyncOptions([...(optionsData || [])]);
       }
     })();
     return () => {
@@ -61,14 +97,14 @@ export default function AppAutocomplete(props) {
     };
   }, [loading]);
 
-  React.useEffect(() => {
-    if (!open) {
-      setAsyncOptions([]);
-    }
-  }, [open]);
+  // const isChanged = useRef(false);
+  // React.useEffect(() => {
+  //   if (!isChanged && options.length) {
+  //   }
+  // }, [options]);
 
   return (
-    <div>
+    <div key={JSON.stringify(watchFields)}>
       <Typography variant="body_medium_muted" component="p" mb={1}>
         {label}
         {isRequired && (
@@ -108,11 +144,12 @@ export default function AppAutocomplete(props) {
         onClose={() => {
           setOpen(false);
         }}
+        value={getValues(name)?.value}
         isOptionEqualToValue={(option, value) => option.value === value.value}
-        onChange={(e, option) => setValue(name, option?.value)}
+        onChange={(e, option) => setValue(name, option)}
         getOptionLabel={(option) => option.text}
         options={asyncOptions}
-        loading={loading}
+        loading={isLoading}
         renderOption={(props, option, state) => (
           <li {...props}>
             <Typography variant="body_medium_secondary" component="p">
@@ -120,6 +157,9 @@ export default function AppAutocomplete(props) {
             </Typography>
           </li>
         )}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
         renderInput={(params) => (
           <Paper
             elevation={0}

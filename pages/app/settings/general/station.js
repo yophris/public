@@ -96,6 +96,10 @@ export const addressFields = [
         endpointApi: getSetting,
         endpoint: 'app/valueHelp/countries',
         key: 'countries',
+        optionTransformation: (d) => ({
+          text: d.name,
+          value: d.code,
+        }),
       },
     },
     validation: {
@@ -120,13 +124,17 @@ export const addressFields = [
       name: 'address.state',
       asyncData: {
         endpointApi: getSetting,
-        endpoint: 'app/valueHelp/states/IN',
-        lookup: 'address.country',
+        endpoint: (field) => `app/valueHelp/states/${field[0]?.value || ''}`,
+        optionTransformation: (d) => ({
+          text: d.name,
+          value: d.isoCode,
+        }),
+        lookup: ['address.country'],
         key: 'states',
       },
     },
     validation: {
-      validationType: 'string',
+      validationType: 'object',
       validations: [
         {
           type: 'required',
@@ -137,10 +145,26 @@ export const addressFields = [
     xs: 6,
   },
   {
-    element: TextInput,
-    attr: { label: 'City', name: 'address.city', dependOn: 'address.state' },
+    element: AppAutocomplete,
+    attr: {
+      label: 'City',
+      name: 'address.city',
+      asyncData: {
+        endpointApi: getSetting,
+        endpoint: (field) =>
+          `app/valueHelp/cities/${field[0]?.value || ''}/${
+            field[1]?.value || ''
+          }`,
+        lookup: ['address.country', 'address.state'],
+        key: 'city',
+        optionTransformation: (d) => ({
+          text: d.name,
+          value: d.name,
+        }),
+      },
+    },
     validation: {
-      validationType: 'string',
+      validationType: 'object',
       validations: [
         {
           type: 'required',

@@ -38,6 +38,7 @@
     "zustand": "^4.1.4"
   },
   "devDependencies": {
+    "@hookform/devtools": "^4.3.0",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.8.0"
   }
