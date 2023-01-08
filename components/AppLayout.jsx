@@ -63,7 +63,6 @@ const AppBar = styled(MuiAppBar, {
   //   left: open ? 0 : 65,
   backgroundColor: 'transparent',
   color: '#333333',
-  zIndex: 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
