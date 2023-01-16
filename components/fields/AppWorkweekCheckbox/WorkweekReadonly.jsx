@@ -87,7 +87,7 @@ export default function WorkweekReadonly(props) {
           console.log('modified data: ', modifiedData);
 
           return (
-            <Stack justifyContent="space-around">
+            <Stack key={index} justifyContent="space-around">
               {/* <Box sx={{ height: '20px', marginBottom: 1 }}></Box> */}
               <Typography variant="body_medium_secondary" component="p">
                 {modifiedData.label}

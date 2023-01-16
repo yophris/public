@@ -30,12 +30,10 @@ export default function AppAutocomplete(props) {
     getValues,
     ...rest
   } = props;
-  const watchFields =
-    asyncData?.lookup &&
-    useWatch({
-      control,
-      name: asyncData?.lookup,
-    });
+  const watchFields = useWatch({
+    control,
+    name: asyncData?.lookup,
+  });
 
   const [inputValue, setInputValue] = React.useState('');
   console.log('watchFields', name, asyncData?.lookup, watchFields);
