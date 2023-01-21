@@ -1,3 +1,4 @@
+import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
 import AppDropdown from 'components/fields/AppDropdown';
 import TextInput from 'components/fields/TextInput';
@@ -256,9 +257,199 @@ const stationForm = {
   putFn: updateSetting,
   deleteFn: deleteSetting,
 };
-
-
-
+const plan = {
+  sideBarTitle:"Add Station",
+  section: {
+    fields: [
+      {
+        label: 'Station Name',
+        // isRequired: true,
+        type: 'Text',
+        id: 'stationName',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        config: {
+          placeholder: 'Station Name',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        label: 'Is main station?',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'isMainStation',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: [
+            { value: 'None', label: 'None' },
+            { value: 'Yes', label: 'Yes' },
+            { value: 'No', label: 'No' },
+          ],
+        },
+      },
+      {
+        label: 'Description',
+        type: 'Text',
+        id: 'description',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        isMultiline: true,
+        config: {
+          placeholder: 'Description',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        label: 'Station Head',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        id: 'stationHead',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: [
+            { value: '30', label: '30 Days' },
+            { value: '60', label: '60 Days' },
+            { value: '90', label: '90 Days' },
+          ],
+        },
+      },
+      {
+        type: 'Divider',
+      },
+      {
+        type: 'Title',
+        title: 'Primary Address',
+      },
+      {
+        label: 'Address Line 1',
+        type: 'Text',
+        id: 'primaryAddress_addressLine1',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        config: {
+          placeholder: 'Address Line 1',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        label: 'Address Line 2',
+        type: 'Text',
+        id: 'primaryAddress_addressLine2',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        config: {
+          placeholder: 'Address Line 2',
+        },
+        validations: [
+          // {
+          //   type: 'required',
+          // },
+        ],
+      },
+      {
+        label: 'Country',
+        type: 'Select',
+        id: 'primaryAddress_country',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        config: {
+          placeholder: 'Country',
+        },
+        validations: [
+          // {
+          //   type: 'required',
+          // },
+        ],
+        select: {
+          type: 'api',
+          api: 'app/valueHelp/countries',
+        },
+      },
+      {
+        label: 'State',
+        type: 'Select',
+        id: 'primaryAddress_state',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        validations: [
+          // {
+          //   type: 'required',
+          // },
+        ],
+        select: {
+          type: 'api',
+          api: 'app/valueHelp/states/${primaryAddress_country}',
+        },
+      },
+      {
+        label: 'City',
+        type: 'Select',
+        id: 'primaryAddressCity',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        validations: [
+          // {
+          //   type: 'required',
+          // },
+        ],
+        select: {
+          type: 'api',
+          api: 'app/valueHelp/cities/${primaryAddress_country}/${primaryAddress_state}',
+        },
+      },
+      {
+        label: 'Postal Code',
+        // isRequired: true,
+        type: 'Text',
+        id: 'postalCode',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        config: {
+          placeholder: 'Postal Code',
+          type:'number'
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        label: 'Phone',
+        type: 'PhoneNumber',
+        id: 'phone',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        validations: [
+          {
+            type: 'required',
+            vtype: 'number',
+          },
+          {
+            type: 'Length',
+            length: {
+              min: 13,
+              max: 15,
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
 export default function Page() {
   const { watch } = useForm();
   const qc = useQueryClient();
@@ -302,7 +493,7 @@ export default function Page() {
 
   return (
     <SettingPageLayout texts={stationForm.texts}>
-      <ListWithSidebarLayout config={stationForm} />
+      <SmartSideBarForm plan={plan} />
     </SettingPageLayout>
   );
   // return <ListWithSidebarLayout config={divisionForm}/>

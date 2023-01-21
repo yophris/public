@@ -89,7 +89,7 @@ export default function TextInput(props) {
   );
 }
 
-const InputAdornmentComp = ({ text }) => {
+export const InputAdornmentComp = ({ text }) => {
   return (
     <Box
       sx={{

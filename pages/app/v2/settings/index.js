@@ -13,7 +13,7 @@ export default function SettingsMain() {
 
   return (
     <Stack spacing={2} sx={{ margin: 2 }}>
-      {0
+      {isLoading
         ? 'loading...'
         : settingsOverviewData.map((sod, index) => (
             <SettingsOverviewCard

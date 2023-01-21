@@ -22,6 +22,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import useFileUploadStore from 'store/useFileUploadStore';
 import FileUploadStatus from './FileUploadStatus';
+import BusinessIcon from '@mui/icons-material/Business';
 
 const drawerWidth = 240;
 
@@ -166,6 +167,11 @@ export default function AppLayout({ children }) {
               path: 'settings',
               iconComponent: SettingsApplicationsIcon,
             },
+            {
+              label: 'My Company',
+              path: 'my-company',
+              iconComponent: BusinessIcon,
+            },
           ].map((menu, index) => (
             <Link href={`/app/${menu.path}`} key={index}>
               <ListItem disablePadding sx={{ display: 'block' }}>
@@ -205,7 +211,10 @@ export default function AppLayout({ children }) {
       <Box
         component="main"
         mt={8}
-        sx={{ flexGrow: 1, backgroundColor: '#F5F5F5' }}
+        sx={{
+          flexGrow: 1,
+          backgroundColor: '#F5F5F5',
+        }}
       >
         {children}
       </Box>
