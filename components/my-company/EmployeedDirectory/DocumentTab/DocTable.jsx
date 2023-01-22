@@ -61,8 +61,8 @@ export default function DocTable({ tableData, tableHeader }) {
         <TableHead>
           <TableRow>
             {tableHeader &&
-              tableHeader.map((header) => (
-                <StyledTableCell>{header}</StyledTableCell>
+              tableHeader.map((header, index) => (
+                <StyledTableCell key={index}>{header}</StyledTableCell>
               ))}
             {/* <StyledTableCell align="left">Date</StyledTableCell>
             <StyledTableCell align="left">Mark as optional</StyledTableCell>
