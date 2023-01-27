@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
+
+const repo = 'public';
+const assetPrefix = `/${repo}/`;
+const basePath = `/${repo}`;
+
 const nextConfig = {
-  basePath: '',
+  assetPrefix: assetPrefix,
+  basePath: basePath,
   reactStrictMode: true,
   images: {
     unoptimized: true,
