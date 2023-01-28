@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export": "next export",
+    "export": "next build && next export && touch ./out/.nojekyll && git add out/. && git commit -m 'no jekyll' && git subtree push --prefix out https://github.com/yophris/yophris.github.io.git master",
     "start": "next start -p 4000",
     "lint": "next lint"
   },
