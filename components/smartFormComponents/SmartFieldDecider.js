@@ -55,7 +55,7 @@ export default function SmartFieldDecider({ field }) {
 
   if (field.type === 'Title') {
     return (
-      <Grid item {...field.gridSizes}>
+      <Grid item xs={12}>
         <SmartTitle field={field} />
       </Grid>
     );
@@ -63,7 +63,7 @@ export default function SmartFieldDecider({ field }) {
 
   if (field.type === 'Divider') {
     return (
-      <Grid item md={12}>
+      <Grid item xs={12}>
         <SmartDivider field={field} />
       </Grid>
     );
@@ -71,12 +71,12 @@ export default function SmartFieldDecider({ field }) {
 
   if (field.type === 'ApproverFieldArray') {
     return (
-      <Grid item md={12}>
+      <Grid item xs={12}>
         <SmartApproverFieldItem smartField={field} />
       </Grid>
     );
   }
-//TODO:Duplication
+  //TODO:Duplication
   if (field.type === 'Heading') {
     return (
       <Grid item {...field.gridSizes}>
