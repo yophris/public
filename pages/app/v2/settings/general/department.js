@@ -1,14 +1,20 @@
+import EditableList from '@/components/settings/EditableList';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
+import { Stack } from '@mui/system';
 import AppDropdown from 'components/fields/AppDropdown';
 import TextInput from 'components/fields/TextInput';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   createSetting,
   deleteSetting,
   getSetting,
   updateSetting,
 } from 'requests/settings';
+import { extractFromJSON } from 'Utils';
 
 // const fields = [
 //   {
@@ -50,7 +56,7 @@ import {
 // });
 
 const plan = {
-  sideBarTitle:"Add Department",
+  sideBarTitle: 'Add Department',
   section: {
     fields: [
       {
@@ -104,12 +110,18 @@ const plan = {
       },
     ],
   },
+  getAllFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
+  key: 'department',
+  endpoint: 'settings/department',
 };
 const DeparmentForm = {
   form: [
     {
       header: '',
-      fields: "",
+      fields: '',
     },
   ],
   key: 'department',
@@ -132,10 +144,77 @@ const DeparmentForm = {
 };
 
 export default function Page() {
+  const [editData, setEditData] = useState(null);
+  const router = useRouter();
+  const editClickCB = (data) => {
+    // router.push(data.id);
+    console.log(data);
+    setEditData(data);
+  };
+
+  const qc = useQueryClient();
+
+  const {
+    isLoading,
+    data: response,
+    error,
+  } = useQuery('get' + plan.key, () => getSetting(plan.endpoint, { page: 1 }), {
+    // onSuccess: () => {
+    //   setEditData(null);
+    // },
+  });
+
+  // Delete
+  const onDelete = useMutation((data) => deleteSetting(plan.endpoint, data), {
+    onSuccess: () => {
+      qc.invalidateQueries('get' + plan.key);
+      alert('Deleted');
+      // setOpenSideMenu(false);
+    },
+    onError: (data) => {
+      debugger;
+      alert('Failed');
+    },
+  });
+
+  const onDeleteClick = (id) => {
+    if (window.confirm('Do you want to delete this ? ')) {
+      onDelete.mutate({ id: id });
+    }
+  };
+
+  const clearEdit = () => {
+    setEditData(null);
+  };
   return (
-    <SettingPageLayout texts={DeparmentForm.texts}>
-      <SmartSideBarForm plan={plan}/>
-      {/* <ListWithSidebarLayout config={DeparmentForm} /> */}
+    <SettingPageLayout
+      texts={DeparmentForm.texts}
+      endpoint={plan.endpoint}
+      idKey={plan.key}
+      getAllFn={getSetting}
+      editClickCB={editClickCB}
+    >
+      <SmartSideBarForm plan={plan} formData={editData} clearEdit={clearEdit} />
+      <>
+        {isLoading ? (
+          'Loading,,,'
+        ) : error ? (
+          <h2>Error Fetching Data</h2>
+        ) : response?.data?.length ? (
+          response?.data?.map((e, index) => (
+            <EditableList
+              key={index}
+              label={extractFromJSON(e, `**.departmentName`)}
+              cb={{
+                Edit: () => editClickCB(e),
+                Delete: () => onDeleteClick(e.id),
+              }}
+            />
+          ))
+        ) : (
+          <h3>No Records Found</h3>
+        )}
+      </>
     </SettingPageLayout>
   );
   // return <ListWithSidebarLayout config={divisionForm}/>

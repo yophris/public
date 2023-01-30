@@ -12,8 +12,19 @@ import {
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'next/link';
 import AppDivider from 'components/AppDivider';
+import { useQuery } from 'react-query';
+import EditableList from './EditableList';
+import { extractFromJSON } from 'Utils';
 
-function SettingPageLayout({ children, texts, SideChildren }) {
+function SettingPageLayout({
+  children,
+  texts,
+  SideChildren,
+  endpoint = '',
+  idKey = '',
+  getAllFn = () => {},
+  renderList = () => null,
+}) {
   const matches = useMediaQuery('(max-width:900px)');
 
   const breadcrumbs = [

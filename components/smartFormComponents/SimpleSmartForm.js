@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SmartFieldDecider from './SmartFieldDecider';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Button, Grid, Stack, Typography } from '@mui/material';
 
-export default function SimpleSmartForm({ plan }) {
+export default function SimpleSmartForm({
+  plan,
+  onSubmit = (data) => {
+    console.log('🚀 ~ file: SmartForm.js ~ line 9 ~ submit ~ data', data);
+  },
+  formData = null,
+}) {
   const methods = useForm();
   const { section } = plan;
 
-  const onSubmit = (data) => {
-    console.log('🚀 ~ file: SmartForm.js ~ line 10 ~ onSubmit ~ data', data);
-  };
-
+  useEffect(() => {
+    if (formData) {
+      methods.reset(formData);
+    }
+  }, [formData]);
   return (
     <>
       <FormProvider {...methods}>
