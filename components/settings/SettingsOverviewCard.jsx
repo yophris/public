@@ -89,7 +89,7 @@ export default function SettingsOverviewCard({ settingsData, completedData }) {
                       />
                     )}
                     <Link
-                      href={`/app/settings/${path.toString().toLowerCase()}`}
+                      href={`/app/v2/settings/${path.toString().toLowerCase()}`}
                     >
                       <Typography variant="body_medium_primary">
                         {title}

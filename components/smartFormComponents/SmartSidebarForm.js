@@ -13,89 +13,51 @@ import SettingDrawer from '../settings/SettingDrawer';
 import SimpleSmartForm from './SimpleSmartForm';
 // import EditableList from './EditableList';
 
-const SmartSideBarForm = ({ plan }) => {
-  // const {
-  //   endpoint,
-  //   texts,
-  //   getAllFn,
-  //   postFn,
-  //   key,
-  //   deleteFn,
-  //   validation,
-  //   putFn,
-  //   transform = (data) => data,
-  // } = config;
+const SmartSideBarForm = ({ plan, formData, clearEdit }) => {
+  const { endpoint, postFn, key, putFn, transform = (data) => data } = plan;
 
   const setProgress = useFileUploadStore((state) => state.setProgress);
   const alert = useAlert();
   const qc = useQueryClient();
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
 
-  const texts = 'Hello World';
-
-  const [editId, setEditId] = useState(null);
-  // getSetting
-  // const {
-  //   isLoading,
-  //   data: response,
-  //   error,
-  // } = useQuery('get' + key, () => getAllFn(endpoint, { page: 1 }));
-
   // create
-  // const onCreate = useMutation(
-  //   (data) => {
-  //     return !editId
-  //       ? postFn(endpoint, transform(data), setProgress)
-  //       : putFn(endpoint, editId, transform(data), setProgress);
-  //   },
-  //   {
-  //     onSuccess: () => {
-  //       setOpenSideMenu(false);
-  //       qc.invalidateQueries('get' + key);
-  //       alert.success(!editId ? 'created' : 'Updated');
-  //     },
-  //     onError: (data) => {
-  //       alert.error('Failed');
-  //     },
-  //   }
-  // );
-
-  // Delete
-  // const onDelete = useMutation((data) => deleteFn(endpoint, data), {
-  //   onSuccess: () => {
-  //     qc.invalidateQueries('get' + key);
-  //     alert('Deleted');
-  //     setOpenSideMenu(false);
-  //   },
-  //   onError: (data) => {
-  //     alert('Failed');
-  //   },
-  // });
-
-  
-
-  const editClickCB = (id) => {
-    setOpenSideMenu(true);
-    // TODO: Very Crucial
-    setEditId(id);
-  };
-
-  const onDeleteClick = (id) => {
-    if (window.confirm('Do you want to delete this ? ')) {
-      onDelete.mutate({ id: id });
+  const onCreate = useMutation(
+    (data) => {
+      return !formData
+        ? postFn(endpoint, transform(data), setProgress)
+        : putFn(endpoint, formData.id, transform(data), setProgress);
+    },
+    {
+      onSuccess: () => {
+        setOpenSideMenu(false);
+        qc.invalidateQueries('get' + key);
+        alert.success(!formData.id ? 'created' : 'Updated');
+      },
+      onError: (data) => {
+        alert.error('Failed');
+      },
     }
-    // setOpenSideMenu(true)
-  };
+  );
+
+  useEffect(
+    (_) => {
+      if (formData) {
+        console.log('Opening');
+        setOpenSideMenu(true);
+      }
+    },
+    [formData]
+  );
 
   useEffect(
     (_) => {
       if (!openSideMenu) {
-        setEditId(null);
+        clearEdit();
       }
     },
     [openSideMenu]
   );
-  // return "hi"
   return (
     <Stack spacing={2} m={2} divider={<AppDivider />}>
       <Stack direction="row" spacing={3}>
@@ -108,40 +70,21 @@ const SmartSideBarForm = ({ plan }) => {
             open={openSideMenu}
             callback={setOpenSideMenu}
             title={
-              editId
+              formData?.id
                 ? plan?.sideBarTitle?.replace('Add', 'Update')
                 : plan?.sideBarTitle
             }
           >
             <Box p={2}>
-              <SimpleSmartForm plan={plan} />
+              <SimpleSmartForm
+                plan={plan}
+                onSubmit={(data) => onCreate.mutate({ ...data })}
+                formData={formData}
+              />
             </Box>
-            {/* <AppForm
-              form={config.form}
-              edit={
-                editId ? { ...response.data.find((e) => e.id == editId) } : null
-              }
-              submitData={(data) => onCreate.mutate({ ...data })}
-              validationSchema={validation}
-              cancelDrawer={() => setOpenSideMenu(false)}
-            /> */}
           </SettingDrawer>
         )}
       </Stack>
-      {/* <Stack sx={{ rowGap: 1 }}>
-        {isLoading
-          ? 'Loading'
-          : response?.data?.map((e, index) => (
-              <EditableList
-                key={index}
-                label={extractFromJSON(e, `**.${texts.key}`)}
-                cb={{
-                  Edit: () => editClickCB(e.id),
-                  Delete: () => onDeleteClick(e.id),
-                }}
-              />
-            ))}
-      </Stack> */}
     </Stack>
   );
 };

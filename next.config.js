@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+const repo = '';
+const assetPrefix = `/${repo}/`;
+const basePath = `/${repo}`;
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
