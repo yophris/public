@@ -246,7 +246,7 @@ export default function Pages(props) {
           select: {
             type: 'inLine',
             options: [
-              { value: '', label: 'None' },
+              { value: undefined, label: 'None' },
               { value: 'Hierarchy1', label: 'Hierarchy1' },
               { value: 'Hierarchy2', label: 'Hierarchy2' },
               { value: 'Hierarchy3', label: 'Hierarchy3' },
@@ -272,7 +272,7 @@ export default function Pages(props) {
           select: {
             type: 'inLine',
             options: [
-              { value: '', label: 'None' },
+              { value: undefined, label: 'None' },
               { value: 'Hierarchy1', label: 'Hierarchy1' },
               { value: 'Hierarchy2', label: 'Hierarchy2' },
               { value: 'Hierarchy3', label: 'Hierarchy3' },
@@ -298,7 +298,7 @@ export default function Pages(props) {
           select: {
             type: 'inLine',
             options: [
-              { value: '', label: 'None' },
+              { value: undefined, label: 'None' },
               { value: 'Hierarchy1', label: 'Hierarchy1' },
               { value: 'Hierarchy2', label: 'Hierarchy2' },
               { value: 'Hierarchy3', label: 'Hierarchy3' },
@@ -310,7 +310,7 @@ export default function Pages(props) {
   };
 
   const workflowHierarchyPlan = {
-    sideBarTitle:"Add Workflow",
+    sideBarTitle: 'Add Workflow',
     section: {
       fields: [
         {
@@ -331,22 +331,22 @@ export default function Pages(props) {
         {
           type: 'Title',
           title: 'Approver sequence in role',
-          subTitle:"Select the Approvers in order of Hierarchy",
+          subTitle: 'Select the Approvers in order of Hierarchy',
           gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
         },
         {
           type: 'ApproverFieldArray',
-          appendButtonText:"Add another approver",
-          id:"approverSequence",
+          appendButtonText: 'Add another approver',
+          id: 'approverSequence',
           arrayField: {
             fieldName: 'approver',
             select: {
               type: 'inLine',
               options: [
-                { value: '', label: 'None' },
-                { value: 'Hierarchy1', label: 'Hierarchy1' },
-                { value: 'Hierarchy2', label: 'Hierarchy2' },
-                { value: 'Hierarchy3', label: 'Hierarchy3' },
+                { value: undefined, label: 'None' },
+                { value: 'Hierarchy1', label: 'Hierarchy 1' },
+                { value: 'Hierarchy2', label: 'Hierarchy 2' },
+                { value: 'Hierarchy3', label: 'Hierarchy 3' },
               ],
             },
             gridSizes: { xs: 12, sm: 6, md: 12 },
@@ -356,13 +356,10 @@ export default function Pages(props) {
               },
             ],
           },
-        }
-        
+        },
       ],
     },
   };
-
-
 
   return (
     <SettingPageLayout
@@ -443,7 +440,6 @@ export default function Pages(props) {
           </TabPanel>
           <TabPanel value={value} index={1}>
             <SimpleSmartForm plan={workflowSettingsPlan} />
-
           </TabPanel>
           {/* ))} */}
         </Stack>

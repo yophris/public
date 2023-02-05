@@ -67,9 +67,10 @@ const division = [
 ];
 
 const plan = {
-  sideBarTitle:"Add Division",
+  sideBarTitle: 'Add Division',
   section: {
     fields: [
+
       {
         label: 'Division Name',
         // isRequired: true,
@@ -138,14 +139,6 @@ const plan = {
   },
 };
 
-// const validation_division = Yup.object().shape({
-//   division: Yup.object().shape({
-//     divisionName: Yup.string().required(' name required.'),
-//     divisionType: Yup.string().required('type required.'),
-//     description: Yup.string().required('description required.'),
-//   }),
-// });
-
 const divisionForm = {
   key: 'division',
   form: [
@@ -176,7 +169,6 @@ export default function Page() {
   return (
     <SettingPageLayout texts={divisionForm.texts}>
       <SmartSideBarForm plan={plan} />
-      {/* <ListWithSidebarLayout config={divisionForm} /> */}
     </SettingPageLayout>
   );
 }

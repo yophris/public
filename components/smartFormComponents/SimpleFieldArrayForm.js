@@ -40,6 +40,7 @@ export default function SimpleFieldArrayForm({ smartField }) {
                       ...arrayField,
                       id: `${smartField.id}.${index}.${arrayField.fieldName}`,
                     }}
+                    index={index}
                   />
                 ))}
               </Grid>

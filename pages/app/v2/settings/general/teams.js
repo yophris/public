@@ -62,7 +62,7 @@ const teamForm = {
   deleteFn: deleteSetting,
 };
 const plan = {
-  sideBarTitle:"Add Team",
+  sideBarTitle: 'Add Team',
   section: {
     fields: [
       {
@@ -81,7 +81,7 @@ const plan = {
         ],
       },
       {
-        label: 'Description',
+        label: 'Descriptions',
         type: 'Text',
         id: 'description',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
@@ -95,7 +95,15 @@ const plan = {
           },
         ],
       },
-    
+      {
+        type: 'DocumentUpload',
+        id: 'Document',
+        // validations: [
+        //   {
+        //     type: 'required',
+        //   },
+        // ],
+      },
     ],
   },
 };

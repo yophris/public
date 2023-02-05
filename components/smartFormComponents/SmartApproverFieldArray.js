@@ -43,12 +43,13 @@ export default function SmartApproverFieldArray({ smartField }) {
                 {`Approver-${index + 1}`}
               </Typography>
               <SmartSelect
-              field={{
-                ...smartField.arrayField,
-                id: `${smartField.id}.${index}.${smartField.arrayField.fieldName}`,
-              }}
-            />
-              <IconButton onClick={()=>remove(index)}>
+                
+                field={{
+                  ...smartField.arrayField,
+                  id: `${smartField.id}.${index}.${smartField.arrayField.fieldName}`,
+                }}
+              />
+              <IconButton onClick={() => remove(index)}>
                 <Image
                   src="/images/trashIcon.svg"
                   width={14}
@@ -76,6 +77,6 @@ export default function SmartApproverFieldArray({ smartField }) {
       >
         {smartField.appendButtonText ?? 'Append'}
       </Button>
-      </Box>
+    </Box>
   );
 }

@@ -4,6 +4,7 @@ import React from 'react';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 
 export default function SmartDataCard({ field }) {
+
   const fields = {
     title: 'Personal Details',
     fields: [
@@ -39,6 +40,7 @@ export default function SmartDataCard({ field }) {
       },
     ],
   };
+  
   return (
     <>
     <Grid padding={2}>

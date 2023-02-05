@@ -2,15 +2,19 @@ import { Grid, Typography } from '@mui/material';
 import React from 'react';
 import SimpleFieldArrayForm from './SimpleFieldArrayForm';
 import SmartApproverFieldItem from './SmartApproverFieldArray';
+import SmartCheckBox from './SmartCheckBox';
 import SmartDataCard from './SmartDataCard';
 import SmartDatePicker from './SmartDatePicker';
 import SmartDivider from './SmartDivider';
+import SmartDocumentUploader from './SmartDocumentUploader';
 import SmartPhoneNumberInput from './SmartPhoneNumberInput';
 import SmartSelect from './SmartSelect';
+import SmartTabs from './SmartTabs';
+import SmartTabsWithinForm from './SmartTabsWithinForm';
 import SmartText from './SmartText';
 import SmartTitle from './SmartTitle';
 
-export default function SmartFieldDecider({ field }) {
+export default function SmartFieldDecider({ field, index }) {
   const gridSize = field?.gridSize ?? 6;
 
   if (field.type === 'Text') {
@@ -76,13 +80,35 @@ export default function SmartFieldDecider({ field }) {
       </Grid>
     );
   }
-//TODO:Duplication
+  if (field.type === 'Checkbox') {
+    return (
+      <Grid item {...field.gridSizes}>
+        <SmartCheckBox field={field} />
+      </Grid>
+    );
+  }
+  //TODO:Duplication
   if (field.type === 'Heading') {
     return (
       <Grid item {...field.gridSizes}>
         <Typography variant="h3_bold_secondary" component="h3">
           {field.label}
         </Typography>
+      </Grid>
+    );
+  }
+  if (field.type === 'Tabs') {
+    return (
+      <Grid item {...field.gridSizes}>
+        <SmartTabsWithinForm field={field} fieldArrayIndex={index} />
+      </Grid>
+    );
+  }
+
+  if (field.type === 'DocumentUpload') {
+    return (
+      <Grid item {...field.gridSizes}>
+        <SmartDocumentUploader field={field} />
       </Grid>
     );
   }

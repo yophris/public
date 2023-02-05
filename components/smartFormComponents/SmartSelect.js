@@ -9,9 +9,7 @@ import { getCountries } from 'Utils/Apis/settingsApisFn';
 import { useQuery } from 'react-query';
 import { GET } from 'configs/axios';
 
-
 export default function SmartSelect({ field }) {
-  console.log("🚀 ~ file: SmartSelect.js:22 ~ SmartSelect ~ field", field)
   const {
     control,
     formState: { errors },
@@ -36,7 +34,6 @@ export default function SmartSelect({ field }) {
   // );
 
   const isInline = field?.select?.type === 'inLine';
-  console.log("🚀 ~ file: SmartSelect.js:39 ~ SmartSelect ~ isInline", isInline)
   const isMulti = false;
 
   const options = isInline ? field?.select?.options : field?.select?.options;
@@ -127,7 +124,6 @@ export default function SmartSelect({ field }) {
             />
           </>
         )}
-             
       />
     </>
   );
