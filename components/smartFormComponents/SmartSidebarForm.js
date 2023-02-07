@@ -6,33 +6,38 @@ import SearchInput from 'components/fields/SearchInput';
 import React, { useEffect, useState } from 'react';
 import { useAlert } from 'react-alert';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { jsonToFormData } from 'requests';
+import { jsonToeditData } from 'requests';
 import useFileUploadStore from 'store/useFileUploadStore';
 import { extractFromJSON } from 'Utils';
 import SettingDrawer from '../settings/SettingDrawer';
 import SimpleSmartForm from './SimpleSmartForm';
 // import EditableList from './EditableList';
 
-const SmartSideBarForm = ({ plan, formData, clearEdit }) => {
+const SmartSideBarForm = ({
+  plan,
+  editData,
+  clearEdit = () => {},
+  openSideMenu,
+  setOpenSideMenu,
+}) => {
   const { endpoint, postFn, key, putFn, transform = (data) => data } = plan;
 
   const setProgress = useFileUploadStore((state) => state.setProgress);
   const alert = useAlert();
   const qc = useQueryClient();
-  const [openSideMenu, setOpenSideMenu] = React.useState(false);
 
   // create
   const onCreate = useMutation(
     (data) => {
-      return !formData
+      return !editData
         ? postFn(endpoint, transform(data), setProgress)
-        : putFn(endpoint, formData.id, transform(data), setProgress);
+        : putFn(endpoint, editData.id, transform(data), setProgress);
     },
     {
       onSuccess: () => {
         setOpenSideMenu(false);
         qc.invalidateQueries('get' + key);
-        alert.success(!formData.id ? 'created' : 'Updated');
+        alert.success(!editData?.id ? 'created' : 'Updated');
       },
       onError: (data) => {
         alert.error('Failed');
@@ -42,12 +47,12 @@ const SmartSideBarForm = ({ plan, formData, clearEdit }) => {
 
   useEffect(
     (_) => {
-      if (formData) {
+      if (editData) {
         console.log('Opening');
         setOpenSideMenu(true);
       }
     },
-    [formData]
+    [editData]
   );
 
   useEffect(
@@ -70,7 +75,7 @@ const SmartSideBarForm = ({ plan, formData, clearEdit }) => {
             open={openSideMenu}
             callback={setOpenSideMenu}
             title={
-              formData?.id
+              editData?.id
                 ? plan?.sideBarTitle?.replace('Add', 'Update')
                 : plan?.sideBarTitle
             }
@@ -79,7 +84,7 @@ const SmartSideBarForm = ({ plan, formData, clearEdit }) => {
               <SimpleSmartForm
                 plan={plan}
                 onSubmit={(data) => onCreate.mutate({ ...data })}
-                formData={formData}
+                formData={editData}
               />
             </Box>
           </SettingDrawer>
