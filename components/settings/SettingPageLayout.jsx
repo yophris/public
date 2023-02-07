@@ -16,15 +16,7 @@ import { useQuery } from 'react-query';
 import EditableList from './EditableList';
 import { extractFromJSON } from 'Utils';
 
-function SettingPageLayout({
-  children,
-  texts,
-  SideChildren,
-  endpoint = '',
-  idKey = '',
-  getAllFn = () => {},
-  renderList = () => null,
-}) {
+function SettingPageLayout({ children, texts, SideChildren }) {
   const matches = useMediaQuery('(max-width:900px)');
 
   const breadcrumbs = [
@@ -114,6 +106,7 @@ function SettingPageLayout({
                 <Typography variant="body_medium_muted">
                   {texts?.sideDescription}
                 </Typography>
+
                 {SideChildren && <SideChildren />}
               </Stack>
             </Grid>

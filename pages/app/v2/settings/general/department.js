@@ -6,7 +6,7 @@ import TextInput from 'components/fields/TextInput';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   createSetting,
@@ -102,18 +102,16 @@ const plan = {
         select: {
           type: 'inLine',
           options: [
-            { value: '30', label: '30 Days' },
-            { value: '60', label: '60 Days' },
-            { value: '90', label: '90 Days' },
+            { value: 'c152a174-6024-4490-b1ac-5944337bb943', label: 'Emp 1' },
+            { value: 'a107a512-a6a5-11ed-afa1-0242ac120002', label: 'EMp 2' },
+            { value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002', label: 'Emp 3' },
           ],
         },
       },
     ],
   },
-  getAllFn: getSetting,
   postFn: createSetting,
   putFn: updateSetting,
-  deleteFn: deleteSetting,
   key: 'department',
   endpoint: 'settings/department',
 };
@@ -144,78 +142,70 @@ const DeparmentForm = {
 };
 
 export default function Page() {
-  const [editData, setEditData] = useState(null);
-  const router = useRouter();
-  const editClickCB = (data) => {
-    // router.push(data.id);
-    console.log(data);
-    setEditData(data);
-  };
-
   const qc = useQueryClient();
-
   const {
     isLoading,
     data: response,
     error,
-  } = useQuery('get' + plan.key, () => getSetting(plan.endpoint, { page: 1 }), {
-    // onSuccess: () => {
-    //   setEditData(null);
-    // },
-  });
+  } = useQuery('get' + plan.key, () => getSetting(plan.endpoint, { page: 1 }));
 
+  const [openSideMenu, setOpenSideMenu] = useState(false);
+  const [editData, setEditData] = useState(null);
   // Delete
   const onDelete = useMutation((data) => deleteSetting(plan.endpoint, data), {
     onSuccess: () => {
       qc.invalidateQueries('get' + plan.key);
       alert('Deleted');
-      // setOpenSideMenu(false);
+      setOpenSideMenu(false);
     },
     onError: (data) => {
-      debugger;
       alert('Failed');
     },
   });
+
+  const editClickCB = (id) => {
+    setOpenSideMenu(true);
+    // TODO: Very Crucial
+    setEditData(id);
+  };
 
   const onDeleteClick = (id) => {
     if (window.confirm('Do you want to delete this ? ')) {
       onDelete.mutate({ id: id });
     }
+    // setOpenSideMenu(true)
   };
 
-  const clearEdit = () => {
-    setEditData(null);
-  };
+  useEffect(
+    (_) => {
+      if (!openSideMenu) {
+        setEditData(null);
+      }
+    },
+    [openSideMenu]
+  );
   return (
-    <SettingPageLayout
-      texts={DeparmentForm.texts}
-      endpoint={plan.endpoint}
-      idKey={plan.key}
-      getAllFn={getSetting}
-      editClickCB={editClickCB}
-    >
-      <SmartSideBarForm plan={plan} formData={editData} clearEdit={clearEdit} />
-      <>
-        {isLoading ? (
-          'Loading,,,'
-        ) : error ? (
-          <h2>Error Fetching Data</h2>
-        ) : response?.data?.length ? (
-          response?.data?.map((e, index) => (
-            <EditableList
-              key={index}
-              label={extractFromJSON(e, `**.departmentName`)}
-              cb={{
-                Edit: () => editClickCB(e),
-                Delete: () => onDeleteClick(e.id),
-              }}
-            />
-          ))
-        ) : (
-          <h3>No Records Found</h3>
-        )}
-      </>
+    <SettingPageLayout texts={DeparmentForm.texts}>
+      <SmartSideBarForm
+        plan={plan}
+        openSideMenu={openSideMenu}
+        setOpenSideMenu={setOpenSideMenu}
+        editData={editData}
+      />
+      <Stack sx={{ rowGap: 1 }}>
+        {isLoading
+          ? 'Loading'
+          : response?.data?.map((e, index) => (
+              <EditableList
+                key={index}
+                label={extractFromJSON(e, `**.departmentName`)}
+                cb={{
+                  Edit: () => editClickCB(e),
+                  Delete: () => onDeleteClick(e.id),
+                }}
+              />
+            ))}
+      </Stack>
     </SettingPageLayout>
   );
-  // return <ListWithSidebarLayout config={divisionForm}/>
 }
