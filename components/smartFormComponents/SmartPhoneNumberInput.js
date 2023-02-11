@@ -12,10 +12,6 @@ export default function SmartPhoneNumberInput({ field }) {
     formState: { errors },
   } = useFormContext();
 
-  const [value, setValue] = useState('0');
-
-  const onChange = (phone) => setValue(phone);
-
   return (
     <>
       <Controller

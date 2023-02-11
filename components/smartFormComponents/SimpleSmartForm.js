@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import SmartFieldDecider from './SmartFieldDecider';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Button, Grid, Stack, Typography } from '@mui/material';
+import { DevTool } from '@hookform/devtools';
 
 export default function SimpleSmartForm({
   plan,
@@ -85,6 +86,7 @@ export default function SimpleSmartForm({
           </Grid>
         </form>
       </FormProvider>
+      <DevTool control={methods.control} />
     </>
   );
 }

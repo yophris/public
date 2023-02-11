@@ -4,15 +4,18 @@ import AppDropdown from 'components/fields/AppDropdown';
 import TextInput from 'components/fields/TextInput';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useQuery, useQueryClient } from 'react-query';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   createSetting,
   deleteSetting,
   getSetting,
   updateSetting,
 } from 'requests/settings';
+import { Stack } from '@mui/material';
+import EditableList from '@/components/settings/EditableList';
+import { extractFromJSON } from 'Utils';
 
 const station = [
   {
@@ -207,29 +210,7 @@ export const addressFields = [
   },
 ];
 
-// const validation_station = Yup.object().shape({
-//   station: Yup.object().shape({
-//     stationName: Yup.string().required('stationName'),
-//     isMainStation: Yup.string().required('select main station'),
-//   }),
-// });
-
-// export const validation_address = Yup.object()
-//   .shape({
-//     address: Yup.object().shape({
-//       addressLn1: Yup.string().required(' Line 1 required.'),
-//       addressLn2: Yup.string(),
-//       city: Yup.string().required(),
-//       state: Yup.string().required(),
-//       postalCode: Yup.string().required(),
-//       country: Yup.string().required(),
-//       phone1: Yup.string().required(),
-//     }),
-//   })
-//   .required();
-
 const stationForm = {
-  key: 'stationName',
   form: [
     {
       header: '',
@@ -258,7 +239,9 @@ const stationForm = {
   deleteFn: deleteSetting,
 };
 const plan = {
-  sideBarTitle:"Add Station",
+  key: 'stationName',
+  endpoint: 'settings/station',
+  sideBarTitle: 'Add Station',
   section: {
     fields: [
       {
@@ -289,9 +272,8 @@ const plan = {
         select: {
           type: 'inLine',
           options: [
-            { value: 'None', label: 'None' },
-            { value: 'Yes', label: 'Yes' },
-            { value: 'No', label: 'No' },
+            { value: true, label: 'Yes' },
+            { value: false, label: 'No' },
           ],
         },
       },
@@ -323,9 +305,9 @@ const plan = {
         select: {
           type: 'inLine',
           options: [
-            { value: '30', label: '30 Days' },
-            { value: '60', label: '60 Days' },
-            { value: '90', label: '90 Days' },
+            { value: 'aef9a00b-bcff-4a39-8873-3c4648645c69', label: 'Emp 1' },
+            { value: '56b0fb05-3a93-42d9-b96e-ff0f21c0df00', label: 'Emp 2' },
+            { value: 'e1bab173-4482-4396-a6c7-092052963e62', label: 'Emp 3' },
           ],
         },
       },
@@ -339,7 +321,7 @@ const plan = {
       {
         label: 'Address Line 1',
         type: 'Text',
-        id: 'primaryAddress_addressLine1',
+        id: 'primary.Address.addressLn1',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
         config: {
           placeholder: 'Address Line 1',
@@ -353,7 +335,7 @@ const plan = {
       {
         label: 'Address Line 2',
         type: 'Text',
-        id: 'primaryAddress_addressLine2',
+        id: 'primary.Address.addressLn2',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
         config: {
           placeholder: 'Address Line 2',
@@ -367,7 +349,7 @@ const plan = {
       {
         label: 'Country',
         type: 'Select',
-        id: 'primaryAddress_country',
+        id: 'primary.Address.country',
         gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
         config: {
           placeholder: 'Country',
@@ -385,7 +367,7 @@ const plan = {
       {
         label: 'State',
         type: 'Select',
-        id: 'primaryAddress_state',
+        id: 'primary.Address.state',
         gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
         validations: [
           // {
@@ -394,13 +376,13 @@ const plan = {
         ],
         select: {
           type: 'api',
-          api: 'app/valueHelp/states/${primaryAddress_country}',
+          api: 'app/valueHelp/states/${primary.Address.country.value}',
         },
       },
       {
         label: 'City',
         type: 'Select',
-        id: 'primaryAddressCity',
+        id: 'primary.Address.city',
         gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
         validations: [
           // {
@@ -409,18 +391,18 @@ const plan = {
         ],
         select: {
           type: 'api',
-          api: 'app/valueHelp/cities/${primaryAddress_country}/${primaryAddress_state}',
+          api: 'app/valueHelp/cities/${primary.Address.country.value}/${primary.Address.state.value}',
         },
       },
       {
         label: 'Postal Code',
         // isRequired: true,
         type: 'Text',
-        id: 'postalCode',
+        id: 'primary.Address.postalCode',
         gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
         config: {
           placeholder: 'Postal Code',
-          type:'number'
+          type: 'number',
         },
         validations: [
           {
@@ -431,7 +413,7 @@ const plan = {
       {
         label: 'Phone',
         type: 'PhoneNumber',
-        id: 'phone',
+        id: 'primary.Address.phone1',
         gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
         validations: [
           {
@@ -441,7 +423,7 @@ const plan = {
           {
             type: 'Length',
             length: {
-              min: 13,
+              min: 12,
               max: 15,
             },
           },
@@ -449,52 +431,84 @@ const plan = {
       },
     ],
   },
+  postFn: createSetting,
+  putFn: updateSetting,
+  texts: {
+    key: 'stationName',
+    breadcrumbText: 'Station',
+    drawerTitle: 'Add Station',
+    mainTitle: 'List of Stations',
+    mainDescription: 'this is short description for division',
+    sideTitle: 'Station',
+    sideDescription:
+      'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
+  },
 };
 export default function Page() {
-  const { watch } = useForm();
   const qc = useQueryClient();
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedState, setSelectedState] = useState('');
-  console.log(watch('city'), 'lklk');
-  console.log(stationForm, 'lklk');
-  // const alert = useAlert();
   const {
-    isLoading: countryLoading,
-    data: countryResponse,
-    error: countryError,
-  } = useQuery('getcountries', () =>
-    stationForm.getAllFn('app/valueHelp/countries')
+    isLoading,
+    data: response,
+    error,
+  } = useQuery('get' + plan.key, () => getSetting(plan.endpoint, { page: 1 }));
+
+  const [openSideMenu, setOpenSideMenu] = useState(false);
+  const [editData, setEditData] = useState(null);
+  // Delete
+  const onDelete = useMutation((data) => deleteSetting(plan.endpoint, data), {
+    onSuccess: () => {
+      qc.invalidateQueries('get' + plan.key);
+      alert('Deleted');
+      setOpenSideMenu(false);
+    },
+    onError: (data) => {
+      alert('Failed');
+    },
+  });
+
+  const editClickCB = (id) => {
+    setOpenSideMenu(true);
+    // TODO: Very Crucial
+    setEditData(id);
+  };
+
+  const onDeleteClick = (id) => {
+    if (window.confirm('Do you want to delete this ? ')) {
+      onDelete.mutate({ id: id });
+    }
+    // setOpenSideMenu(true)
+  };
+
+  useEffect(
+    (_) => {
+      if (!openSideMenu) {
+        setEditData(null);
+      }
+    },
+    [openSideMenu]
   );
-
-  // const {
-  //   isLoading: stateLoading,
-  //   data: stateResponse,
-  //   // refetch: stateRefetch,
-  //   error: stateError,
-  // } = useQuery(
-  //   'getstate',
-  //   () => stationForm.getAllFn(`app/valueHelp/states/${selectedCountry}`),
-  //   { enabled: selectedCountry }
-  // );
-
-  // const {
-  //   isLoading: cityLoading,
-  //   data: cityResponse,
-  //   refetch: cityFetch,
-  //   error: cityError,
-  // } = useQuery(
-  //   'getcity',
-  //   () => stationForm.getAllFn(`app/valueHelp/cities/${selectedCountry}`),
-  //   { enabled: selectedState }
-  // );
-  console.log(countryResponse, 'response');
-  // console.log(stateResponse, 'response');
-  // console.log(cityResponse, 'response');
-
   return (
-    <SettingPageLayout texts={stationForm.texts}>
-      <SmartSideBarForm plan={plan} />
+    <SettingPageLayout texts={plan.texts}>
+      <SmartSideBarForm
+        plan={plan}
+        openSideMenu={openSideMenu}
+        setOpenSideMenu={setOpenSideMenu}
+        editData={editData}
+      />
+      <Stack sx={{ rowGap: 1 }}>
+        {isLoading
+          ? 'Loading'
+          : response?.data?.map((e, index) => (
+              <EditableList
+                key={index}
+                label={extractFromJSON(e, `**.stationName`)}
+                cb={{
+                  Edit: () => editClickCB(e),
+                  Delete: () => onDeleteClick(e.id),
+                }}
+              />
+            ))}
+      </Stack>
     </SettingPageLayout>
   );
-  // return <ListWithSidebarLayout config={divisionForm}/>
 }
