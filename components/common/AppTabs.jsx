@@ -29,19 +29,10 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default function AppTabs({
-  index,
-  tabs,
-  fields,
-  renderFields,
-  errors,
-  name,
-  setFieldValue,
-  leaveType,
-}) {
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+export default function AppTabs({ children, tabs, modifyFields, index }) {
+  const [selectedTabIndex, setSelectedTabIndex] = React.useState(0);
+  const handleTabChangeIndex = (event, newValue) => {
+    setSelectedTabIndex(newValue);
   };
 
   return (
@@ -61,8 +52,8 @@ export default function AppTabs({
             },
           }}
           indicatorColor="primary"
-          value={value}
-          onChange={handleChange}
+          value={selectedTabIndex}
+          onChange={handleTabChangeIndex}
           centered
         >
           {tabs.map((tab, index) => (
@@ -74,13 +65,13 @@ export default function AppTabs({
               label={
                 <Typography
                   variant={
-                    index === value
+                    index === selectedTabIndex
                       ? 'body_medium_secondary'
                       : 'body_medium_muted'
                   }
                   component="p"
                 >
-                  {tab.text}
+                  {tab.text} test
                 </Typography>
               }
             />
@@ -94,21 +85,26 @@ export default function AppTabs({
           padding: 2,
         }}
       >
-        {tabs.map((tab, i) => (
-          <TabPanel key={i} value={value} index={i}>
-            {tab.fields.map((field, j) => {
-              setFieldValue(`${name}.${index}.${name}Id`, leaveType.value);
-              const modifiedField = {
-                ...field,
-                attr: {
-                  ...field.attr,
-                  name: `${name}.${index}.${field.attr.name}`,
-                },
-              };
-              return <Box key={j}>{renderFields(modifiedField, errors)}</Box>;
-            })}
-          </TabPanel>
-        ))}
+        {/* <Box
+          role="tabpanel"
+          hidden={selectedTabIndex !== index}
+          {...other}
+          style={{ marginTop: 0 }}
+        >
+          {selectedTabIndex === index && (
+            <Stack direction="column" spacing={2}>
+              {children}
+            </Stack>
+          )}
+        </Box> */}
+        {/* {children} */}
+        {tabs.map((tab, i) =>
+          tab.fields.map((field) => (
+            <TabPanel key={i} value={selectedTabIndex} index={i}>
+              {modifyFields ? modifyFields(field, i) : field}
+            </TabPanel>
+          ))
+        )}
       </Stack>
     </Stack>
   );
