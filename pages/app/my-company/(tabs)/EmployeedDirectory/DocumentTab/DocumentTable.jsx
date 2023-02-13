@@ -258,6 +258,7 @@ function TablePaginationActions(props) {
     setPages(newPages);
     setLowerLimit(0);
     setUpperLimit(newPages.length > 3 ? 2 : newPages.length - 1);
+    setActivePage(0);
   }, [count, rowsPerPage]);
 
   return (
