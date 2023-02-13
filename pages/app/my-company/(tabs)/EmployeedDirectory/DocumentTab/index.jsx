@@ -10,6 +10,7 @@ import DocumentTable from './DocumentTable';
 
 const asyncTableData = [
   {
+    uid: 'sdffd123123123',
     name: 'Driving Licence',
     type: 'Identity Doc',
     requestedOn: '13-02-2022',
@@ -17,6 +18,327 @@ const asyncTableData = [
     issuedCountry: 'USA',
   },
   {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
+    name: 'Experience Letter',
+    type: 'Previous Experience',
+    requestedOn: '13-07-2022',
+    valid: { from: '03 Oct 2014', to: '02 Oct 2020' },
+    issuedCountry: 'KSA',
+  },
+  {
+    uid: 'sdffd123123123',
+    name: 'Driving Licence',
+    type: 'Identity Doc',
+    requestedOn: '13-02-2022',
+    valid: { from: '03 Oct 2020', to: '02 Oct 2030' },
+    issuedCountry: 'USA',
+  },
+  {
+    uid: 'sdffd1231245334',
     name: 'Experience Letter',
     type: 'Previous Experience',
     requestedOn: '13-07-2022',
@@ -43,33 +365,66 @@ export default function DocumentTab(props) {
     }
   };
 
+  const handleDelete = (e, item) => {
+    const filteredItems = tableData.filter((d) => item !== d);
+    setTableData(filteredItems);
+  };
+
   const [tableData, setTableData] = React.useState([]);
   React.useEffect(() => {
     let modifyTableData = [];
     asyncTableData.map((td, i) =>
       modifyTableData.push([
-        <Typography variant="body_medium_secondary">{td.name}</Typography>,
-        <Stack rowGap={1}>
-          <Typography variant="body_medium_secondary">{td.type}</Typography>
-          <Typography variant="subbody_medium_muted" component="p">
-            {td.requestedOn}
-          </Typography>
-        </Stack>,
-        <Stack rowGap={1}>
-          <Typography variant="body_medium_secondary">
-            {td.valid.from}
-            {' - '}
-            {td.valid.to}{' '}
-          </Typography>
-          <Typography variant="subbody_medium_muted" component="p">
-            {new Date(td.valid.to).getFullYear() -
-              new Date(td.valid.from).getFullYear()}{' '}
-            {'years left'}
-          </Typography>
-        </Stack>,
-        <Typography variant="body_medium_secondary">
-          {td.issuedCountry}
-        </Typography>,
+        {
+          name: td.name,
+          component: (
+            <Typography variant="body_medium_secondary">{td.name}</Typography>
+          ),
+        },
+        {
+          type: td.requestedOn,
+          component: (
+            <Stack rowGap={0.7}>
+              <Typography variant="body_medium_secondary">{td.type}</Typography>
+              <Typography variant="subbody_medium_muted" component="p">
+                {td.requestedOn}
+              </Typography>
+            </Stack>
+          ),
+        },
+        {
+          valid: td.valid.from,
+          component: (
+            <Stack rowGap={0.7}>
+              <Typography variant="body_medium_secondary">
+                {td.valid.from}
+                {' - '}
+                {td.valid.to}{' '}
+              </Typography>
+              <Typography variant="subbody_medium_muted" component="p">
+                {new Date(td.valid.to).getFullYear() -
+                  new Date(td.valid.from).getFullYear()}{' '}
+                {'years left'}
+              </Typography>
+            </Stack>
+          ),
+        },
+        {
+          issued: td.issuedCountry,
+          component: (
+            <Typography variant="body_medium_secondary">
+              {td.issuedCountry}
+            </Typography>
+          ),
+        },
+        {
+          sortValueRef: 'action',
+          component: <DownloadComponent />,
+        },
+        {
+          sortValueRef: 'action',
+          component: <MenuComponent />,
+        },
       ])
     );
     setTableData(modifyTableData);
@@ -79,24 +434,33 @@ export default function DocumentTab(props) {
   //   tableData.
   // }
 
-  return <DocumentTable />;
-  // <DocTable
-  //   tableData={tableData}
-  //   tableHeader={tableHeader}
-  //   actionComponents={actionComponents}
-  // />
+  // return (
+  //   <DocTable
+  //     tableData={tableData}
+  //     tableHeader={tableHeader}
+  //     actionComponents={actionComponents}
+  //   />
+  // );
+
+  return (
+    <DocumentTable
+      rows={tableData}
+      headCells={headCells}
+      handleDelete={handleDelete}
+    />
+  );
 }
 
 function DownloadComponent(props) {
   return (
-    <IconButton disableRipple onClick={() => {}}>
+    <Stack direction="row" alignItems="center" sx={{}}>
       <Button disableRipple>
         <Typography variant="body_bold_primary">Download</Typography>
       </Button>
       <FileDownloadOutlinedIcon
         sx={{ fontSize: '2rem', color: 'text.primary' }}
       />
-    </IconButton>
+    </Stack>
   );
 }
 
@@ -223,16 +587,16 @@ function MenuComponent(props) {
   // };
 }
 
-const actionComponents = [DownloadComponent, MenuComponent];
+// const actionComponents = [DownloadComponent, MenuComponent];
 
-const tableHeader = [
-  'Document Name',
-  'Document Type',
-  'Valid From - To',
-  'Issued Country',
-  '',
-  '',
-];
+// const tableHeader = [
+//   'Document Name',
+//   'Document Type',
+//   'Valid From - To',
+//   'Issued Country',
+//   '',
+//   '',
+// ];
 
 const formBuilder = [
   {
@@ -309,5 +673,44 @@ const formBuilder = [
         ],
       },
     },
+  },
+];
+
+const headCells = [
+  {
+    id: 'name',
+    numeric: false,
+    disablePadding: true,
+    label: 'Document Name',
+  },
+  {
+    id: 'type',
+    numeric: false,
+    disablePadding: false,
+    label: 'Document Type',
+  },
+  {
+    id: 'valid',
+    numeric: false,
+    disablePadding: false,
+    label: 'Valid From - To',
+  },
+  {
+    id: 'issued',
+    numeric: false,
+    disablePadding: false,
+    label: 'Issued Country',
+  },
+  {
+    id: 'actionComp1',
+    numeric: false,
+    disablePadding: false,
+    label: '',
+  },
+  {
+    id: 'actionComp2',
+    numeric: false,
+    disablePadding: false,
+    label: '',
   },
 ];

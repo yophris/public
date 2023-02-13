@@ -1,68 +1,40 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import { alpha, styled, useTheme } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import Typography from '@mui/material/Typography';
 import { visuallyHidden } from '@mui/utils';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { styled } from '@mui/material/styles';
 
-function createData(name, calories, fat, carbs, protein) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-  };
-}
-
-const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
-];
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
+function descendingComparator(index, a, b, orderBy) {
+  if (b[index][orderBy] < a[index][orderBy]) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (b[index][orderBy] > a[index][orderBy]) {
     return 1;
   }
   return 0;
 }
 
-function getComparator(order, orderBy) {
+function getComparator(index, order, orderBy) {
   return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+    ? (a, b) => descendingComparator(index, a, b, orderBy)
+    : (a, b) => -descendingComparator(index, a, b, orderBy);
 }
 
 // Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
@@ -81,57 +53,28 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-  {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Dessert (100g serving)',
-  },
-  {
-    id: 'calories',
-    numeric: true,
-    disablePadding: false,
-    label: 'Calories',
-  },
-  {
-    id: 'fat',
-    numeric: true,
-    disablePadding: false,
-    label: 'Fat (g)',
-  },
-  {
-    id: 'carbs',
-    numeric: true,
-    disablePadding: false,
-    label: 'Carbs (g)',
-  },
-  {
-    id: 'protein',
-    numeric: true,
-    disablePadding: false,
-    label: 'Protein (g)',
-  },
-];
-
 function EnhancedTableHead(props) {
   const {
+    headCells,
     onSelectAllClick,
     order,
     orderBy,
     numSelected,
     rowCount,
     onRequestSort,
+    setColumnIndex,
   } = props;
-  const createSortHandler = (property) => (event) => {
+  const createSortHandler = (event, property, index) => {
     onRequestSort(event, property);
+    setColumnIndex(index);
   };
 
   return (
-    <TableHead sx={{ backgroundColor: '#F7F9FB' }}>
+    <TableHead sx={{ backgroundColor: 'background.main' }}>
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
+            sx={{ '& .MuiSvgIcon-root': { fontSize: '2rem' } }}
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -141,7 +84,7 @@ function EnhancedTableHead(props) {
             }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
+        {headCells.map((headCell, index) => (
           <TableCell
             key={headCell.id}
             align={headCell.numeric ? 'right' : 'left'}
@@ -151,7 +94,7 @@ function EnhancedTableHead(props) {
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
+              onClick={(e) => createSortHandler(e, headCell.id, index)}
             >
               <Typography variant="body_medium_muted" component="p">
                 {headCell.label}
@@ -169,17 +112,8 @@ function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected, handleDelete, selectedItem } = props;
 
   return (
     <Toolbar
@@ -189,7 +123,7 @@ function EnhancedTableToolbar(props) {
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
             alpha(
-              theme.palette.primary.main,
+              theme.palette.secondary.main,
               theme.palette.action.activatedOpacity
             ),
         }),
@@ -217,7 +151,7 @@ function EnhancedTableToolbar(props) {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={(e) => handleDelete(e, selectedItem)}>
             <DeleteIcon sx={{ fontSize: '2rem' }} />
           </IconButton>
         </Tooltip>
@@ -232,8 +166,27 @@ function EnhancedTableToolbar(props) {
   );
 }
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
+const PageNumber = ({ page, handleClick, active = false, isLast = false }) => {
+  return (
+    <Box
+      onClick={(e) => handleClick(e, page)}
+      component="span"
+      sx={{
+        fontSize: '1.2rem',
+        fontWeight: 500,
+        backgroundColor: active ? 'secondary.main' : 'background.secondary',
+        color: active ? 'text.light' : 'text.secondary',
+        textAlign: 'center',
+        alignItems: 'center',
+        borderRadius: '8px',
+        padding: '6px 12px',
+        marginRight: !isLast && '8px',
+        cursor: 'pointer',
+      }}
+    >
+      {page + 1}
+    </Box>
+  );
 };
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -250,35 +203,183 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-export default function DocumentTable() {
+function TablePaginationActions(props) {
+  const theme = useTheme();
+  const { count, page, rowsPerPage, onPageChange } = props;
+  const [pages, setPages] = React.useState([]);
+  const [currentPages, setCurrentPages] = React.useState([]);
+  const [activePage, setActivePage] = React.useState(0);
+  const [lowerLimit, setLowerLimit] = React.useState(0);
+  const [upperLimit, setUpperLimit] = React.useState(2);
+
+  const handleFirstPageButtonClick = (event) => {
+    onPageChange(event, 0);
+  };
+
+  const handleBackButtonClick = (event) => {
+    // setCurrentPages((prev) => prev.map((val) => (val - 3 < 1 ? val : val - 3)));
+    // onPageChange(event, page - 1);
+    // setLimits;
+    // if (lowerLimit >= 0 && upperLimit <= pages.length - 1) {
+    setLowerLimit((prev) => (prev - 3 < 0 ? prev : prev - 3));
+    setUpperLimit((prev) => (prev <= 3 ? prev : prev - 3));
+    // }
+  };
+
+  // const setLimits = (type) => {
+  //   setLowerLimit((prev) => (prev - 1 < 1 ? prev : prev - 1));
+  //   setUpperLimit((prev) => (prev + 1 > pages.length ? prev : prev + 1));
+  // };
+
+  const handleNextButtonClick = (event) => {
+    // setCurrentPages((prev) =>
+    //   prev.map((val) => (val + 3 > pages.length ? val : val + 3))
+    // );
+    if (lowerLimit >= 0 && upperLimit < pages.length - 1) {
+      setLowerLimit((prev) => (prev + 3 > pages.length ? prev : prev + 3));
+      setUpperLimit((prev) => (prev + 3 > pages.length ? prev : prev + 3));
+    }
+    // onPageChange(event, page + 1);
+  };
+
+  const handleLastPageButtonClick = (event) => {
+    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+  };
+  const handlePageClick = (event, p) => {
+    onPageChange(event, p);
+    setActivePage(p);
+  };
+
+  React.useEffect(() => {
+    let totalPages = count / rowsPerPage;
+    if (count % rowsPerPage) totalPages += 1;
+    let newPages = Array.from({ length: totalPages }, (value, index) => index);
+
+    setPages(newPages);
+    setLowerLimit(0);
+    setUpperLimit(newPages.length > 3 ? 2 : newPages.length - 1);
+  }, [count, rowsPerPage]);
+
+  return (
+    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+      {/* <IconButton
+        onClick={handleFirstPageButtonClick}
+        disabled={page === 0}
+        aria-label="first page"
+      >
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+      </IconButton> */}
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={lowerLimit === 0}
+        aria-label="previous page"
+      >
+        {theme.direction === 'rtl' ? (
+          <KeyboardArrowRight />
+        ) : (
+          <KeyboardArrowLeft />
+        )}
+      </IconButton>
+      {pages &&
+        pages.map((page, index) => {
+          if (page >= lowerLimit && page <= upperLimit) {
+            return (
+              <Box
+                onClick={(e) => handlePageClick(e, page)}
+                component="span"
+                sx={{
+                  fontSize: '1.2rem',
+                  fontWeight: 500,
+                  backgroundColor:
+                    page === activePage
+                      ? 'secondary.main'
+                      : 'background.secondary',
+                  color: page === activePage ? 'text.light' : 'text.secondary',
+                  textAlign: 'center',
+                  alignItems: 'center',
+                  borderRadius: '8px',
+                  padding: '6px 12px',
+                  marginRight: upperLimit !== page && '8px',
+                  cursor: 'pointer',
+                }}
+              >
+                {page + 1}
+              </Box>
+            );
+          }
+        })}
+      {/* <PageNumber
+                isLast={false}
+                page={page}
+                active={page === activePage}
+                handleClick={handlePageClick}
+              /> */}
+      <IconButton
+        onClick={handleNextButtonClick}
+        disabled={upperLimit === pages.length - 1}
+        aria-label="next page"
+      >
+        {theme.direction === 'rtl' ? (
+          <KeyboardArrowLeft />
+        ) : (
+          <KeyboardArrowRight />
+        )}
+      </IconButton>
+      {/* <IconButton
+        onClick={handleLastPageButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="last page"
+      >
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+      </IconButton> */}
+    </Box>
+  );
+}
+
+//@headCells
+//@rows in the form of [[<component> | string, <component> | string],[<component> | string, <component> | string]....]
+export default function DocumentTable({ headCells, rows, handleDelete }) {
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState(headCells[0].id);
   const [selected, setSelected] = React.useState([]);
+  const [selectedItem, setSelectedItem] = React.useState();
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
+  const [columnIndex, setColumnIndex] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleRequestSort = (event, property) => {
+  const handleRequestSort = (event, property, index) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+    setColumnIndex(index);
   };
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      //since each row is array, it's ok to reference only the first item of each row
+
+      // Select all should only select the current page
+      // const newSelected = rows.slice(
+      //   page * rowsPerPage,
+      //   page * rowsPerPage + rowsPerPage
+      // ).map((n, i) => n[0]);
+
+      // This selects all the regardless of the page
+      const newSelected = rows.map((n, i) => n[0]);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, row) => {
+    const selectFirstCell = row[0];
+    const selectedIndex = selected.indexOf(selectFirstCell);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, selectFirstCell);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -289,7 +390,7 @@ export default function DocumentTable() {
         selected.slice(selectedIndex + 1)
       );
     }
-
+    setSelectedItem(row);
     setSelected(newSelected);
   };
 
@@ -302,11 +403,13 @@ export default function DocumentTable() {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
+  // const handleChangeDense = (event) => {
+  //   setDense(event.target.checked);
+  // };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (name) => {
+    return selected.indexOf(name) !== -1;
+  };
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -315,7 +418,11 @@ export default function DocumentTable() {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          handleDelete={handleDelete}
+          selectedItem={selectedItem}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -323,60 +430,55 @@ export default function DocumentTable() {
             size={dense ? 'small' : 'medium'}
           >
             <EnhancedTableHead
+              headCells={headCells}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              setColumnIndex={setColumnIndex}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-                      <StyledTableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
+              {rows &&
+                stableSort(rows, getComparator(columnIndex, order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, rowIndex) => {
+                    const isItemSelected = isSelected(row[0]);
+                    const labelId = `enhanced-table-checkbox-${rowIndex}`;
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={rowIndex}
+                        selected={isItemSelected}
                       >
-                        {row.name}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {row.calories}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                      <StyledTableCell align="right">
-                        {row.carbs}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {row.protein}
-                      </StyledTableCell>
-                    </TableRow>
-                  );
-                })}
+                        <StyledTableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            sx={{ '& .MuiSvgIcon-root': { fontSize: '2rem' } }}
+                            onClick={(event) => handleClick(event, row)}
+                            checked={isItemSelected}
+                            inputProps={{
+                              'aria-labelledby': labelId,
+                            }}
+                          />
+                        </StyledTableCell>
+                        {/* {stableSort(row, getComparator(order, orderBy))
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        ) */}
+                        {row.map((data, j) => (
+                          <StyledTableCell key={j}>
+                            {data.component}
+                          </StyledTableCell>
+                        ))}
+                      </TableRow>
+                    );
+                  })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
@@ -390,6 +492,22 @@ export default function DocumentTable() {
           </Table>
         </TableContainer>
         <TablePagination
+          sx={{
+            '& .MuiTablePagination-selectLabel, .MuiInputBase-root, .MuiTablePagination-displayedRows':
+              {
+                color: 'text.secondary',
+                fontSize: '1.4rem',
+                fontWeight: 500,
+              },
+            '.MuiTablePagination-menuItem': {
+              color: 'text.secondary',
+              fontSize: '1.4rem',
+              fontWeight: 500,
+            },
+            '& .MuiSvgIcon-root ': {
+              fontSize: '2.2rem',
+            },
+          }}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}
@@ -397,12 +515,18 @@ export default function DocumentTable() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          ActionsComponent={TablePaginationActions}
         />
       </Paper>
-      <FormControlLabel
+      {/* <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
-      />
+      /> */}
     </Box>
   );
 }
+
+// DocumentTable.propTypes = {
+//   headCells: PropTypes.array.isRequired,
+//   rows: PropTypes.array.isRequired,
+// };
