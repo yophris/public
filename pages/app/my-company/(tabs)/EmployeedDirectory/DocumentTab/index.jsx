@@ -7,6 +7,7 @@ import SettingDrawer from '@/components/settings/SettingDrawer';
 import SimpleSmartForm from '@/components/smartFormComponents/SimpleSmartForm';
 import SmartCards from '@/components/smartFormComponents/SmartCards';
 import DocumentTable from './DocumentTable';
+import AppButton from '@/components/AppButton';
 
 const asyncTableData = [
   {
@@ -444,9 +445,13 @@ export default function DocumentTab(props) {
 
   return (
     <DocumentTable
+      title="List of Documents"
       rows={tableData}
       headCells={headCells}
       handleDelete={handleDelete}
+      optionalComponents={
+        <AppButton onClick={() => {}}>Add Document</AppButton>
+      }
     />
   );
 }

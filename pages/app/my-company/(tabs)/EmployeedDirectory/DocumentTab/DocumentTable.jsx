@@ -113,7 +113,8 @@ function EnhancedTableHead(props) {
 }
 
 function EnhancedTableToolbar(props) {
-  const { numSelected, handleDelete, selectedItem } = props;
+  const { numSelected, handleDelete, selectedItem, title, optionalComponents } =
+    props;
 
   return (
     <Toolbar
@@ -145,7 +146,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="h3"
         >
-          List of Documents
+          {title}
         </Typography>
       )}
 
@@ -156,38 +157,16 @@ function EnhancedTableToolbar(props) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon sx={{ fontSize: '2rem' }} />
-          </IconButton>
-        </Tooltip>
+        // <Tooltip title="Filter list">
+        //   <IconButton>
+        //     <FilterListIcon sx={{ fontSize: '2rem' }} />
+        //   </IconButton>
+        // </Tooltip>
+        optionalComponents
       )}
     </Toolbar>
   );
 }
-
-const PageNumber = ({ page, handleClick, active = false, isLast = false }) => {
-  return (
-    <Box
-      onClick={(e) => handleClick(e, page)}
-      component="span"
-      sx={{
-        fontSize: '1.2rem',
-        fontWeight: 500,
-        backgroundColor: active ? 'secondary.main' : 'background.secondary',
-        color: active ? 'text.light' : 'text.secondary',
-        textAlign: 'center',
-        alignItems: 'center',
-        borderRadius: '8px',
-        padding: '6px 12px',
-        marginRight: !isLast && '8px',
-        cursor: 'pointer',
-      }}
-    >
-      {page + 1}
-    </Box>
-  );
-};
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -339,7 +318,13 @@ function TablePaginationActions(props) {
 
 //@headCells
 //@rows in the form of [[<component> | string, <component> | string],[<component> | string, <component> | string]....]
-export default function DocumentTable({ headCells, rows, handleDelete }) {
+export default function DocumentTable({
+  title,
+  headCells,
+  rows,
+  handleDelete,
+  optionalComponents,
+}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState(headCells[0].id);
   const [selected, setSelected] = React.useState([]);
@@ -417,18 +402,20 @@ export default function DocumentTable({ headCells, rows, handleDelete }) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <Box>
+      <Paper sx={{ mb: 2 }}>
         <EnhancedTableToolbar
           numSelected={selected.length}
           handleDelete={handleDelete}
           selectedItem={selectedItem}
+          title={title}
+          optionalComponents={optionalComponents}
         />
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
+            sx={{ minWidth: 1020 }}
           >
             <EnhancedTableHead
               headCells={headCells}
@@ -450,6 +437,11 @@ export default function DocumentTable({ headCells, rows, handleDelete }) {
                     return (
                       <TableRow
                         hover
+                        sx={{
+                          '&.MuiTableRow-hover:hover': {
+                            backgroundColor: 'background.secondary',
+                          },
+                        }}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
