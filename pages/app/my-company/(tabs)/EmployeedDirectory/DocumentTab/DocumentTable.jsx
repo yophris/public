@@ -288,19 +288,19 @@ function TablePaginationActions(props) {
                 onClick={(e) => handlePageClick(e, page)}
                 component="span"
                 sx={{
-                  fontSize: '1.2rem',
-                  fontWeight: 500,
                   backgroundColor:
                     page === activePage
                       ? 'secondary.main'
                       : 'background.secondary',
-                  color: page === activePage ? 'text.light' : 'text.secondary',
-                  textAlign: 'center',
-                  alignItems: 'center',
                   borderRadius: '8px',
-                  padding: '6px 12px',
-                  marginRight: upperLimit !== page && '8px',
                   cursor: 'pointer',
+                  color: page === activePage ? 'text.light' : 'text.secondary',
+                  fontSize: '1.2rem',
+                  fontWeight: 500,
+                  marginRight: upperLimit !== page && '8px',
+                  padding: '6px 12px',
+                  textAlign: 'center',
+                  userSelect: 'none',
                 }}
               >
                 {page + 1}
