@@ -1,15 +1,11 @@
 import * as React from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Grid, Stack } from '@mui/material';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Typography from '@mui/material/Typography';
-import AppTabs from 'components/AppTabs';
-import { useFieldArray } from 'react-hook-form';
+import AppTabs, { TabPanel } from '@/components/common/AppTabs';
+import { Box, Grid } from '@mui/material';
 import AppButton from 'components/AppButton';
-import AppColorCircle from 'components/AppColorCircle';
+import { useFieldArray } from 'react-hook-form';
+
 import AppDropdown from 'components/fields/AppDropdown';
+import AppAccordion from '../common/AppAccordion';
 
 export default function LeaveTypeRulesSetting({
   renderFields,
@@ -48,10 +44,32 @@ export default function LeaveTypeRulesSetting({
   };
 
   const handleAddField = () => {
+    debugger;
     if (selectedOption.text !== '') {
       setTabHeading([...tabHeading, selectedOption.text]);
       append(rest.fieldForArray);
     }
+  };
+
+  // const [selectedTabIndex, setSelectedTabIndex] = React.useState(0);
+  // const handleSelectedTabIndex = (index) => {
+  //   setSelectedTabIndex(index);
+  // };
+
+  const modifyFields = (field, index) => {
+    rest.setValue(
+      `${rest.name}.${index}.${rest.name}Id`,
+      options.find((o) => o.text === tabHeading[index])
+    );
+    const modifiedField = {
+      ...field,
+      attr: {
+        ...field.attr,
+        name: `${rest.name}.${index}.${field.attr.name}`,
+      },
+    };
+    console.log('modified field: ', field);
+    return <Box>{renderFields(modifiedField, errors)}</Box>;
   };
 
   return (
@@ -89,62 +107,45 @@ export default function LeaveTypeRulesSetting({
 
       {fields &&
         fields.map((field, index) => (
-          <Accordion
-            key={index}
-            expanded={expanded === 'panel1'}
-            onChange={handleChange('panel1')}
-            sx={{
-              '&.MuiPaper-root.MuiAccordion-root.Mui-expanded': {
-                margin: 0,
-                marginBottom: 1.25,
-              },
-              '&:last-of-type, &:first-of-type': {
-                borderRadius: '8px',
-              },
-              overflow: 'hidden',
-              borderRadius: '8px',
-              marginBottom: '10px',
-              marginTop: 2.5,
-            }}
-          >
-            <AccordionSummary
-              expandIcon={
-                <ExpandMoreIcon
-                  sx={{
-                    fontSize: '3rem',
-                    color: '#444444',
-                  }}
-                />
-              }
+          <AppAccordion tabHeading={tabHeading[index]}>
+            <AppTabs
+              tabs={rest.tabs}
+              index={index}
+              modifyFields={modifyFields}
+              // handleSelectedIndex={handleSelectedTabIndex}
             >
-              <Stack
-                sx={{
-                  width: '100%',
-                  marginRight: 2,
-                }}
-                direction="row"
-                alignItems="center"
-                spacing={1.5}
-              >
-                <AppColorCircle size={18} colorVal="#46C0C0" />
-                <Typography variant="h3_medium_secondary" component="h3">
-                  {tabHeading[index]}
-                </Typography>
-              </Stack>
-            </AccordionSummary>
-            <AccordionDetails sx={{ paddingTop: 0 }}>
-              <AppTabs
-                index={index}
-                tabs={rest.tabs}
-                renderFields={renderFields}
-                errors={errors}
-                name={rest.name}
-                setFieldValue={rest.setValue}
-                leaveType={options.find((o) => o.text === tabHeading[index])}
-              />
-            </AccordionDetails>
-          </Accordion>
+              {/* <Box key={j}>{renderFields(modifiedField, errors)}</Box> */}
+              {/* {rest.tabs.map((tab, i) => {
+                console.log('tabs being renders', tab);
+                return (
+                  <TabPanel key={i} value={selectedTabIndex} index={i}>
+                    {tab.fields.map((field, j) => {
+                      rest.setValue(
+                        `${rest.name}.${index}.${rest.name}Id`,
+                        options.find((o) => o.text === tabHeading[index])
+                      );
+                      const modifiedField = {
+                        ...field,
+                        attr: {
+                          ...field.attr,
+                          name: `${rest.name}.${index}.${field.attr.name}`,
+                        },
+                      };
+                      console.log('modified field: ', field);
+                      return (
+                        <Box key={j}>{renderFields(modifiedField, errors)}</Box>
+                      );
+                    })}
+                  </TabPanel>
+                );
+              })} */}
+            </AppTabs>
+          </AppAccordion>
         ))}
     </Grid>
   );
 }
+
+//tabs and their children
+//selected index has to be maintained in the component level
+//all the logics should be on the host
