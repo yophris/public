@@ -36,12 +36,12 @@ export default function FileUploadList({ file, handleRemove, isLast }) {
         <ListItemText
           primary={
             <Typography component="p" variant="body_medium_primary">
-              {file[0].path}
+              {file.path}
             </Typography>
           }
           secondary={
             <Typography component="p" variant="smallcopy_regular_muted">
-              Document - {Number(file[0].size) / 1000000} MB - .PDF
+              Document - {Number(file.size) / 1000000} MB - .PDF
             </Typography>
           }
         />

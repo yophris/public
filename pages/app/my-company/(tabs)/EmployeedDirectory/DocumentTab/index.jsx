@@ -675,6 +675,18 @@ const formBuilder = [
               },
             ],
           },
+          {
+            label: 'Attach File',
+            type: 'DocumentUpload',
+            gridSizes: { xs: 12 },
+            id: 'attachFile',
+
+            validations: [
+              {
+                type: 'required',
+              },
+            ],
+          },
         ],
       },
     },
