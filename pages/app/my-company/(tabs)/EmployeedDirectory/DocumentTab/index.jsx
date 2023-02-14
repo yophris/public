@@ -3,7 +3,7 @@ import AppButton from '@/components/AppButton';
 import AppMenu from '@/components/AppMenu';
 import SettingDrawer from '@/components/settings/SettingDrawer';
 import SmartCards from '@/components/smartFormComponents/SmartCards';
-import SmartTable from '@/components/smartFormComponents/SmartTable';
+import SmartTable from '@/components/common/SmartTable';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { Button, Stack, Typography } from '@mui/material';
 
