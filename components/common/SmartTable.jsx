@@ -318,7 +318,7 @@ function TablePaginationActions(props) {
 
 //@headCells
 //@rows in the form of [[<component> | string, <component> | string],[<component> | string, <component> | string]....]
-export default function DocumentTable({
+export default function SmartTable({
   title,
   headCells,
   rows,
