@@ -1,4 +1,5 @@
 import EditableList from '@/components/settings/EditableList';
+import SmartFromToDatePicker from '@/components/smartFormComponents/SmartFromToDatePicker';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
 import { Stack } from '@mui/system';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
@@ -145,6 +146,7 @@ const plan = {
           ],
         },
       },
+      
     ],
   },
   postFn: createSetting,
@@ -220,8 +222,10 @@ export default function Page() {
     },
     [openSideMenu]
   );
+
   return (
     <SettingPageLayout texts={divisionForm.texts}>
+      <SmartFromToDatePicker />
       <SmartSideBarForm
         plan={plan}
         openSideMenu={openSideMenu}
