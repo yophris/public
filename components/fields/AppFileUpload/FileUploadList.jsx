@@ -9,13 +9,20 @@ import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import AppDivider from 'components/AppDivider';
 import { ListItemIcon } from '@mui/material';
-
+const style = {
+  border: '2px dashed #BDCEDD',
+  background: '#FAFAFA',
+  borderRadius: '8px',
+  // background: "url('/images/borderDashed.svg') no-repeat",
+  // backgroundSize: 'contain',
+};
 export default function FileUploadList({ file, handleRemove, isLast }) {
+  console.log('files', file);
   return (
     <List
       alignItems="center"
       justifyContent="center"
-      sx={{ width: '100%', bgcolor: 'background.paper', padding: 0 }}
+      sx={{ width: '100%', bgcolor: 'background.paper', px: 2, ...style }}
     >
       <ListItem sx={{ px: 0 }} alignItems="center">
         <ListItemAvatar>
@@ -29,12 +36,12 @@ export default function FileUploadList({ file, handleRemove, isLast }) {
         <ListItemText
           primary={
             <Typography component="p" variant="body_medium_primary">
-              {file}
+              {file[0].path}
             </Typography>
           }
           secondary={
             <Typography component="p" variant="smallcopy_regular_muted">
-              Document - 2.21 MB - .PDF
+              Document - {Number(file[0].size) / 1000000} MB - .PDF
             </Typography>
           }
         />

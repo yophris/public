@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Select from 'react-select';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Typography } from '@mui/material';
@@ -12,32 +12,45 @@ import { GET } from 'configs/axios';
 export default function SmartSelect({ field }) {
   const {
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
     useWatch,
     watch,
+    resetField,
+    getFieldState,
   } = useFormContext();
 
-  // const templateObject = watch?.();
-  // const url = smartUrlBuilder(field?.select?.api, templateObject);
+  const templateObject = watch?.();
+  const [url, keys] = smartUrlBuilder(field?.select?.api, templateObject);
 
-  // const { data, isLoading, isSuccess } = useQuery(
-  //   [url, 'dropDown', field.id],
-  //   () => GET(url),
-  //   {
-  //     retry: false,
-  //     enabled:
-  //       !!url &&
-  //       field?.select?.type === 'api' &&
-  //       !url.includes('MISSING_VALUE'),
-  //     cacheTime: 0,
-  //   }
-  // );
+  const currentUrl = useRef(url);
+
+  const { data, isLoading, isSuccess } = useQuery(
+    [url, 'dropDown', field.id],
+    () => GET(url),
+    {
+      retry: false,
+      enabled:
+        !!url &&
+        field?.select?.type === 'api' &&
+        !url.includes('MISSING_VALUE'),
+      cacheTime: 0,
+    }
+  );
+
+  useEffect(() => {
+    const changed = keys
+      .map((e) => getFieldState(e.replace('.value', '')).isDirty)
+      .some((e) => e);
+    if (changed) {
+      resetField(field.id, { defaultValue: null });
+    }
+  }, [url]);
 
   const isInline = field?.select?.type === 'inLine';
   const isMulti = false;
 
-  const options = isInline ? field?.select?.options : field?.select?.options;
-
+  const options = field?.select?.options || [];
+  // debugger;
   return (
     <>
       <Controller
@@ -61,11 +74,20 @@ export default function SmartSelect({ field }) {
               inputRef={ref}
               // value={(val) => val.value}  value={options.filter((option) => value?.includes(option.value))}
               value={
-                isMulti
-                  ? options?.find((c) => c.value === value)
-                  : options?.filter((option) => value?.includes(option?.value))
+                field?.select?.type === 'api'
+                  ? value
+                  : !isMulti
+                  ? options?.filter((c) => c.value === value)
+                  : options?.filter((option) => {
+                      console.log('smartSelect', options, field?.id, value);
+                      return value?.includes(option?.value);
+                    })
               }
               onChange={(val) => {
+                if (field?.select?.type === 'api') {
+                  onChange(val);
+                  return;
+                }
                 if (!isMulti) {
                   onChange(val?.value);
                 } else {
@@ -108,7 +130,7 @@ export default function SmartSelect({ field }) {
                   color: '#4E5A6D',
                 }),
               }}
-              options={options}
+              options={data?.data?.data || options}
             />
             <ErrorMessage
               errors={errors}

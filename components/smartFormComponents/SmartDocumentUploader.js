@@ -12,6 +12,9 @@ import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { Controller, useFormContext } from 'react-hook-form';
 import { fieldValidationRules } from 'Utils/SmartFieldValidation';
+import FileUploadList from '../fields/AppFileUpload/FileUploadList';
+import { Stack } from '@mui/material';
+import SmartUploadedList from './SmartUploadedList';
 
 // Styled component for the upload image inside the dropzone area
 const Img = styled('img')(({ theme }) => ({
@@ -25,6 +28,15 @@ const Img = styled('img')(({ theme }) => ({
     width: 160,
   },
 }));
+
+const style = {
+  height: '155px',
+  border: '2px dashed #BDCEDD',
+  background: '#FAFAFA',
+  borderRadius: '8px',
+  // background: "url('/images/borderDashed.svg') no-repeat",
+  // backgroundSize: 'contain',
+};
 
 // Styled component for the heading inside the dropzone area
 const HeadingTypography = styled(Typography)(({ theme }) => ({
@@ -51,6 +63,7 @@ const SmartDocumentUploader = ({ field }) => {
       'application/pdf': ['.pdf'],
     },
     onDrop: (acceptedFiles) => {
+      console.log('accepted files, ', acceptedFiles);
       setFiles(acceptedFiles.map((file) => Object.assign(file)));
     },
   });
@@ -80,31 +93,109 @@ const SmartDocumentUploader = ({ field }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
 
+  //Logic has to be implemented
   return (
     <>
-      <Typography variant="body_medium_muted" component="p" mb={1}>
-        {field.label}
-        {field?.isRequired && (
-          <Typography
-            variant="body_bold"
-            sx={{ marginLeft: '4px', color: '#F53E40' }}
-          >
-            *
-          </Typography>
-        )}
-      </Typography>
-      <Controller
-        name={field?.id}
-        control={control}
-        rules={{ ...fieldValidationRules(field?.validations) }}
-        render={({ field: { onChange, value, ref } }) => (
-          <Box
-            {...getRootProps({ className: 'dropzone' })}
-            border={'1px solid black'}
-            sx={acceptedFiles.length ? { height: 450 } : {}}
-          >
-            <input {...getInputProps()} />
+      {files.length ? (
+        files.map((item, index) => (
+          <>
+            {/* <input
+            key={item.id} // important to include key with field's id
+            {...register(`${name}.${index}`)}
+            hidden
+          /> */}
+            <Controller
+              key={index}
+              render={() => (
+                <SmartUploadedList
+                  file={item}
+                  handleRemove={() => remove(index)}
+                  isLast={index === files.length - 1}
+                />
+              )}
+              name={`${name}`}
+              control={control}
+            />
+          </>
+        ))
+      ) : (
+        <Controller
+          name={field?.id}
+          control={control}
+          rules={{ ...fieldValidationRules(field?.validations) }}
+          render={({ field: { onChange, value, ref } }) => (
             <Box
+              {...getRootProps({ className: 'dropzone' })}
+              // sx={{
+              //   background: '#FAFAFA',
+              //   border: '2px dashed #BDCEDD',
+              //   borderRadius: '8px',
+              //   height: '155px',
+              // }}
+            >
+              <input {...getInputProps()} />
+              <Stack
+                // onClick={() => {inputRef?.current?.click()}}
+                // ref={localProgess == 0 ? drop : null}
+                style={{
+                  ...style,
+                  // background: isOver
+                  //   ? 'lightgreen'
+                  //   : fileError
+                  //   ? 'orange'
+                  //   : style.background,
+                }}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Box mb={2}>
+                  {iconSrcs &&
+                    iconSrcs.map((src) => (
+                      <Image
+                        key={src}
+                        src={src}
+                        alt="Vercel Logo"
+                        width={40}
+                        height={40}
+                        style={{ opacity: 0.7 }}
+                      />
+                    ))}
+                </Box>
+                <Box>
+                  <Typography variant="body_medium_secondary" component="p">
+                    Drag & Drop your document here, or{' '}
+                    <Typography variant="body_bold_primary" component="span">
+                      Browse
+                    </Typography>
+                  </Typography>
+                  {/* {isActive ? (
+                  <Typography variant="body_medium_secondary" component="p">
+                    Release to drop
+                  </Typography>
+                ) : (
+                  <Typography variant="body_medium_secondary" component="p">
+                    {fileError ? (
+                      fileError
+                    ) : (
+                      <>
+                        Drag & Drop your document here, or{' '}
+                        <Typography
+                          variant="body_bold_primary"
+                          component="span"
+                        >
+                          Browse
+                        </Typography>
+                      </>
+                    )}
+                  </Typography>
+                )} */}
+                </Box>
+                <Typography variant="smallcopy_regular_muted" component="p">
+                  Upload .pdf, .doc, .xls, .jpg & etc
+                  {/* {!fileError && 'Upload .pdf, .doc, .xls, .jpg & etc'} */}
+                </Typography>
+              </Stack>
+              {/* <Box
               sx={{
                 display: 'flex',
                 flexDirection: ['column', 'column', 'row'],
@@ -130,11 +221,12 @@ const SmartDocumentUploader = ({ field }) => {
                   thorough your machine
                 </Typography>
               </Box>
+            </Box> */}
+              {/* {files.length ? img : null} */}
             </Box>
-            {/* {files.length ? img : null} */}
-          </Box>
-        )}
-      />
+          )}
+        />
+      )}
     </>
   );
 };

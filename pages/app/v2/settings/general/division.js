@@ -178,7 +178,7 @@ const divisionForm = {
   putFn: updateSetting,
   deleteFn: deleteSetting,
 };
-
+// id=3u47123o8741o
 export default function Page() {
   const qc = useQueryClient();
   const {
