@@ -95,15 +95,6 @@ const plan = {
           },
         ],
       },
-      {
-        type: 'DocumentUpload',
-        id: 'Document',
-        // validations: [
-        //   {
-        //     type: 'required',
-        //   },
-        // ],
-      },
     ],
   },
 };

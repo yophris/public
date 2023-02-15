@@ -1,5 +1,4 @@
 import EditableList from '@/components/settings/EditableList';
-import SmartFromToDatePicker from '@/components/smartFormComponents/SmartFromToDatePicker';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
 import { Stack } from '@mui/system';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
@@ -78,60 +77,15 @@ const division = [
 ];
 
 const plan = {
-  sideBarTitle: 'Add Division',
+  sideBarTitle: 'Reimbursement Request',
   endpoint: 'settings/division',
   section: {
     fields: [
       {
-        label: 'Division Name',
-        // isRequired: true,
-        type: 'Text',
-        id: 'divisionName',
-        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-        config: {
-          placeholder: 'Division Name',
-        },
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-      },
-      {
-        label: 'Division Type',
-        // isRequired: true,
-        type: 'Text',
-        id: 'divisionType',
-        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-        config: {
-          placeholder: 'Division Type',
-        },
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-      },
-      {
-        label: 'Description',
-        type: 'Text',
-        id: 'description',
-        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        isMultiline: true,
-        config: {
-          placeholder: 'Description',
-        },
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-      },
-      {
-        label: 'Division Head',
+        label: 'Expense Category',
         type: 'Select',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        id: 'divisionHead',
+        id: 'expenseCategory',
         validations: [
           {
             type: 'required',
@@ -140,13 +94,104 @@ const plan = {
         select: {
           type: 'inLine',
           options: [
-            { value: 'c152a174-6024-4490-b1ac-5944337bb943', label: 'Emp 1' },
-            { value: 'a107a512-a6a5-11ed-afa1-0242ac120002', label: 'EMp 2' },
-            { value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002', label: 'Emp 3' },
+            {
+              value: 'c152a174-6024-4490-b1ac-5944337bb943',
+              label: 'Sick Leave',
+            },
+            {
+              value: 'a107a512-a6a5-11ed-afa1-0242ac120002',
+              label: 'Earned Leave',
+            },
+            {
+              value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002',
+              label: 'Casual Leave',
+            },
           ],
         },
       },
-      
+      {
+        label: 'Expense Title',
+        // isRequired: true,
+        type: 'Text',
+        id: 'expenseTitle',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        config: {
+          placeholder: 'Expense Title',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        type: 'Date',
+        label: 'Expense Date',
+        id: 'Expense Date',
+      },
+      {
+        label: 'Currency',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'currency',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: [
+            {
+              value: 'c152a174-6024-4490-b1ac-5944337bb943',
+              label: 'Sick Leave',
+            },
+            {
+              value: 'a107a512-a6a5-11ed-afa1-0242ac120002',
+              label: 'Earned Leave',
+            },
+            {
+              value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002',
+              label: 'Casual Leave',
+            },
+          ],
+        },
+      },
+      {
+        label: 'Amount',
+        // isRequired: true,
+        type: 'Text',
+        id: 'amount',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        config: {
+          placeholder: 'Amount',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        label: 'Comment',
+        type: 'Text',
+        id: 'comment',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        isMultiline: true,
+        config: {
+          placeholder: 'Please enter reason for applying leave',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        type: 'DocumentUpload',
+        id: 'reimbursementDocument',
+        label: 'Attach File',
+      },
     ],
   },
   postFn: createSetting,
@@ -225,7 +270,6 @@ export default function Page() {
 
   return (
     <SettingPageLayout texts={divisionForm.texts}>
-      <SmartFromToDatePicker />
       <SmartSideBarForm
         plan={plan}
         openSideMenu={openSideMenu}

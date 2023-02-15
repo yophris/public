@@ -18,6 +18,7 @@ export default function SimpleSmartForm({
       methods.reset(formData);
     }
   }, [formData]);
+  
   return (
     <>
       <FormProvider {...methods}>

@@ -1,3 +1,5 @@
+import SimpleSmartForm from '@/components/smartFormComponents/SimpleSmartForm';
+import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
 import AppWorkweekCheckbox from 'components/fields/AppWorkweekCheckbox';
 import TextInput from 'components/fields/TextInput';
@@ -95,11 +97,65 @@ const workweekForm = {
   putFn: updateSetting,
   deleteFn: deleteSetting,
 };
+const plan = {
+  sideBarTitle: 'Add Workweek',
+  section: {
+    fields: [
+      {
+        label: 'Workweek Name',
+        // isRequired: true,
+        type: 'Text',
+        id: 'workweekName',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        config: {
+          placeholder: 'Workweek Name',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        label: 'Select the work days for this week',
+        type: 'WorkWeek',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        isRequired: true,
+        attrs: [
+          {
+            name: 'workweek.sunday',
+          },
+          {
+            name: 'workweek.monday',
+          },
+          {
+            name: 'workweek.tuesday',
+          },
+          {
+            name: 'workweek.wednesday',
+          },
+          {
+            name: 'workweek.thursday',
+          },
+          {
+            name: 'workweek.friday',
+          },
+          {
+            name: 'workweek.saturday',
+          },
+        ],
+      },
+    ],
+  },
+};
 
 export default function Page() {
   return (
-    <SettingPageLayout texts={workweekForm.texts}>
-      <ListWithSidebarLayout config={workweekForm} />
-    </SettingPageLayout>
+    <>
+      <SimpleSmartForm plan={plan} />
+      <SettingPageLayout texts={workweekForm.texts}>
+        {/* <ListWithSidebarLayout config={workweekForm} /> */}
+      </SettingPageLayout>
+    </>
   );
 }

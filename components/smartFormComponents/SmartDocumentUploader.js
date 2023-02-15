@@ -35,7 +35,6 @@ const HeadingTypography = styled(Typography)(({ theme }) => ({
 }));
 
 const SmartDocumentUploader = ({ field }) => {
-  console.log("🚀 ~ file: SmartDocumentUploader.js:38 ~ SmartDocumentUploader ~ field", field)
   const {
     control,
     setValue,
@@ -83,6 +82,17 @@ const SmartDocumentUploader = ({ field }) => {
 
   return (
     <>
+      <Typography variant="body_medium_muted" component="p" mb={1}>
+        {field.label}
+        {field?.isRequired && (
+          <Typography
+            variant="body_bold"
+            sx={{ marginLeft: '4px', color: '#F53E40' }}
+          >
+            *
+          </Typography>
+        )}
+      </Typography>
       <Controller
         name={field?.id}
         control={control}
@@ -121,7 +131,7 @@ const SmartDocumentUploader = ({ field }) => {
                 </Typography>
               </Box>
             </Box>
-            {files.length ? img : null}
+            {/* {files.length ? img : null} */}
           </Box>
         )}
       />
