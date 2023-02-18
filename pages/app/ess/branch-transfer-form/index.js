@@ -71,18 +71,16 @@ const division = [
 ];
 
 const plan = {
-  sideBarTitle: 'Leave Request',
+  sideBarTitle: 'Apply for Branch Transfer',
   endpoint: 'settings/division',
   section: {
     fields: [
+    
       {
-        type: 'FromToDate',
-      },
-      {
-        label: 'Select available leaves',
+        label: 'To Division',
         type: 'Select',
-        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        id: 'leaveType',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'toDivision',
         validations: [
           {
             type: 'required',
@@ -106,7 +104,90 @@ const plan = {
           ],
         },
       },
-
+      {
+        label: 'To Station',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'toStation',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: [
+            {
+              value: 'c152a174-6024-4490-b1ac-5944337bb943',
+              label: 'Sick Leave',
+            },
+            {
+              value: 'a107a512-a6a5-11ed-afa1-0242ac120002',
+              label: 'Earned Leave',
+            },
+            {
+              value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002',
+              label: 'Casual Leave',
+            },
+          ],
+        },
+      },
+      {
+        label: 'To Department',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'toDepartment',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: [
+            {
+              value: 'c152a174-6024-4490-b1ac-5944337bb943',
+              label: 'Sick Leave',
+            },
+            {
+              value: 'a107a512-a6a5-11ed-afa1-0242ac120002',
+              label: 'Earned Leave',
+            },
+            {
+              value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002',
+              label: 'Casual Leave',
+            },
+          ],
+        },
+      },
+      {
+        label: 'Reason',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'reason',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: [
+            {
+              value: 'c152a174-6024-4490-b1ac-5944337bb943',
+              label: 'Sick Leave',
+            },
+            {
+              value: 'a107a512-a6a5-11ed-afa1-0242ac120002',
+              label: 'Earned Leave',
+            },
+            {
+              value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002',
+              label: 'Casual Leave',
+            },
+          ],
+        },
+      },
       {
         label: 'Comment',
         type: 'Text',
@@ -122,11 +203,7 @@ const plan = {
           },
         ],
       },
-      {
-        type: 'DocumentUpload',
-        id: 'leaveDocument',
-        label: 'Attach File',
-      },
+  
     ],
   },
   postFn: createSetting,

@@ -71,42 +71,13 @@ const division = [
 ];
 
 const plan = {
-  sideBarTitle: 'Leave Request',
+  sideBarTitle: 'WFH Request',
   endpoint: 'settings/division',
   section: {
     fields: [
       {
         type: 'FromToDate',
       },
-      {
-        label: 'Select available leaves',
-        type: 'Select',
-        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        id: 'leaveType',
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-        select: {
-          type: 'inLine',
-          options: [
-            {
-              value: 'c152a174-6024-4490-b1ac-5944337bb943',
-              label: 'Sick Leave',
-            },
-            {
-              value: 'a107a512-a6a5-11ed-afa1-0242ac120002',
-              label: 'Earned Leave',
-            },
-            {
-              value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002',
-              label: 'Casual Leave',
-            },
-          ],
-        },
-      },
-
       {
         label: 'Comment',
         type: 'Text',
@@ -122,16 +93,11 @@ const plan = {
           },
         ],
       },
-      {
-        type: 'DocumentUpload',
-        id: 'leaveDocument',
-        label: 'Attach File',
-      },
     ],
   },
   postFn: createSetting,
   putFn: updateSetting,
-  key: 'division',
+  key: 'WFH-request',
 };
 
 const divisionForm = {

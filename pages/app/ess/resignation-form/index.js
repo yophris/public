@@ -71,40 +71,31 @@ const division = [
 ];
 
 const plan = {
-  sideBarTitle: 'Leave Request',
+  sideBarTitle: 'Apply for Resignation',
   endpoint: 'settings/division',
   section: {
     fields: [
       {
-        type: 'FromToDate',
+        type: 'Title',
+        title: 'Fill the below details for resignation',
       },
       {
-        label: 'Select available leaves',
-        type: 'Select',
-        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        id: 'leaveType',
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-        select: {
-          type: 'inLine',
-          options: [
-            {
-              value: 'c152a174-6024-4490-b1ac-5944337bb943',
-              label: 'Sick Leave',
-            },
-            {
-              value: 'a107a512-a6a5-11ed-afa1-0242ac120002',
-              label: 'Earned Leave',
-            },
-            {
-              value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002',
-              label: 'Casual Leave',
-            },
-          ],
-        },
+        type: 'Date',
+        label: 'Requesting Day (Today)',
+        id: 'requestingDay',
+        gridSizes: { md: 6 },
+      },
+      {
+        type: 'Date',
+        label: 'Exit Date (As per policy)',
+        id: 'exitDay',
+        gridSizes: { md: 6 },
+      },
+      {
+        type: 'Date',
+        label: 'Expected Exit Date',
+        id: 'expectedExitDate',
+        gridSizes: { md: 6 },
       },
 
       {
@@ -121,11 +112,6 @@ const plan = {
             type: 'required',
           },
         ],
-      },
-      {
-        type: 'DocumentUpload',
-        id: 'leaveDocument',
-        label: 'Attach File',
       },
     ],
   },
