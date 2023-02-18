@@ -26,13 +26,14 @@ const theme = createTheme({
       main: '#377DFF',
     },
     secondary: {
-      main: '#5B2F51',
+      main: '#0067FB',
     },
     tertiary: {
       main: '#70BC7C',
     },
     background: {
       main: '#F8FAFC',
+      secondary: '#ECF5FA',
     },
     text: {
       primary: '#0061EC',

@@ -1,5 +1,4 @@
 import EditableList from '@/components/settings/EditableList';
-import SmartFromToDatePicker from '@/components/smartFormComponents/SmartFromToDatePicker';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
 import { Stack } from '@mui/system';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
@@ -78,60 +77,18 @@ const division = [
 ];
 
 const plan = {
-  sideBarTitle: 'Add Division',
+  sideBarTitle: 'Leave Request',
   endpoint: 'settings/division',
   section: {
     fields: [
       {
-        label: 'Division Name',
-        // isRequired: true,
-        type: 'Text',
-        id: 'divisionName',
-        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-        config: {
-          placeholder: 'Division Name',
-        },
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
+        type: 'FromToDate',
       },
       {
-        label: 'Division Type',
-        // isRequired: true,
-        type: 'Text',
-        id: 'divisionType',
-        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-        config: {
-          placeholder: 'Division Type',
-        },
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-      },
-      {
-        label: 'Description',
-        type: 'Text',
-        id: 'description',
-        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        isMultiline: true,
-        config: {
-          placeholder: 'Description',
-        },
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-      },
-      {
-        label: 'Division Head',
+        label: 'Select available leaves',
         type: 'Select',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        id: 'divisionHead',
+        id: 'leaveType',
         validations: [
           {
             type: 'required',
@@ -140,13 +97,42 @@ const plan = {
         select: {
           type: 'inLine',
           options: [
-            { value: 'c152a174-6024-4490-b1ac-5944337bb943', label: 'Emp 1' },
-            { value: 'a107a512-a6a5-11ed-afa1-0242ac120002', label: 'EMp 2' },
-            { value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002', label: 'Emp 3' },
+            {
+              value: 'c152a174-6024-4490-b1ac-5944337bb943',
+              label: 'Sick Leave',
+            },
+            {
+              value: 'a107a512-a6a5-11ed-afa1-0242ac120002',
+              label: 'Earned Leave',
+            },
+            {
+              value: 'a107a6fc-a6a5-11ed-afa1-0242ac120002',
+              label: 'Casual Leave',
+            },
           ],
         },
       },
-      
+
+      {
+        label: 'Comment',
+        type: 'Text',
+        id: 'comment',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        isMultiline: true,
+        config: {
+          placeholder: 'Please enter reason for applying leave',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        type: 'DocumentUpload',
+        id: 'leaveDocument',
+        label: 'Attach File',
+      },
     ],
   },
   postFn: createSetting,
@@ -178,7 +164,7 @@ const divisionForm = {
   putFn: updateSetting,
   deleteFn: deleteSetting,
 };
-// id=3u47123o8741o
+
 export default function Page() {
   const qc = useQueryClient();
   const {
@@ -225,7 +211,6 @@ export default function Page() {
 
   return (
     <SettingPageLayout texts={divisionForm.texts}>
-      <SmartFromToDatePicker />
       <SmartSideBarForm
         plan={plan}
         openSideMenu={openSideMenu}

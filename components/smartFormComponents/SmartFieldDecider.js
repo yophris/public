@@ -7,12 +7,14 @@ import SmartDataCard from './SmartDataCard';
 import SmartDatePicker from './SmartDatePicker';
 import SmartDivider from './SmartDivider';
 import SmartDocumentUploader from './SmartDocumentUploader';
+import SmartFromToDatePicker from './SmartFromToDatePicker';
 import SmartPhoneNumberInput from './SmartPhoneNumberInput';
 import SmartSelect from './SmartSelect';
 import SmartTabs from './SmartTabs';
 import SmartTabsWithinForm from './SmartTabsWithinForm';
 import SmartText from './SmartText';
 import SmartTitle from './SmartTitle';
+import SmartWorkWeekComponent from './SmartWorkWeekComponent';
 
 export default function SmartFieldDecider({ field, index }) {
   const gridSize = field?.gridSize ?? 6;
@@ -37,6 +39,13 @@ export default function SmartFieldDecider({ field, index }) {
     return (
       <Grid item {...field.gridSizes}>
         <SmartDatePicker field={field} />
+      </Grid>
+    );
+  }
+  if (field.type === 'FromToDate') {
+    return (
+      <Grid item {...field.gridSizes}>
+        <SmartFromToDatePicker  />
       </Grid>
     );
   }
@@ -102,6 +111,14 @@ export default function SmartFieldDecider({ field, index }) {
     return (
       <Grid item {...field.gridSizes}>
         <SmartDocumentUploader field={field} />
+      </Grid>
+    );
+  }
+
+  if(field.type === "WorkWeek"){
+    return (
+      <Grid item {...field.gridSizes}>
+        <SmartWorkWeekComponent field={field} />
       </Grid>
     );
   }

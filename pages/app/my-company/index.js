@@ -1,5 +1,5 @@
-import EmployeeDirectory from '@/components/my-company/EmployeedDirectory';
 import SmartTabs from '@/components/smartFormComponents/SmartTabs';
+import EmployeeDirectory from './(tabs)/EmployeedDirectory';
 
 export default function index() {
   const CompanyTabs = [

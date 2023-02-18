@@ -16,6 +16,7 @@ export default function AppButton({
         padding: '8px 32px',
         borderRadius: 1.25,
         textTransform: 'none',
+        minWidth: 'fit-content',
         ...styleOverrides,
       }}
       {...restProps}
