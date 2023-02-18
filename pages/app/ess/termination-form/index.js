@@ -71,18 +71,15 @@ const division = [
 ];
 
 const plan = {
-  sideBarTitle: 'Leave Request',
+  sideBarTitle: 'Request to terminate an Employee',
   endpoint: 'settings/division',
   section: {
     fields: [
       {
-        type: 'FromToDate',
-      },
-      {
-        label: 'Select available leaves',
+        label: 'Employee to be Terminate',
         type: 'Select',
-        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        id: 'leaveType',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'employee',
         validations: [
           {
             type: 'required',
@@ -106,6 +103,14 @@ const plan = {
           ],
         },
       },
+      {
+        type: 'Divider',
+      },
+      {
+        type: 'Title',
+        title:
+          'Enter reasoning & justification to terminate the selected employee',
+      },
 
       {
         label: 'Comment',
@@ -121,11 +126,6 @@ const plan = {
             type: 'required',
           },
         ],
-      },
-      {
-        type: 'DocumentUpload',
-        id: 'leaveDocument',
-        label: 'Attach File',
       },
     ],
   },
