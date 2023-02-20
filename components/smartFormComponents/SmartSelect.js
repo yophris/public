@@ -23,6 +23,9 @@ export default function SmartSelect({ field }) {
   const [url, keys] = smartUrlBuilder(field?.select?.api, templateObject);
 
   const currentUrl = useRef(url);
+  if (keys) {
+    console.log(url);
+  }
 
   const { data, isLoading, isSuccess } = useQuery(
     [url, 'dropDown', field.id],

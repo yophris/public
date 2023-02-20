@@ -161,7 +161,7 @@ const settingsOverviewData = [
         types: [
           {
             id: 'Approvaltype',
-            path: 'approval_type',
+            path: 'workflow/approval',
             title: 'Approval Type',
           },
           {

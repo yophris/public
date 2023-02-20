@@ -15,73 +15,18 @@ import {
 } from 'requests/settings';
 import { extractFromJSON, transformToFormData } from 'Utils';
 
-const plan = {
-  sideBarTitle: 'Add Company Document',
-  section: {
-    fields: [
-      {
-        label: 'Document Name',
-        // isRequired: true,
-        type: 'Text',
-        id: 'document.name',
-        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-        config: {
-          placeholder: 'Document Name',
-        },
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-      },
-      {
-        label: 'File',
-        // isRequired: true,
-        type: 'DocumentUpload',
-        id: 'file',
-        gridSizes: { xs: 12, sm: 12, md: 12, lg: 12 },
-        config: {
-          placeholder: 'File',
-        },
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-      },
-    ],
-  },
-  postFn: createSetting,
-  putFn: updateSetting,
-  endpoint: 'settings/companyDocument',
-  key: 'company-doc',
-  texts: {
-    key: 'document.name',
-    breadcrumbText: 'Comapny Documents',
-    drawerTitle: 'Add Document',
-    mainTitle: 'List of Documents',
-    mainDescription: 'This is short description for division',
-    sideTitle: 'Document',
-    sideDescription:
-      'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
-  },
-  transform: (data) => {
-    return transformToFormData(data);
-  },
-};
-
-export default function Page() {
+export default function SettingsFormPage({ plan }) {
   const qc = useQueryClient();
   const {
     isLoading,
     data: response,
     error,
-  } = useQuery('get' + plan.key, () => getSetting(plan.endpoint, { page: 1 }));
+  } = useQuery('get' + plan.key, () => plan.getFn(plan.endpoint, { page: 1 }));
 
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [editData, setEditData] = useState(null);
   // Delete
-  const onDelete = useMutation((data) => deleteSetting(plan.endpoint, data), {
+  const onDelete = useMutation((data) => plan.deleteFn(plan.endpoint, data), {
     onSuccess: () => {
       qc.invalidateQueries('get' + plan.key);
       alert('Deleted');
@@ -129,7 +74,7 @@ export default function Page() {
           : response?.data?.map((e, index) => (
               <EditableList
                 key={index}
-                label={extractFromJSON(e, `**.document.name`)}
+                label={extractFromJSON(e, plan?.listLabelExp || '**.name[0]')}
                 cb={{
                   Edit: () => editClickCB(e),
                   Delete: () => onDeleteClick(e.id),

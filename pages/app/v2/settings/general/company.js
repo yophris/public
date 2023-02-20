@@ -75,7 +75,7 @@ const companyForm = {
       fields: company,
     },
     {
-      header: 'Primary Address',
+      header: 'Primary address',
       fields: addressFields.map((field) => ({
         ...field,
         attr: {
@@ -89,7 +89,7 @@ const companyForm = {
       })),
     },
     {
-      header: 'Emergency Address',
+      header: 'emergency. address',
       fields: addressFields.map((field) => ({
         ...field,
         attr: {
@@ -139,9 +139,10 @@ const Organization = () => {
   // create
   const onCreate = useMutation(
     (data) =>
-      response?.data
+      response?.data?.id
         ? companyForm.putFn(companyForm.endpoint, response.data.id, data)
         : companyForm.postFn(companyForm.endpoint, data),
+
     {
       onSuccess: () => {
         qc.invalidateQueries('get' + companyForm.key);
@@ -154,6 +155,7 @@ const Organization = () => {
   );
 
   const plan = {
+    endpoint: 'settings/company',
     section: {
       fields: [
         {
@@ -164,7 +166,7 @@ const Organization = () => {
           label: 'Organization Name',
           isRequired: true,
           type: 'Text',
-          id: 'organizationName',
+          id: 'company.companyName',
           gridSize: 12,
           config: {
             placeholder: 'Organization Name',
@@ -178,7 +180,7 @@ const Organization = () => {
         {
           label: 'Start Year',
           type: 'Text',
-          id: 'startYear',
+          id: 'company.startYear',
           config: {
             type: 'number',
             placeholder: 'Start Year',
@@ -193,7 +195,7 @@ const Organization = () => {
           label: 'Country',
 
           type: 'Select',
-          id: 'country',
+          id: 'company.country',
           config: {
             placeholder: 'Country',
           },
@@ -211,19 +213,15 @@ const Organization = () => {
           label: 'Language',
           type: 'Select',
           isRequired: true,
-          id: 'language',
+          id: 'company.language',
           validations: [
             {
               type: 'required',
             },
           ],
           select: {
-            type: 'inLine',
-            options: [
-              { value: 'None', label: 'None' },
-              { value: 'English', label: 'English' },
-              { value: 'Arabic', label: 'Arabic' },
-            ],
+            type: 'api',
+            api: 'app/valueHelp/const/Languages',
           },
         },
         {
@@ -231,15 +229,15 @@ const Organization = () => {
         },
         {
           type: 'Title',
-          title: 'Primary Address',
+          title: 'Primary address',
         },
         {
-          label: 'Address Line 1',
+          label: 'address Line 1',
           type: 'Text',
-          id: 'primaryAddress_addressLine1',
+          id: 'primary.address.addressLn1',
           gridSize: 12,
           config: {
-            placeholder: 'Address Line 1',
+            placeholder: 'address Line 1',
           },
           validations: [
             {
@@ -248,12 +246,12 @@ const Organization = () => {
           ],
         },
         {
-          label: 'Address Line 2',
+          label: 'address Line 2',
           type: 'Text',
-          id: 'primaryAddress_addressLine2',
+          id: 'primary.address.addressLn2',
           gridSize: 12,
           config: {
-            placeholder: 'Address Line 2',
+            placeholder: 'address Line 2',
           },
           validations: [
             // {
@@ -264,7 +262,7 @@ const Organization = () => {
         {
           label: 'Country',
           type: 'Select',
-          id: 'primaryAddress_country',
+          id: 'primary.address.country',
           gridSize: 6,
           config: {
             placeholder: 'Country',
@@ -282,7 +280,7 @@ const Organization = () => {
         {
           label: 'State',
           type: 'Select',
-          id: 'primaryAddress_state',
+          id: 'primary.address.state',
           validations: [
             // {
             //   type: 'required',
@@ -290,13 +288,13 @@ const Organization = () => {
           ],
           select: {
             type: 'api',
-            api: 'app/valueHelp/states/${primaryAddress_country}',
+            api: 'app/valueHelp/states/${primary.address.country.value}',
           },
         },
         {
           label: 'City',
           type: 'Select',
-          id: 'primaryAddressCity',
+          id: 'primary.address.city',
           validations: [
             // {
             //   type: 'required',
@@ -304,13 +302,29 @@ const Organization = () => {
           ],
           select: {
             type: 'api',
-            api: 'app/valueHelp/cities/${primaryAddress_country}/${primaryAddress_state}',
+            api: 'app/valueHelp/cities/${primary.address.country.value}/${primary.address.state.value}',
           },
+        },
+        {
+          label: 'Postal Code',
+          // isRequired: true,
+          type: 'Text',
+          id: 'primary.address.postalCode',
+          gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+          config: {
+            placeholder: 'Postal Code',
+            type: 'number',
+          },
+          validations: [
+            {
+              type: 'required',
+            },
+          ],
         },
         {
           label: 'Phone',
           type: 'PhoneNumber',
-          id: 'primaryAddress_phone',
+          id: 'primary.address.phone1',
 
           validations: [
             {
@@ -320,7 +334,7 @@ const Organization = () => {
             {
               type: 'Length',
               length: {
-                min: 13,
+                min: 12,
                 max: 15,
               },
             },
@@ -331,15 +345,15 @@ const Organization = () => {
         },
         {
           type: 'Title',
-          title: 'Emergency Address',
+          title: 'emergency. address',
         },
         {
-          label: 'Address Line 1',
+          label: 'address Line 1',
           type: 'Text',
-          id: 'EmergencyAddressAddressLine1',
+          id: 'emergency.address.addressLn1',
           gridSize: 12,
           config: {
-            placeholder: 'Address Line 1',
+            placeholder: 'address Line 1',
           },
           validations: [
             {
@@ -348,12 +362,12 @@ const Organization = () => {
           ],
         },
         {
-          label: 'Address Line 2',
+          label: 'address Line 2',
           type: 'Text',
-          id: 'EmergencyAddressAddressLine2',
+          id: 'emergency.address.addressLn2',
           gridSize: 12,
           config: {
-            placeholder: 'Address Line 2',
+            placeholder: 'address Line 2',
           },
           validations: [
             {
@@ -364,7 +378,7 @@ const Organization = () => {
         {
           label: 'Country',
           type: 'Select',
-          id: 'EmergencyAddress_country',
+          id: 'emergency.address.country',
           gridSize: 6,
           config: {
             placeholder: 'Country',
@@ -382,7 +396,7 @@ const Organization = () => {
         {
           label: 'State',
           type: 'Select',
-          id: 'EmergencyAddress_state',
+          id: 'emergency.address.state',
           validations: [
             // {
             //   type: 'required',
@@ -390,13 +404,13 @@ const Organization = () => {
           ],
           select: {
             type: 'api',
-            api: 'app/valueHelp/states/${EmergencyAddress_country}',
+            api: 'app/valueHelp/states/${emergency.address.country.value}',
           },
         },
         {
           label: 'City',
           type: 'Select',
-          id: 'EmergencyAddressCity',
+          id: 'emergency.address.city',
           validations: [
             // {
             //   type: 'required',
@@ -404,13 +418,29 @@ const Organization = () => {
           ],
           select: {
             type: 'api',
-            api: 'app/valueHelp/cities/${EmergencyAddress_country}/${EmergencyAddress_state}',
+            api: 'app/valueHelp/cities/${emergency.address.country.value}/${emergency.address.state.value}',
           },
+        },
+        {
+          label: 'Postal Code',
+          // isRequired: true,
+          type: 'Text',
+          id: 'emergency.address.postalCode',
+          gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+          config: {
+            placeholder: 'Postal Code',
+            type: 'number',
+          },
+          validations: [
+            {
+              type: 'required',
+            },
+          ],
         },
         {
           label: 'Phone',
           type: 'PhoneNumber',
-          id: 'EmergencyAddress_phone',
+          id: 'emergency.address.phone1',
           validations: [
             // {
             //   type: 'required',
@@ -419,7 +449,7 @@ const Organization = () => {
             {
               type: 'Length',
               length: {
-                min: 13,
+                min: 12,
                 max: 15,
               },
             },
@@ -450,7 +480,11 @@ const Organization = () => {
             marginBottom: 2,
           }}
         >
-          <SimpleSmartForm plan={plan} />
+          <SimpleSmartForm
+            plan={plan}
+            onSubmit={(data) => onCreate.mutate(data)}
+            formData={response?.data}
+          />
         </Stack>
       </SettingPageLayout>
     </>

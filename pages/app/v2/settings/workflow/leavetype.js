@@ -1,4 +1,6 @@
+import SettingsFormPage from '@/components/PageMaker/SettingsFormPage';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
+import { Typography } from '@mui/material';
 import AppDropdown from 'components/fields/AppDropdown';
 import TextInput from 'components/fields/TextInput';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
@@ -107,33 +109,8 @@ const leaveType = [
   },
 ];
 
-const leaveTypeForm = {
-  key: 'leaveType',
-  form: [
-    {
-      header: '',
-      fields: leaveType,
-    },
-  ],
-  endpoint: 'settings/leave/',
-  texts: {
-    key: 'leaveType',
-    breadcrumbText: 'Leave Type',
-    drawerTitle: 'Add Leave Type',
-    mainTitle: 'Leave Type',
-    mainDescription: 'this is short description for division',
-    sideTitle: 'Leave Types',
-    sideDescription:
-      'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
-  },
-  // validation: validation_station.concat(validation_address),
-  getAllFn: getSetting,
-  postFn: createSetting,
-  putFn: updateSetting,
-  deleteFn: deleteSetting,
-};
-
 const plan = {
+  listLabelExp: '**.name[0]',
   sideBarTitle: 'Add Leave Type',
   section: {
     fields: [
@@ -228,21 +205,25 @@ const plan = {
       },
     ],
   },
+  postFn: createSetting,
+  putFn: updateSetting,
+  getFn: getSetting,
+  deleteFn: deleteSetting,
+  endpoint: 'settings/leavetype',
+  key: 'leaveType',
+  texts: {
+    key: 'leaveType',
+    breadcrumbText: 'Leave Type',
+    drawerTitle: 'Add Leave Type',
+    mainTitle: 'Leave Type',
+    mainDescription: 'this is short description for division',
+    sideTitle: 'Leave Types',
+    sideDescription:
+      'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
+  },
 };
 
 export default function Page() {
-  const qc = useQueryClient();
-  const alert = useAlert();
-  const {
-    isLoading,
-    data: response,
-    error,
-  } = useQuery('get' + leaveTypeForm.key, () =>
-    leaveTypeForm.getAllFn(leaveTypeForm.endpoint)
-  );
-  return (
-    <SettingPageLayout texts={leaveTypeForm.texts}>
-      <SmartSideBarForm plan={plan} />
-    </SettingPageLayout>
-  );
+  return <Typography variant="h3">Todo : // - Model Pending</Typography>;
+  return <SettingsFormPage plan={plan} />;
 }

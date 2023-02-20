@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 // ** MUI Imports
 import Box from '@mui/material/Box';
@@ -51,9 +51,11 @@ const SmartDocumentUploader = ({ field }) => {
     control,
     setValue,
     formState: { errors },
+    watch,
   } = useFormContext();
   // ** State
   const [files, setFiles] = useState([]);
+  const [existingFiles, setExistingFiles] = useState([]);
 
   // ** Hook
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -64,7 +66,7 @@ const SmartDocumentUploader = ({ field }) => {
     },
     onDrop: (acceptedFiles) => {
       console.log('accepted files, ', acceptedFiles);
-      setFiles(acceptedFiles.map((file) => Object.assign(file)));
+      setFiles(acceptedFiles.map((file) => file));
     },
   });
 
@@ -77,39 +79,73 @@ const SmartDocumentUploader = ({ field }) => {
     '/images/docIcon.svg',
     '/images/xlsIcon.svg',
   ];
-  const img = files.map((file) => (
-    <Image
-      width={20}
-      height={20}
-      key={file.name}
-      alt={file.name}
-      className="single-file-image"
-      src={URL.createObjectURL(file)}
-    />
-  ));
+  // const img = files.map((file) => (
+  //   <Image
+  //     width={20}
+  //     height={20}
+  //     key={file.name}
+  //     alt={file.name}
+  //     className="single-file-image"
+  //     src={URL.createObjectURL(file)}
+  //   />
+  // ));
 
   useEffect(() => {
     setValue(field?.id, files);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
 
+  const exFile = watch(field.id);
+  useEffect(
+    (_) => {
+      if (exFile) {
+        setExistingFiles(
+          exFile.map((e, i) => ({
+            ...e,
+            index: i,
+          }))
+        );
+      }
+    },
+    [exFile]
+  );
+  console.log('files');
   //Logic has to be implemented
+  // const fileList = useMemo(
+  //   () => [...(existingFiles || []), ...files],
+  //   [existingFiles, files]
+  // );
+
+  const remove = (item, idx) => {
+    console.log('remove', item);
+    if ('index' in item) {
+      const dup = [...exFile];
+      dup.splice(item.index, 1);
+      setFiles(dup);
+    } else {
+      const dup = [...exFile];
+      dup.splice(idx, 1);
+      setFiles(dup);
+    }
+  };
+
   return (
     <>
-      {files.length ? (
-        files.map((item, index) => (
+      {exFile?.length ? (
+        exFile.map((item, index) => (
           <>
             {/* <input
             key={item.id} // important to include key with field's id
             {...register(`${name}.${index}`)}
             hidden
           /> */}
+
             <Controller
-              key={index}
+              // key={index}
               render={() => (
                 <SmartUploadedList
                   file={item}
-                  handleRemove={() => remove(index)}
+                  handleRemove={() => remove(item, index)}
                   isLast={index === files.length - 1}
                 />
               )}

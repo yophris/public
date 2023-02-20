@@ -146,7 +146,6 @@ const plan = {
           ],
         },
       },
-      
     ],
   },
   postFn: createSetting,
@@ -225,7 +224,7 @@ export default function Page() {
 
   return (
     <SettingPageLayout texts={divisionForm.texts}>
-      <SmartFromToDatePicker />
+      {/* <SmartFromToDatePicker /> */}
       <SmartSideBarForm
         plan={plan}
         openSideMenu={openSideMenu}

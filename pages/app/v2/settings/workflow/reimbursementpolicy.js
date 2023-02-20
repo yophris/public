@@ -13,6 +13,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { useAlert } from 'react-alert';
 import ApprovalRange from 'components/settings/ApprovalRange';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
+import SettingsFormPage from '@/components/PageMaker/SettingsFormPage';
 
 const reimbursementPolicy = [
   {
@@ -255,6 +256,17 @@ const reimbursementPolicyForm = {
     },
   ],
   endpoint: 'settings/reimbursementpolicy/',
+
+  // validation: validation_station.concat(validation_address),
+};
+
+const plan = {
+  sideBarTitle: 'Add Reimbursement Policy',
+  endpoint: 'settings/reimbursementpolicy',
+  getFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
   texts: {
     key: 'reimbursementPolicy',
     breadcrumbText: 'reimbursement Policy',
@@ -265,15 +277,7 @@ const reimbursementPolicyForm = {
     sideDescription:
       'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
-  // validation: validation_station.concat(validation_address),
-  getAllFn: getSetting,
-  postFn: createSetting,
-  putFn: updateSetting,
-  deleteFn: deleteSetting,
-};
-
-const plan = {
-  sideBarTitle: 'Add Reimbursement Policy',
+  key: 'reimbursementPolicy',
   section: {
     fields: [
       { type: 'Title', title: 'Add Reimbursement Policy' },
@@ -410,6 +414,8 @@ const plan = {
 };
 
 export default function Page() {
+  return <SettingsFormPage plan={plan} />;
+
   const qc = useQueryClient();
   const alert = useAlert();
   const {

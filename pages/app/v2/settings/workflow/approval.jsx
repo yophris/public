@@ -18,6 +18,7 @@ import AppForm from 'components/fields/AppForm';
 import AppDropdown from 'components/fields/AppDropdown';
 import SimpleSmartForm from '@/components/smartFormComponents/SimpleSmartForm';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
+import { useState } from 'react';
 
 export function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -361,6 +362,7 @@ export default function Pages(props) {
     },
   };
 
+  const [openSideMenu, setOpenSideMenu] = useState(false);
   return (
     <SettingPageLayout
       texts={{
@@ -436,7 +438,11 @@ export default function Pages(props) {
         >
           {/* {tabs.map((tab, i) => ( */}
           <TabPanel value={value} index={0}>
-            <SmartSideBarForm plan={workflowHierarchyPlan} />
+            <SmartSideBarForm
+              plan={workflowHierarchyPlan}
+              setOpenSideMenu={setOpenSideMenu}
+              openSideMenu={openSideMenu}
+            />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <SimpleSmartForm plan={workflowSettingsPlan} />
