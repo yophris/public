@@ -97,6 +97,29 @@ const workweekForm = {
   putFn: updateSetting,
   deleteFn: deleteSetting,
 };
+
+const workWeekOptions = [
+  { value: 'D_FWD', label: 'Full Working Day' },
+  {
+    value: 'D_FHWD',
+    label: 'Only First Half Working Day',
+  },
+  {
+    value: 'D_SHWD',
+    label: 'Only Second Half Working Day',
+  },
+  { value: 'R_FWD', label: 'Remote: Full Working Day' },
+  {
+    value: 'R_FHWD',
+    label: 'Remote: Only First Half Working Day',
+  },
+  {
+    value: 'R_SHWD',
+    label: 'Remote: Only Second Half Working Day',
+  },
+  { value: 'WEEKOFF', label: 'Weekoff' },
+];
+
 const plan = {
   sideBarTitle: 'Add Workweek',
   section: {
@@ -117,33 +140,109 @@ const plan = {
         ],
       },
       {
-        label: 'Select the work days for this week',
-        type: 'WorkWeek',
-        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        isRequired: true,
-        attrs: [
+        label: 'Monday',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'monday',
+        validations: [
           {
-            name: 'workweek.sunday',
-          },
-          {
-            name: 'workweek.monday',
-          },
-          {
-            name: 'workweek.tuesday',
-          },
-          {
-            name: 'workweek.wednesday',
-          },
-          {
-            name: 'workweek.thursday',
-          },
-          {
-            name: 'workweek.friday',
-          },
-          {
-            name: 'workweek.saturday',
+            type: 'required',
           },
         ],
+        select: {
+          type: 'inLine',
+          options: workWeekOptions,
+        },
+      },
+      {
+        label: 'Tuesday',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'tuesday',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: workWeekOptions,
+        },
+      },
+      {
+        label: 'Wednesday',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'wednesday',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: workWeekOptions,
+        },
+      },
+      {
+        label: 'Thursday',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'thursday',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: workWeekOptions,
+        },
+      },
+      {
+        label: 'Friday',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'friday',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: workWeekOptions,
+        },
+      },
+      {
+        label: 'Saturday',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'saturday',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: workWeekOptions,
+        },
+      },
+      {
+        label: 'Sunday',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'sunday',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'inLine',
+          options: workWeekOptions,
+        },
       },
     ],
   },
@@ -152,8 +251,8 @@ const plan = {
 export default function Page() {
   return (
     <>
-      <SimpleSmartForm plan={plan} />
       <SettingPageLayout texts={workweekForm.texts}>
+        <SimpleSmartForm plan={plan} />
         {/* <ListWithSidebarLayout config={workweekForm} /> */}
       </SettingPageLayout>
     </>
