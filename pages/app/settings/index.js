@@ -134,11 +134,6 @@ const settingsOverviewData = [
             path: 'workflow/workweek',
             title: 'Work Week',
           },
-          {
-            id: 'approval',
-            path: 'workflow/approval',
-            title: 'WorkFlow Approval',
-          },
         ],
       },
       {
@@ -160,15 +155,20 @@ const settingsOverviewData = [
         title: 'Approval Heirachy',
         types: [
           {
-            id: 'Approvaltype',
+            id: 'approval',
             path: 'workflow/approval',
-            title: 'Approval Type',
+            title: 'WorkFlow Approval',
           },
-          {
-            id: 'Approvalhierarchy',
-            path: 'approval_hierarchy',
-            title: 'Approval Hierarchy',
-          },
+          // {
+          //   id: 'Approvaltype',
+          //   path: 'workflow/approval',
+          //   title: 'Approval Type',
+          // },
+          // {
+          //   id: 'Approvalhierarchy',
+          //   path: 'approval_hierarchy',
+          //   title: 'Approval Hierarchy',
+          // },
         ],
       },
     ],

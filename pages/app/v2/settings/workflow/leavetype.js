@@ -1,10 +1,12 @@
 import SettingsFormPage from '@/components/PageMaker/SettingsFormPage';
+import EditableList from '@/components/settings/EditableList';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import AppDropdown from 'components/fields/AppDropdown';
 import TextInput from 'components/fields/TextInput';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
+import { useSettingFormPage } from 'hooks/useSettingPageForm';
 import React from 'react';
 import { useAlert } from 'react-alert';
 import { useQuery, useQueryClient } from 'react-query';
@@ -14,6 +16,7 @@ import {
   getSetting,
   updateSetting,
 } from 'requests/settings';
+import { extractFromJSON } from 'Utils';
 
 const leaveType = [
   {
@@ -110,7 +113,7 @@ const leaveType = [
 ];
 
 const plan = {
-  listLabelExp: '**.name[0]',
+  listLabelExp: '**.leaveName[0]',
   sideBarTitle: 'Add Leave Type',
   section: {
     fields: [
@@ -118,7 +121,7 @@ const plan = {
         label: 'Enter Leave Type Name',
         // isRequired: true,
         type: 'Text',
-        id: 'leaveTypeName',
+        id: 'leaveName',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
         config: {
           placeholder: 'Enter Leave Type Name',
@@ -148,47 +151,37 @@ const plan = {
         label: 'For Gender',
         type: 'Select',
         gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-        id: 'gender',
+        id: 'forGender',
         validations: [
           {
             type: 'required',
           },
         ],
         select: {
-          type: 'inLine',
-          options: [
-            { value: '', label: 'None' },
-            { value: 'Male', label: 'Male' },
-            { value: 'Female', label: 'Female' },
-            { value: 'Others', label: 'Others' },
-          ],
+          type: 'api',
+          api: 'app/valueHelp/const/Genders',
         },
       },
       {
         label: 'For Marital Status',
         type: 'Select',
         gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-        id: 'maritalStatus',
+        id: 'forMaritalStatus',
         validations: [
           {
             type: 'required',
           },
         ],
         select: {
-          type: 'inLine',
-          options: [
-            { value: '', label: 'None' },
-            { value: 'Single', label: 'Male' },
-            { value: 'Married', label: 'Married' },
-            { value: 'Others', label: 'Others' },
-          ],
+          type: 'api',
+          api: 'app/valueHelp/const/MaritalStatus',
         },
       },
       {
-        label: 'Leave is',
+        label: 'is Paid Leave ?',
         type: 'Select',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        id: 'leaveIs',
+        id: 'isPaidLeave',
         validations: [
           {
             type: 'required',
@@ -197,9 +190,8 @@ const plan = {
         select: {
           type: 'inLine',
           options: [
-            { value: '', label: 'None' },
-            { value: 'Paid Leave', label: 'Paid Leave' },
-            { value: 'Loss of Pay', label: 'Loss of Pay' },
+            { value: true, label: 'Yes' },
+            { value: false, label: 'No (Loss Of Pay)' },
           ],
         },
       },
@@ -209,10 +201,10 @@ const plan = {
   putFn: updateSetting,
   getFn: getSetting,
   deleteFn: deleteSetting,
-  endpoint: 'settings/leavetype',
-  key: 'leaveType',
+  endpoint: 'settings/leave',
+  key: 'leave',
   texts: {
-    key: 'leaveType',
+    key: 'leave',
     breadcrumbText: 'Leave Type',
     drawerTitle: 'Add Leave Type',
     mainTitle: 'Leave Type',
@@ -224,6 +216,39 @@ const plan = {
 };
 
 export default function Page() {
-  return <Typography variant="h3">Todo : // - Model Pending</Typography>;
-  return <SettingsFormPage plan={plan} />;
+  const {
+    setOpenSideMenu,
+    openSideMenu,
+    editData,
+    setEditData,
+    response,
+    isLoading,
+    editClickCB,
+  } = useSettingFormPage(plan);
+
+  return (
+    <SettingPageLayout texts={plan.texts}>
+      {/* <SmartFromToDatePicker /> */}
+      <SmartSideBarForm
+        plan={plan}
+        openSideMenu={openSideMenu}
+        setOpenSideMenu={setOpenSideMenu}
+        editData={editData}
+      />
+      <Stack sx={{ rowGap: 1 }}>
+        {isLoading
+          ? 'Loading'
+          : response?.data?.map((e, index) => (
+              <EditableList
+                key={index}
+                label={extractFromJSON(e, plan?.listLabelExp || '**.leaveName')}
+                cb={{
+                  Edit: () => editClickCB(e),
+                  Delete: () => onDeleteClick(e.id),
+                }}
+              />
+            ))}
+      </Stack>
+    </SettingPageLayout>
+  );
 }

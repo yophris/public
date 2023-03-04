@@ -133,7 +133,12 @@ export default function SmartSelect({ field }) {
                   color: '#4E5A6D',
                 }),
               }}
-              options={data?.data?.data || options}
+              options={
+                data?.data?.data.map((d) => {
+                  if (d?.dropdown) return d.dropdown;
+                  return d;
+                }) || options
+              }
             />
             <ErrorMessage
               errors={errors}

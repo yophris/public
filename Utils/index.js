@@ -32,3 +32,27 @@ export function transformToFormData(
   });
   return formData;
 }
+
+const isObject = (val) =>
+  typeof val == 'object' && !Array.isArray(val) && val !== null;
+function mapValueToKey(data) {
+  return Object.entries(data).reduce((agg, [k, v]) => {
+    if (isObject(v)) {
+      if (v?.value && isObject(v.value)) {
+        agg[k] = mapValueToKey(v.value);
+      } else if (v?.dropdown) {
+        agg[k] = v.dropdown;
+      } else {
+        agg[k] = v;
+      }
+    } else {
+      agg[k] = v;
+    }
+
+    return agg;
+  }, {});
+}
+
+export function mapDropDownFields(data) {
+  return mapValueToKey(data);
+}

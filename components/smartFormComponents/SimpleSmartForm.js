@@ -3,6 +3,7 @@ import SmartFieldDecider from './SmartFieldDecider';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Button, Grid, Stack, Typography } from '@mui/material';
 import { DevTool } from '@hookform/devtools';
+import { mapDropDownFields } from 'Utils';
 
 export default function SimpleSmartForm({
   plan,
@@ -16,10 +17,10 @@ export default function SimpleSmartForm({
 
   useEffect(() => {
     if (formData) {
-      methods.reset(formData);
+      methods.reset(mapDropDownFields(formData));
     }
   }, [formData]);
-  
+
   return (
     <>
       <FormProvider {...methods}>

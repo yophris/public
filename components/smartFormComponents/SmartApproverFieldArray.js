@@ -43,7 +43,6 @@ export default function SmartApproverFieldArray({ smartField }) {
                 {`Approver-${index + 1}`}
               </Typography>
               <SmartSelect
-                
                 field={{
                   ...smartField.arrayField,
                   id: `${smartField.id}.${index}.${smartField.arrayField.fieldName}`,

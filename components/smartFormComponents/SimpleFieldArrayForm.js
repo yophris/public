@@ -3,6 +3,18 @@ import React, { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import SmartFieldDecider from './SmartFieldDecider';
 
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Image from 'next/image';
+import { Checkbox, IconButton, Typography } from '@mui/material';
+import { StyledTableCell, StyledTableRow } from '../AppTable';
+
 export default function SimpleFieldArrayForm({ smartField }) {
   const { control, register } = useFormContext();
 
@@ -19,6 +31,10 @@ export default function SimpleFieldArrayForm({ smartField }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (smartField?.variant == 'Table') {
+    const props = { smartField, fields, append, remove };
+    return <TableView {...props} />;
+  }
   return (
     <Stack alignItems={'center'}>
       {fields.map((field, index) => {
@@ -89,3 +105,71 @@ export default function SimpleFieldArrayForm({ smartField }) {
     </Stack>
   );
 }
+
+const TableView = ({ smartField, fields, append, remove }) => {
+  console.log('fields', fields);
+  return (
+    <TableContainer>
+      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            {smartField.arrayFields.map((arrayField) => (
+              <StyledTableCell>{arrayField?.label || ''}</StyledTableCell>
+            ))}
+
+            <StyledTableCell align="left">
+              <Button
+                variant={'outlined'}
+                sx={{
+                  fontSize: '1.2rem',
+                  fontWeight: 500,
+                  borderRadius: 1.25,
+                  textTransform: 'none',
+                }}
+                onClick={() => {
+                  append();
+                }}
+              >
+                {smartField.appendButtonText ?? 'Append'}
+              </Button>
+            </StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {fields.map((row, index) => (
+            <StyledTableRow>
+              {smartField.arrayFields.map((arrayField, arrayIndex) => (
+                <StyledTableCell align="left">
+                  <SmartFieldDecider
+                    key={arrayIndex}
+                    field={{
+                      ...arrayField,
+                      id: `${smartField.id}.${index}.${arrayField.id}`,
+                      label: null,
+                    }}
+                    index={index}
+                  />
+                </StyledTableCell>
+              ))}
+
+              <StyledTableCell align="left">
+                <IconButton
+                  onClick={() => {
+                    remove(index);
+                  }}
+                >
+                  <Image
+                    src="/images/trashIcon.svg"
+                    width={14}
+                    height={14}
+                    alt="checked"
+                  />
+                </IconButton>
+              </StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};

@@ -1,7 +1,9 @@
+import EditableList from '@/components/settings/EditableList';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
 import TextInput from 'components/fields/TextInput';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
+import { useSettingFormPage } from 'hooks/useSettingPageForm';
 import React from 'react';
 import { useAlert } from 'react-alert';
 import { useQuery, useQueryClient } from 'react-query';
@@ -11,71 +13,23 @@ import {
   getSetting,
   updateSetting,
 } from 'requests/settings';
+import { extractFromJSON } from 'Utils';
 
-const reimbursementType = [
-  {
-    element: TextInput,
-    attr: {
-      label: 'Reimbursement Type Name',
-      name: 'reimbursementType.leaveTypeName',
-    },
-    validation: {
-      validationType: 'string',
-      validations: [
-        {
-          type: 'required',
-          params: ['Reimbursement type name is Required'],
-        },
-      ],
-    },
-    xs: 12,
-  },
-  {
-    element: TextInput,
-    attr: {
-      label: 'Description',
-      name: 'reimbursementType.description',
-      isMultiline: true,
-    },
-    xs: 12,
-  },
-];
-
-const reimbursementTypeForm = {
+const plan = {
+  sideBarTitle: 'Add Reimbursement Type',
+  endpoint: 'settings/reimbursementtype',
   key: 'reimbursementType',
-  form: [
-    {
-      header: '',
-      fields: reimbursementType,
-    },
-  ],
-  endpoint: 'settings/reimbursementtype/',
-  texts: {
-    key: 'reimbursementType',
-    breadcrumbText: 'Reimbursement Type',
-    drawerTitle: 'Add Reimbursement Type',
-    mainTitle: 'Reimbursement Type',
-    mainDescription: 'this is short description for division',
-    sideTitle: 'Reimbursement Types',
-    sideDescription:
-      'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
-  },
-  // validation: validation_station.concat(validation_address),
-  getAllFn: getSetting,
+  getFn: getSetting,
   postFn: createSetting,
   putFn: updateSetting,
   deleteFn: deleteSetting,
-};
-
-const plan = {
-  sideBarTitle:"Add Reimbursement Type",
   section: {
     fields: [
       {
         label: 'Reimbursement Type Name',
         // isRequired: true,
         type: 'Text',
-        id: 'reimbursementTypeName',
+        id: 'name',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
         config: {
           placeholder: 'Reimbursement Type Name',
@@ -101,24 +55,51 @@ const plan = {
           },
         ],
       },
-    
     ],
+  },
+  texts: {
+    key: 'reimbursementType',
+    breadcrumbText: 'Reimbursement Type',
+    drawerTitle: 'Add Reimbursement Type',
+    mainTitle: 'Reimbursement Type',
+    mainDescription: 'this is short description for division',
+    sideTitle: 'Reimbursement Types',
+    sideDescription:
+      'this is long long long for division saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
 };
 
 export default function Page() {
-  const qc = useQueryClient();
-  const alert = useAlert();
   const {
+    setOpenSideMenu,
+    openSideMenu,
+    editData,
+    onDeleteClick,
+    response,
     isLoading,
-    data: response,
-    error,
-  } = useQuery('get' + reimbursementTypeForm.key, () =>
-    reimbursementTypeForm.getAllFn(reimbursementTypeForm.endpoint)
-  );
+    editClickCB,
+  } = useSettingFormPage(plan);
+
   return (
-    <SettingPageLayout texts={reimbursementTypeForm.texts}>
-      <SmartSideBarForm plan={plan} />
+    <SettingPageLayout texts={plan.texts}>
+      <SmartSideBarForm
+        plan={plan}
+        openSideMenu={openSideMenu}
+        editData={editData}
+        setOpenSideMenu={setOpenSideMenu}
+      />
+      {isLoading
+        ? 'Loading'
+        : response?.data?.map((e, index) => (
+            <EditableList
+              key={index}
+              label={extractFromJSON(e, `$.name`)}
+              cb={{
+                Edit: () => editClickCB(e),
+                Delete: () => onDeleteClick(e.id),
+              }}
+            />
+          ))}
     </SettingPageLayout>
   );
 }

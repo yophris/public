@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Image from 'next/image';
 import { Checkbox, IconButton, Typography } from '@mui/material';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#F7F9FB',
     color: theme.palette.text.secondary,
@@ -22,7 +22,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   //   '&:nth-of-type(odd)': {
   //     backgroundColor: theme.palette.action.hover,
   //   },
@@ -47,7 +47,7 @@ const rows = [
   createData('National Holiday', 'Sep 1, 2022 (Sat)', true),
 ];
 
-export default function AppTable({data}) {
+export default function AppTable({ data }) {
   return (
     <TableContainer>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">

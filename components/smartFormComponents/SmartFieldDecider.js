@@ -45,7 +45,7 @@ export default function SmartFieldDecider({ field, index }) {
   if (field.type === 'FromToDate') {
     return (
       <Grid item {...field.gridSizes}>
-        <SmartFromToDatePicker  />
+        <SmartFromToDatePicker />
       </Grid>
     );
   }
@@ -89,6 +89,15 @@ export default function SmartFieldDecider({ field, index }) {
       </Grid>
     );
   }
+
+  if (field.type === 'Checkbox') {
+    return (
+      <Grid item xs={12}>
+        <SmartCheckBox field={field} />
+      </Grid>
+    );
+  }
+
   //TODO:Duplication
   if (field.type === 'Heading') {
     return (
@@ -115,7 +124,7 @@ export default function SmartFieldDecider({ field, index }) {
     );
   }
 
-  if(field.type === "WorkWeek"){
+  if (field.type === 'WorkWeek') {
     return (
       <Grid item {...field.gridSizes}>
         <SmartWorkWeekComponent field={field} />

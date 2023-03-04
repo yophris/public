@@ -40,7 +40,6 @@ export default function SmartCheckBox({ field }) {
   return (
     <Box
       sx={{
-        border: '1px solid',
         color,
         px: 2,
         borderRadius: 1.25,

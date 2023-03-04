@@ -19,6 +19,9 @@ import AppDropdown from 'components/fields/AppDropdown';
 import SimpleSmartForm from '@/components/smartFormComponents/SimpleSmartForm';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
 import { useState } from 'react';
+import EditableList from '@/components/settings/EditableList';
+import { extractFromJSON } from 'Utils';
+import { useSettingFormPage } from 'hooks/useSettingPageForm';
 
 export function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -190,179 +193,146 @@ const workflowApprovalsForm = {
   ],
 };
 
+const workflowHierarchyPlan = {
+  sideBarTitle: 'Add Approval heirachy',
+  endpoint: 'settings/approvaltype',
+  section: {
+    fields: [
+      {
+        label: 'Enter Workflow Hierarchy Type Name',
+        // isRequired: true,
+        type: 'Text',
+        id: 'name',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        config: {
+          placeholder: 'Enter Workflow Hierarchy Type Name',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        type: 'Title',
+        title: 'Approver sequence in role',
+        subTitle: 'Select the Approvers in order of Hierarchy',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+      },
+      {
+        type: 'ApproverFieldArray',
+        appendButtonText: 'Add another approver',
+        id: 'approvers',
+        arrayField: {
+          fieldName: 'approver',
+          select: {
+            type: 'api',
+            api: 'app/valueHelp/const/Approvers',
+          },
+          gridSizes: { xs: 12, sm: 6, md: 12 },
+          validations: [
+            {
+              type: 'required',
+            },
+          ],
+        },
+      },
+    ],
+  },
+  key: 'approvaltype',
+  getFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
+};
+
+const workflowSettingsPlan = {
+  section: {
+    fields: [
+      {
+        type: 'Title',
+        title: 'Transfer Approvals',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+      },
+      {
+        label: 'Select Approval Hierarchy Type',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'transferApprovals',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'api',
+          api: 'settings/approvaltype?mapped=1',
+        },
+      },
+      { type: 'Divider' },
+      {
+        type: 'Title',
+        title: 'Termination Approvals',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+      },
+      {
+        label: 'Select Approval Hierarchy Type',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'terminationApprovals',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'api',
+          api: 'settings/approvaltype?mapped=1',
+        },
+      },
+      { type: 'Divider' },
+      {
+        type: 'Title',
+        title: 'Leave Approvals',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+      },
+      {
+        label: 'Select Approval Hierarchy Type',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'leaveApprovals',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'api',
+          api: 'settings/approvaltype?mapped=1',
+        },
+      },
+    ],
+  },
+};
+
 export default function Pages(props) {
-  const qc = useQueryClient();
-  const alert = useAlert();
   const {
+    setOpenSideMenu,
+    openSideMenu,
+    editData,
+    setEditData,
+    response,
     isLoading,
-    data: response,
-    error,
-  } = useQuery('get' + workflowHierarchyForm.key, () =>
-    workflowHierarchyForm.getAllFn(workflowHierarchyForm.endpoint)
-  );
+    editClickCB,
+  } = useSettingFormPage(workflowHierarchyPlan);
 
   // create
-  const onCreate = useMutation(
-    (data) =>
-      response?.data
-        ? workflowHierarchyForm.putFn(
-            workflowHierarchyForm.endpoint,
-            response.data.id,
-            data
-          )
-        : workflowHierarchyForm.postFn(workflowHierarchyForm.endpoint, data),
-    {
-      onSuccess: () => {
-        qc.invalidateQueries('get' + workflowHierarchyForm.key);
-        alert.success(response?.data ? `Updated` : `Company Created`);
-      },
-      onError: (data) => {
-        alert.error('Failed');
-      },
-    }
-  );
+
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const workflowSettingsPlan = {
-    section: {
-      fields: [
-        {
-          type: 'Title',
-          title: 'Transfer Approvals',
-          gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        },
-        {
-          label: 'Select Approval Hierarchy Type',
-          type: 'Select',
-          gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-          id: 'transferApprovals',
-          validations: [
-            {
-              type: 'required',
-            },
-          ],
-          select: {
-            type: 'inLine',
-            options: [
-              { value: undefined, label: 'None' },
-              { value: 'Hierarchy1', label: 'Hierarchy1' },
-              { value: 'Hierarchy2', label: 'Hierarchy2' },
-              { value: 'Hierarchy3', label: 'Hierarchy3' },
-            ],
-          },
-        },
-        { type: 'Divider' },
-        {
-          type: 'Title',
-          title: 'Termination Approvals',
-          gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        },
-        {
-          label: 'Select Approval Hierarchy Type',
-          type: 'Select',
-          gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-          id: 'terminationApprovals',
-          validations: [
-            {
-              type: 'required',
-            },
-          ],
-          select: {
-            type: 'inLine',
-            options: [
-              { value: undefined, label: 'None' },
-              { value: 'Hierarchy1', label: 'Hierarchy1' },
-              { value: 'Hierarchy2', label: 'Hierarchy2' },
-              { value: 'Hierarchy3', label: 'Hierarchy3' },
-            ],
-          },
-        },
-        { type: 'Divider' },
-        {
-          type: 'Title',
-          title: 'Leave Approvals',
-          gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        },
-        {
-          label: 'Select Approval Hierarchy Type',
-          type: 'Select',
-          gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-          id: 'leaveApprovals',
-          validations: [
-            {
-              type: 'required',
-            },
-          ],
-          select: {
-            type: 'inLine',
-            options: [
-              { value: undefined, label: 'None' },
-              { value: 'Hierarchy1', label: 'Hierarchy1' },
-              { value: 'Hierarchy2', label: 'Hierarchy2' },
-              { value: 'Hierarchy3', label: 'Hierarchy3' },
-            ],
-          },
-        },
-      ],
-    },
-  };
-
-  const workflowHierarchyPlan = {
-    sideBarTitle: 'Add Workflow',
-    section: {
-      fields: [
-        {
-          label: 'Enter Workflow Hierarchy Type Name',
-          // isRequired: true,
-          type: 'Text',
-          id: 'workflowHierarchyTypeName',
-          gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-          config: {
-            placeholder: 'Enter Workflow Hierarchy Type Name',
-          },
-          validations: [
-            {
-              type: 'required',
-            },
-          ],
-        },
-        {
-          type: 'Title',
-          title: 'Approver sequence in role',
-          subTitle: 'Select the Approvers in order of Hierarchy',
-          gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        },
-        {
-          type: 'ApproverFieldArray',
-          appendButtonText: 'Add another approver',
-          id: 'approverSequence',
-          arrayField: {
-            fieldName: 'approver',
-            select: {
-              type: 'inLine',
-              options: [
-                { value: undefined, label: 'None' },
-                { value: 'Hierarchy1', label: 'Hierarchy 1' },
-                { value: 'Hierarchy2', label: 'Hierarchy 2' },
-                { value: 'Hierarchy3', label: 'Hierarchy 3' },
-              ],
-            },
-            gridSizes: { xs: 12, sm: 6, md: 12 },
-            validations: [
-              {
-                type: 'required',
-              },
-            ],
-          },
-        },
-      ],
-    },
-  };
-
-  const [openSideMenu, setOpenSideMenu] = useState(false);
   return (
     <SettingPageLayout
       texts={{
@@ -442,7 +412,23 @@ export default function Pages(props) {
               plan={workflowHierarchyPlan}
               setOpenSideMenu={setOpenSideMenu}
               openSideMenu={openSideMenu}
+              editData={editData}
             />
+
+            {isLoading
+              ? 'Loading'
+              : response?.data?.map((e, index) => (
+                  <EditableList
+                    key={index}
+                    label={extractFromJSON(e, `**.name`)}
+                    cb={{
+                      Edit: () => editClickCB(e),
+                      Delete: () => onDeleteClick(e.id),
+                    }}
+                  />
+                ))}
+
+            {/* <pre>{JSON.stringify(response, null, 4)}</pre> */}
           </TabPanel>
           <TabPanel value={value} index={1}>
             <SimpleSmartForm plan={workflowSettingsPlan} />

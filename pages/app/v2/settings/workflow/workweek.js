@@ -1,16 +1,20 @@
+import EditableList from '@/components/settings/EditableList';
 import SimpleSmartForm from '@/components/smartFormComponents/SimpleSmartForm';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
+import { Stack } from '@mui/material';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
 import AppWorkweekCheckbox from 'components/fields/AppWorkweekCheckbox';
 import TextInput from 'components/fields/TextInput';
 import ListWithSidebarLayout from 'components/settings/ListWithSidebarLayout';
 import SettingPageLayout from 'components/settings/SettingPageLayout';
+import { useSettingFormPage } from 'hooks/useSettingPageForm';
 import {
   createSetting,
   deleteSetting,
   getSetting,
   updateSetting,
 } from 'requests/settings';
+import { extractFromJSON } from 'Utils';
 
 const workweek = [
   {
@@ -73,13 +77,23 @@ const workweek = [
 ];
 
 const workweekForm = {
-  key: 'workweek',
   form: [
     {
       header: '',
       fields: workweek,
     },
   ],
+
+  getFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
+};
+
+const plan = {
+  sideBarTitle: 'Add Workweek',
+  key: 'workweek',
+
   endpoint: 'settings/workweek',
   texts: {
     title: 'Workweek',
@@ -92,43 +106,13 @@ const workweekForm = {
     sideDescription:
       'This is long long long for Workweek saldkf skflas asfkjdsadklfsadf salkdfklajsfkjlsad lorem description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui quidem neque exercitationem aperiam laboriosam at, tempore ipsam natus alias repellat dolorum. Totam commodi eius dolorem laudantium dolores explicabo ex id.',
   },
-  getAllFn: getSetting,
-  postFn: createSetting,
-  putFn: updateSetting,
-  deleteFn: deleteSetting,
-};
-
-const workWeekOptions = [
-  { value: 'D_FWD', label: 'Full Working Day' },
-  {
-    value: 'D_FHWD',
-    label: 'Only First Half Working Day',
-  },
-  {
-    value: 'D_SHWD',
-    label: 'Only Second Half Working Day',
-  },
-  { value: 'R_FWD', label: 'Remote: Full Working Day' },
-  {
-    value: 'R_FHWD',
-    label: 'Remote: Only First Half Working Day',
-  },
-  {
-    value: 'R_SHWD',
-    label: 'Remote: Only Second Half Working Day',
-  },
-  { value: 'WEEKOFF', label: 'Weekoff' },
-];
-
-const plan = {
-  sideBarTitle: 'Add Workweek',
   section: {
     fields: [
       {
         label: 'Workweek Name',
         // isRequired: true,
         type: 'Text',
-        id: 'workweekName',
+        id: 'name',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
         config: {
           placeholder: 'Workweek Name',
@@ -150,8 +134,8 @@ const plan = {
           },
         ],
         select: {
-          type: 'inLine',
-          options: workWeekOptions,
+          type: 'api',
+          api: 'app/valueHelp/const/WorkWeekOptions',
         },
       },
       {
@@ -165,8 +149,8 @@ const plan = {
           },
         ],
         select: {
-          type: 'inLine',
-          options: workWeekOptions,
+          type: 'api',
+          api: 'app/valueHelp/const/WorkWeekOptions',
         },
       },
       {
@@ -180,8 +164,8 @@ const plan = {
           },
         ],
         select: {
-          type: 'inLine',
-          options: workWeekOptions,
+          type: 'api',
+          api: 'app/valueHelp/const/WorkWeekOptions',
         },
       },
       {
@@ -195,8 +179,8 @@ const plan = {
           },
         ],
         select: {
-          type: 'inLine',
-          options: workWeekOptions,
+          type: 'api',
+          api: 'app/valueHelp/const/WorkWeekOptions',
         },
       },
       {
@@ -210,8 +194,8 @@ const plan = {
           },
         ],
         select: {
-          type: 'inLine',
-          options: workWeekOptions,
+          type: 'api',
+          api: 'app/valueHelp/const/WorkWeekOptions',
         },
       },
       {
@@ -225,8 +209,8 @@ const plan = {
           },
         ],
         select: {
-          type: 'inLine',
-          options: workWeekOptions,
+          type: 'api',
+          api: 'app/valueHelp/const/WorkWeekOptions',
         },
       },
       {
@@ -240,20 +224,51 @@ const plan = {
           },
         ],
         select: {
-          type: 'inLine',
-          options: workWeekOptions,
+          type: 'api',
+          api: 'app/valueHelp/const/WorkWeekOptions',
         },
       },
     ],
   },
+  getFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
 };
 
 export default function Page() {
+  const {
+    setOpenSideMenu,
+    openSideMenu,
+    editData,
+    setEditData,
+    response,
+    isLoading,
+    editClickCB,
+  } = useSettingFormPage(plan);
   return (
     <>
-      <SettingPageLayout texts={workweekForm.texts}>
-        <SimpleSmartForm plan={plan} />
-        {/* <ListWithSidebarLayout config={workweekForm} /> */}
+      <SettingPageLayout texts={plan.texts}>
+        <SmartSideBarForm
+          plan={plan}
+          openSideMenu={openSideMenu}
+          setOpenSideMenu={setOpenSideMenu}
+          editData={editData}
+        />
+        <Stack sx={{ rowGap: 1 }}>
+          {isLoading
+            ? 'Loading'
+            : response?.data?.map((e, index) => (
+                <EditableList
+                  key={index}
+                  label={extractFromJSON(e, plan?.listLabelExp || '**.name')}
+                  cb={{
+                    Edit: () => editClickCB(e),
+                    Delete: () => onDeleteClick(e.id),
+                  }}
+                />
+              ))}
+        </Stack>
       </SettingPageLayout>
     </>
   );

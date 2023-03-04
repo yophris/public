@@ -1,3 +1,4 @@
+import SimpleSmartForm from '@/components/smartFormComponents/SimpleSmartForm';
 import { Box, Stack } from '@mui/material';
 import AppTable from 'components/AppTable';
 import AppAutocomplete from 'components/fields/AppAutoComplete';
@@ -167,41 +168,96 @@ const holidayTemplateForm = {
   deleteFn: deleteSetting,
 };
 
-export default function Page() {
-  const qc = useQueryClient();
-  const alert = useAlert();
-  const {
-    isLoading,
-    data: response,
-    error,
-  } = useQuery('get' + holidayForm.key, () =>
-    holidayForm.getAllFn(holidayForm.endpoint)
-  );
+const plan = {
+  sideBarTitle: 'Add Approval heirachy',
+  endpoint: 'settings/approvaltype',
+  section: {
+    fields: [
+      {
+        label: 'Calender Name',
+        // isRequired: true,
+        type: 'Text',
+        id: 'calenderName',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+        config: {
+          placeholder: 'Calender Name',
+        },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        type: 'Title',
+        title: 'Add Holidays',
+        subTitle: 'add holidays to the list',
+        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
+      },
+      {
+        type: 'FieldArray',
+        variant: 'Table',
+        appendButtonText: 'Add',
+        id: 'approvers',
+        arrayFields: [
+          {
+            label: 'Holiday Name',
+            type: 'Text',
+            id: 'name',
+            gridSizes: { xs: 12 },
+            config: {
+              placeholder: 'Enter Workflow Hierarchy Type Name',
+            },
+            validations: [
+              {
+                type: 'required',
+              },
+            ],
+          },
+          {
+            label: 'Date',
+            type: 'Date',
+            id: 'date',
+            gridSizes: { xs: 12 },
+            config: {
+              placeholder: 'Eid',
+            },
+            validations: [
+              {
+                type: 'required',
+              },
+            ],
+          },
+          {
+            // isRequired: true,
+            label: 'Is Optional',
+            type: 'Checkbox',
+            id: 'optional',
+            gridSizes: { xs: 12 },
+            config: {
+              placeholder: 'Enter Workflow Hierarchy Type Name',
+            },
+            validations: [
+              {
+                type: 'required',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  key: 'approvaltype',
+  getFn: getSetting,
+  postFn: createSetting,
+  putFn: updateSetting,
+  deleteFn: deleteSetting,
+};
 
-  // create
-  const onCreate = useMutation(
-    (data) => holidayForm.postFn(holidayForm.endpoint, data),
-    {
-      onSuccess: () => {
-        qc.invalidateQueries('get' + holidayForm.key);
-        alert.success(response?.data ? `Updated` : `Company Created`);
-      },
-      onError: (data) => {
-        alert.error('Failed');
-      },
-    }
-  );
+export default function Page() {
   return (
-    <SettingPageLayout texts={holidayForm.texts} SideChildren={SideChildren}>
-      <AppForm
-        form={holidayForm.form}
-        submitData={(data) => {
-          console.log('first', data);
-          return onCreate.mutate({ ...data });
-        }}
-        edit={false}
-        cancelDrawer={null}
-      />
+    <SettingPageLayout texts={plan.texts}>
+      <SimpleSmartForm plan={plan} />
     </SettingPageLayout>
   );
 }

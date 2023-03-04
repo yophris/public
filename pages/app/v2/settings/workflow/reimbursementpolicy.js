@@ -14,6 +14,9 @@ import { useAlert } from 'react-alert';
 import ApprovalRange from 'components/settings/ApprovalRange';
 import SmartSideBarForm from '@/components/smartFormComponents/SmartSidebarForm';
 import SettingsFormPage from '@/components/PageMaker/SettingsFormPage';
+import EditableList from '@/components/settings/EditableList';
+import { useSettingFormPage } from 'hooks/useSettingPageForm';
+import { extractFromJSON } from 'Utils';
 
 const reimbursementPolicy = [
   {
@@ -285,25 +288,10 @@ const plan = {
         label: 'Enter reimbursement Policy Name',
         // isRequired: true,
         type: 'Text',
-        id: 'reimbursementPolicyName',
+        id: 'name',
         gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
         config: {
           placeholder: 'Enter reimbursement Policy Name',
-        },
-        validations: [
-          {
-            type: 'required',
-          },
-        ],
-      },
-      {
-        label: 'Description',
-        type: 'Text',
-        id: 'description',
-        gridSizes: { xs: 12, sm: 6, md: 12, lg: 12 },
-        isMultiline: true,
-        config: {
-          placeholder: 'Description',
         },
         validations: [
           {
@@ -318,116 +306,100 @@ const plan = {
         subTitle: 'You may add mulltiple Expense limit & Approval Heirarchy',
       },
       {
-        type: 'FieldArray',
-        id: 'Approval Range',
-        // title: 'Previous Employer Details',
-
-        // title: 'Education Details',
-        appendButtonText: '+ Add another range ',
-        type: 'FieldArray',
-        arrayFields: [
+        label: 'Min. Expenses',
+        type: 'Text',
+        id: 'limitAmount',
+        inputAdornment: {
+          placement: 'start',
+          text: 'INR',
+        },
+        gridSizes: { xs: 12, sm: 6, md: 6 },
+        validations: [
           {
-            label: 'Min. Expenses',
-            type: 'Text',
-            fieldName: 'minExpenses',
-            inputAdornment: {
-              placement: 'start',
-              text: 'INR',
-            },
-            gridSizes: { xs: 12, sm: 6, md: 6 },
-            validations: [
-              {
-                type: 'required',
-              },
-            ],
-          },
-          {
-            label: 'Select Approval Heirarchy Type',
-            type: 'Select',
-            fieldName: 'minApprovalHeirarchyType',
-            gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-            id: 'minApprovalHeirarchyType',
-            validations: [
-              {
-                type: 'required',
-              },
-            ],
-            select: {
-              type: 'inLine',
-              options: [
-                { value: '', label: 'None' },
-                {
-                  value: 'Approval Heirarchy 1',
-                  label: 'Approval Heirarchy 1',
-                },
-                {
-                  value: 'Approval Heirarchy 2',
-                  label: 'Approval Heirarchy 2',
-                },
-              ],
-            },
-          },
-          {
-            label: 'Min. Expenses',
-            type: 'Text',
-            fieldName: 'maxExpenses',
-            inputAdornment: {
-              placement: 'start',
-              text: 'INR',
-            },
-            gridSizes: { xs: 12, sm: 6, md: 6 },
-            validations: [
-              {
-                type: 'required',
-              },
-            ],
-          },
-          {
-            label: 'Select Approval Heirarchy Type',
-            type: 'Select',
-            gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
-            id: 'maxApprovalHeirarchyType',
-            validations: [
-              {
-                type: 'required',
-              },
-            ],
-            select: {
-              type: 'inLine',
-              options: [
-                { value: '', label: 'None' },
-                {
-                  value: 'Approval Heirarchy 1',
-                  label: 'Approval Heirarchy 1',
-                },
-                {
-                  value: 'Approval Heirarchy 2',
-                  label: 'Approval Heirarchy 2',
-                },
-              ],
-            },
+            type: 'required',
           },
         ],
+      },
+      {
+        label: 'Select Approval Heirarchy Type',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'remibursementpolicyApprovaltype',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'api',
+          api: 'settings/approvaltype?mapped=1',
+        },
+      },
+      {
+        label: 'Min. Expenses',
+        type: 'Text',
+        id: 'limitAmount2',
+        inputAdornment: {
+          placement: 'start',
+          text: 'INR',
+        },
+        gridSizes: { xs: 12, sm: 6, md: 6 },
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+      },
+      {
+        label: 'Select Approval Heirarchy Type',
+        type: 'Select',
+        gridSizes: { xs: 12, sm: 6, md: 6, lg: 6 },
+        id: 'remibursementpolicyApprovaltype2',
+        validations: [
+          {
+            type: 'required',
+          },
+        ],
+        select: {
+          type: 'api',
+          api: 'settings/approvaltype?mapped=1',
+        },
       },
     ],
   },
 };
 
 export default function Page() {
-  return <SettingsFormPage plan={plan} />;
-
-  const qc = useQueryClient();
-  const alert = useAlert();
   const {
+    setOpenSideMenu,
+    openSideMenu,
+    editData,
+    onDeleteClick,
+    response,
     isLoading,
-    data: response,
-    error,
-  } = useQuery('get' + reimbursementPolicyForm.key, () =>
-    reimbursementPolicyForm.getAllFn(reimbursementPolicyForm.endpoint)
-  );
+    editClickCB,
+  } = useSettingFormPage(plan);
+
   return (
     <SettingPageLayout texts={reimbursementPolicyForm.texts}>
-      <SmartSideBarForm plan={plan} />
+      <SmartSideBarForm
+        plan={plan}
+        editData={editData}
+        openSideMenu={openSideMenu}
+        setOpenSideMenu={setOpenSideMenu}
+      />
+      {isLoading
+        ? 'Loading'
+        : response?.data?.map((e, index) => (
+            <EditableList
+              key={index}
+              label={extractFromJSON(e, `$.name`)}
+              cb={{
+                Edit: () => editClickCB(e),
+                Delete: () => onDeleteClick(e.id),
+              }}
+            />
+          ))}
     </SettingPageLayout>
   );
 }
